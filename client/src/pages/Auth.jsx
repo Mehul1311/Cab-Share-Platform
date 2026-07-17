@@ -49,6 +49,7 @@ const Auth = () => {
 
         localStorage.setItem('userRole', response.data.user.role);
         localStorage.setItem('uid', response.data.user.uid);
+        localStorage.setItem('userName', response.data.user.name || response.data.user.email);
         
       } catch (err) {
         console.warn("Firebase Auth failed (likely missing config). Simulating login & DB sync for demo purposes.");
@@ -67,6 +68,7 @@ const Auth = () => {
 
         localStorage.setItem('userRole', response.data.user.role);
         localStorage.setItem('uid', response.data.user.uid);
+        localStorage.setItem('userName', response.data.user.name || response.data.user.email);
       }
 
       // Navigate based on role
@@ -79,7 +81,8 @@ const Auth = () => {
       }
       
     } catch (err) {
-      setError(err.message || 'An error occurred during authentication.');
+      const errorMsg = err.response?.data?.message || err.message || 'An error occurred during authentication.';
+      setError(errorMsg);
     } finally {
       setLoading(false);
     }
@@ -89,51 +92,60 @@ const Auth = () => {
     setError('');
     setLoading(true);
     try {
-      const provider = new GoogleAuthProvider();
-      const userCredential = await signInWithPopup(auth, provider);
-      
-      const response = await api.post('/auth/sync', {
-        uid: userCredential.user.uid,
-        email: userCredential.user.email,
-        name: userCredential.user.displayName,
-        role: formData.role,
-        phoneNumber: formData.phoneNumber,
-        vehicleNumber: formData.vehicleNumber,
-        upiId: formData.upiId
-      });
+      try {
+        const provider = new GoogleAuthProvider();
+        const userCredential = await signInWithPopup(auth, provider);
+        
+        const response = await api.post('/auth/sync', {
+          uid: userCredential.user.uid,
+          email: userCredential.user.email,
+          name: userCredential.user.displayName,
+          role: formData.role,
+          phoneNumber: formData.phoneNumber,
+          vehicleNumber: formData.vehicleNumber,
+          upiId: formData.upiId
+        });
 
-      localStorage.setItem('userRole', response.data.user.role);
-      localStorage.setItem('uid', response.data.user.uid);
-      
-      if (response.data.user.role === 'Driver') {
-        navigate('/driver-dashboard');
-      } else if (response.data.user.role === 'Admin') {
-        navigate('/admin-dashboard');
-      } else {
-        navigate('/user-dashboard');
+        localStorage.setItem('userRole', response.data.user.role);
+        localStorage.setItem('uid', response.data.user.uid);
+        localStorage.setItem('userName', response.data.user.name || response.data.user.email);
+        localStorage.setItem('userPhoto', userCredential.user.photoURL || '');
+        
+        if (response.data.user.role === 'Driver') {
+          navigate('/driver-dashboard');
+        } else if (response.data.user.role === 'Admin') {
+          navigate('/admin-dashboard');
+        } else {
+          navigate('/user-dashboard');
+        }
+      } catch (err) {
+        console.warn("Google Auth failed. Simulating for demo purposes.", err);
+        const simulatedUid = 'demo_google_' + Date.now();
+        const response = await api.post('/auth/sync', {
+          uid: simulatedUid,
+          email: 'google_demo@example.com',
+          name: 'Google User',
+          role: formData.role,
+          phoneNumber: formData.phoneNumber,
+          vehicleNumber: formData.vehicleNumber,
+          upiId: formData.upiId
+        });
+        localStorage.setItem('userRole', response.data.user.role);
+        localStorage.setItem('uid', response.data.user.uid);
+        localStorage.setItem('userName', response.data.user.name || response.data.user.email);
+        localStorage.setItem('userPhoto', '');
+        
+        if (response.data.user.role === 'Driver') {
+          navigate('/driver-dashboard');
+        } else if (response.data.user.role === 'Admin') {
+          navigate('/admin-dashboard');
+        } else {
+          navigate('/user-dashboard');
+        }
       }
     } catch (err) {
-      console.warn("Google Auth failed. Simulating for demo purposes.", err);
-      const simulatedUid = 'demo_google_' + Date.now();
-      const response = await api.post('/auth/sync', {
-        uid: simulatedUid,
-        email: 'google_demo@example.com',
-        name: 'Google User',
-        role: formData.role,
-        phoneNumber: formData.phoneNumber,
-        vehicleNumber: formData.vehicleNumber,
-        upiId: formData.upiId
-      });
-      localStorage.setItem('userRole', response.data.user.role);
-      localStorage.setItem('uid', response.data.user.uid);
-      
-      if (response.data.user.role === 'Driver') {
-        navigate('/driver-dashboard');
-      } else if (response.data.user.role === 'Admin') {
-        navigate('/admin-dashboard');
-      } else {
-        navigate('/user-dashboard');
-      }
+      const errorMsg = err.response?.data?.message || err.response?.data?.error || err.message || 'An error occurred during Google authentication.';
+      setError(errorMsg);
     } finally {
       setLoading(false);
     }

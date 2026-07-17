@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Car, Menu, X, LogOut } from 'lucide-react';
+import { Car, Menu, X, LogOut, UserCircle } from 'lucide-react';
 import { auth } from '../firebase';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import './Navbar.css';
@@ -23,6 +23,8 @@ const Navbar = () => {
       // Remove role from local storage on logout
       localStorage.removeItem('userRole');
       localStorage.removeItem('uid');
+      localStorage.removeItem('userName');
+      localStorage.removeItem('userPhoto');
       navigate('/');
     } catch (error) {
       console.error('Logout error:', error);
@@ -31,6 +33,9 @@ const Navbar = () => {
 
   const role = localStorage.getItem('userRole');
   const uid = localStorage.getItem('uid');
+  const storedName = localStorage.getItem('userName');
+  const userName = storedName || (user ? user.displayName || user.email : 'User');
+  const userPhoto = localStorage.getItem('userPhoto') || (user ? user.photoURL : null);
   const isLoggedIn = user || uid;
 
   return (
@@ -52,6 +57,16 @@ const Navbar = () => {
               {role === 'Admin' && <Link to="/admin-dashboard" className="nav-link highlight" style={{ color: '#ef4444' }}>Admin Panel</Link>}
               {role === 'Driver' && <Link to="/driver-dashboard" className="nav-link highlight">Driver Dashboard</Link>}
               {role === 'User' && <Link to="/user-dashboard" className="nav-link highlight">Find a Ride</Link>}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '0 8px' }}>
+                {userPhoto ? (
+                  <img src={userPhoto} alt="Profile" style={{ width: '28px', height: '28px', borderRadius: '50%', objectFit: 'cover' }} referrerPolicy="no-referrer" />
+                ) : (
+                  <UserCircle size={24} color="var(--primary)" />
+                )}
+                <span className="nav-link" style={{ fontWeight: 600, color: 'var(--primary)', padding: 0 }}>
+                  Hi, {userName}
+                </span>
+              </div>
               <button onClick={handleLogout} className="btn btn-secondary nav-btn">
                 <LogOut size={18} /> Logout
               </button>
@@ -75,6 +90,16 @@ const Navbar = () => {
           
           {isLoggedIn ? (
             <>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '12px 16px', borderBottom: '1px solid rgba(255,255,255,0.1)', marginBottom: '8px' }}>
+                {userPhoto ? (
+                  <img src={userPhoto} alt="Profile" style={{ width: '36px', height: '36px', borderRadius: '50%', objectFit: 'cover' }} referrerPolicy="no-referrer" />
+                ) : (
+                  <UserCircle size={32} color="var(--primary)" />
+                )}
+                <div style={{ color: 'var(--primary)', fontWeight: 'bold' }}>
+                  Logged in as: <br/>{userName}
+                </div>
+              </div>
               {role === 'Admin' && <Link to="/admin-dashboard" className="nav-link" onClick={() => setIsOpen(false)} style={{ color: '#ef4444' }}>Admin Panel</Link>}
               {role === 'Driver' && <Link to="/driver-dashboard" className="nav-link" onClick={() => setIsOpen(false)}>Driver Dashboard</Link>}
               {role === 'User' && <Link to="/user-dashboard" className="nav-link" onClick={() => setIsOpen(false)}>Find a Ride</Link>}

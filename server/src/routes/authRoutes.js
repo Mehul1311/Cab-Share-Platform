@@ -31,7 +31,7 @@ router.post('/sync', async (req, res) => {
     res.status(200).json({ success: true, user });
   } catch (error) {
     console.error('Error syncing user:', error);
-    res.status(500).json({ success: false, message: 'Server Error' });
+    res.status(500).json({ success: false, message: error.message || 'Server Error', error: error.toString() });
   }
 });
 
