@@ -40,6 +40,21 @@ router.get('/available', async (req, res) => {
   }
 });
 
+// Get rides for a specific driver
+router.get('/driver/:driverUid', async (req, res) => {
+  try {
+    const { driverUid } = req.params;
+    const driver = await User.findOne({ uid: driverUid });
+    if (!driver) return res.status(404).json({ success: false, message: 'Driver not found' });
+
+    const rides = await Ride.find({ driverId: driver._id }).sort({ createdAt: -1 });
+    res.status(200).json({ success: true, rides });
+  } catch (error) {
+    console.error('Error fetching driver rides:', error);
+    res.status(500).json({ success: false, message: 'Server Error' });
+  }
+});
+
 // Book a ride (User)
 router.post('/book/:rideId', async (req, res) => {
   try {

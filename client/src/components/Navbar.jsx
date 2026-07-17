@@ -22,6 +22,7 @@ const Navbar = () => {
       await signOut(auth);
       // Remove role from local storage on logout
       localStorage.removeItem('userRole');
+      localStorage.removeItem('uid');
       navigate('/');
     } catch (error) {
       console.error('Logout error:', error);
@@ -29,11 +30,13 @@ const Navbar = () => {
   };
 
   const role = localStorage.getItem('userRole');
+  const uid = localStorage.getItem('uid');
+  const isLoggedIn = user || uid;
 
   return (
     <nav className="navbar glass-panel">
       <div className="container nav-container">
-        <Link to="/" className="nav-logo">
+        <Link to="/" className="nav-link nav-logo">
           <Car size={32} className="logo-icon" />
           <span>RideShare</span>
         </Link>
@@ -44,8 +47,9 @@ const Navbar = () => {
           <Link to="/query" className="nav-link">Query</Link>
           <Link to="/contact" className="nav-link">Contact</Link>
           
-          {user ? (
+          {isLoggedIn ? (
             <>
+              {role === 'Admin' && <Link to="/admin-dashboard" className="nav-link highlight" style={{ color: '#ef4444' }}>Admin Panel</Link>}
               {role === 'Driver' && <Link to="/driver-dashboard" className="nav-link highlight">Driver Dashboard</Link>}
               {role === 'User' && <Link to="/user-dashboard" className="nav-link highlight">Find a Ride</Link>}
               <button onClick={handleLogout} className="btn btn-secondary nav-btn">
@@ -69,8 +73,9 @@ const Navbar = () => {
           <Link to="/query" className="nav-link" onClick={() => setIsOpen(false)}>Query</Link>
           <Link to="/contact" className="nav-link" onClick={() => setIsOpen(false)}>Contact</Link>
           
-          {user ? (
+          {isLoggedIn ? (
             <>
+              {role === 'Admin' && <Link to="/admin-dashboard" className="nav-link" onClick={() => setIsOpen(false)} style={{ color: '#ef4444' }}>Admin Panel</Link>}
               {role === 'Driver' && <Link to="/driver-dashboard" className="nav-link" onClick={() => setIsOpen(false)}>Driver Dashboard</Link>}
               {role === 'User' && <Link to="/user-dashboard" className="nav-link" onClick={() => setIsOpen(false)}>Find a Ride</Link>}
               <button onClick={() => { handleLogout(); setIsOpen(false); }} className="btn btn-secondary w-full mt-4">

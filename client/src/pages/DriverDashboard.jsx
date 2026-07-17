@@ -7,23 +7,39 @@ const DriverDashboard = () => {
   const [status, setStatus] = useState('');
   const [rides, setRides] = useState([]); // Simulated list of posted rides
 
+  React.useEffect(() => {
+    fetchMyRides();
+  }, []);
+
+  const fetchMyRides = async () => {
+    try {
+      const driverUid = localStorage.getItem('uid');
+      if (!driverUid) return;
+      const response = await axios.get(`http://localhost:5000/api/rides/driver/${driverUid}`);
+      if (response.data.success) {
+        setRides(response.data.rides);
+      }
+    } catch (err) {
+      console.error("Error fetching driver rides:", err);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus('posting...');
     
     try {
-      // If backend is running, this would connect. Simulating success if it fails.
-      try {
-        const response = await axios.post('http://localhost:5000/api/rides/create', {
-          driverUid: 'SIMULATED_DRIVER_UID', // Would come from auth context
-          ...formData
-        });
-        setRides([response.data.ride, ...rides]);
-      } catch (err) {
-        console.warn('Backend not reachable, simulating ride creation.');
-        const fakeRide = { _id: Date.now().toString(), status: 'Available', ...formData };
-        setRides([fakeRide, ...rides]);
+      const driverUid = localStorage.getItem('uid');
+      if (!driverUid) {
+        setStatus('Error: You are not logged in properly. Please login again.');
+        return;
       }
+
+      const response = await axios.post('http://localhost:5000/api/rides/create', {
+        driverUid: driverUid,
+        ...formData
+      });
+      setRides([response.data.ride, ...rides]);
       
       setStatus('Success! Your ride is now visible to users.');
       setFormData({ origin: '', destination: '', price: '', availableSeats: 3 });

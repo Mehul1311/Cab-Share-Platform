@@ -1,5 +1,5 @@
 import React from 'react';
-import { Car, Github, Twitter, Linkedin } from 'lucide-react';
+import { Car, Mail } from 'lucide-react';
 import './Footer.css';
 
 const Footer = () => {
@@ -31,9 +31,7 @@ const Footer = () => {
           <div className="link-group social-links">
             <h3>Follow Us</h3>
             <div className="social-icons">
-              <a href="#"><Github size={20} /></a>
-              <a href="#"><Twitter size={20} /></a>
-              <a href="#"><Linkedin size={20} /></a>
+              <a href="#"><Mail size={20} /></a>
             </div>
           </div>
         </div>

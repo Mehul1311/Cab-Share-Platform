@@ -9,6 +9,7 @@ import Query from './pages/Query';
 import Auth from './pages/Auth';
 import DriverDashboard from './pages/DriverDashboard';
 import UserDashboard from './pages/UserDashboard';
+import AdminDashboard from './pages/AdminDashboard';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
             <Route path="/auth" element={<Auth />} />
             <Route path="/driver-dashboard" element={<DriverDashboard />} />
             <Route path="/user-dashboard" element={<UserDashboard />} />
+            <Route path="/admin-dashboard" element={<AdminDashboard />} />
           </Routes>
         </main>
         <Footer />

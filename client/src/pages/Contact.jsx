@@ -3,10 +3,34 @@ import React, { useState } from 'react';
 const Contact = () => {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
 
-  const handleSubmit = (e) => {
+  const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState('');
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert('Thank you for contacting us! We will get back to you soon.');
-    setFormData({ name: '', email: '', message: '' });
+    setLoading(true);
+    setStatus('Sending...');
+
+    try {
+      const response = await fetch('http://localhost:5000/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+      
+      const data = await response.json();
+      if (data.success) {
+        setStatus('Thank you for contacting us! We will get back to you soon.');
+        setFormData({ name: '', email: '', message: '' });
+      } else {
+        setStatus('Failed to send: ' + data.message);
+      }
+    } catch (err) {
+      console.error(err);
+      setStatus('Failed to send message. Please try again later.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -44,7 +68,14 @@ const Contact = () => {
               required 
             ></textarea>
           </div>
-          <button type="submit" className="btn btn-primary" style={{ width: '100%' }}>Send Message</button>
+          <button type="submit" className="btn btn-primary" style={{ width: '100%' }} disabled={loading}>
+            {loading ? 'Sending...' : 'Send Message'}
+          </button>
+          {status && (
+            <p style={{ marginTop: '16px', textAlign: 'center', color: status.includes('Failed') ? '#ef4444' : 'var(--secondary)' }}>
+              {status}
+            </p>
+          )}
         </form>
       </div>
     </div>
