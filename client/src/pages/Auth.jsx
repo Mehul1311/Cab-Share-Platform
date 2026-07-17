@@ -79,7 +79,8 @@ const Auth = () => {
       }
       
     } catch (err) {
-      setError(err.message || 'An error occurred during authentication.');
+      const errorMsg = err.response?.data?.message || err.message || 'An error occurred during authentication.';
+      setError(errorMsg);
     } finally {
       setLoading(false);
     }
