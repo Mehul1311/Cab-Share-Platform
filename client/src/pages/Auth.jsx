@@ -49,6 +49,7 @@ const Auth = () => {
 
         localStorage.setItem('userRole', response.data.user.role);
         localStorage.setItem('uid', response.data.user.uid);
+        localStorage.setItem('userName', response.data.user.name || response.data.user.email);
         
       } catch (err) {
         console.warn("Firebase Auth failed (likely missing config). Simulating login & DB sync for demo purposes.");
@@ -67,6 +68,7 @@ const Auth = () => {
 
         localStorage.setItem('userRole', response.data.user.role);
         localStorage.setItem('uid', response.data.user.uid);
+        localStorage.setItem('userName', response.data.user.name || response.data.user.email);
       }
 
       // Navigate based on role
@@ -106,6 +108,7 @@ const Auth = () => {
 
         localStorage.setItem('userRole', response.data.user.role);
         localStorage.setItem('uid', response.data.user.uid);
+        localStorage.setItem('userName', response.data.user.name || response.data.user.email);
         
         if (response.data.user.role === 'Driver') {
           navigate('/driver-dashboard');
@@ -128,6 +131,7 @@ const Auth = () => {
         });
         localStorage.setItem('userRole', response.data.user.role);
         localStorage.setItem('uid', response.data.user.uid);
+        localStorage.setItem('userName', response.data.user.name || response.data.user.email);
         
         if (response.data.user.role === 'Driver') {
           navigate('/driver-dashboard');
