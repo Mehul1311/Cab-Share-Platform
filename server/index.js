@@ -14,13 +14,28 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Database Connection
-if (!process.env.MONGODB_URI) {
-  console.error('FATAL ERROR: MONGODB_URI is not defined in environment variables!');
-}
-mongoose.connect(process.env.MONGODB_URI)
-  .then(() => console.log('MongoDB Connected'))
-  .catch(err => console.log('MongoDB connection error:', err));
+// Database Connection Middleware (Optimized for Serverless / Vercel)
+const connectDB = async (req, res, next) => {
+  if (mongoose.connection.readyState === 1) {
+    return next();
+  }
+  if (!process.env.MONGODB_URI) {
+    return res.status(500).json({ success: false, message: 'FATAL ERROR: MONGODB_URI environment variable is missing on the server.' });
+  }
+  try {
+    await mongoose.connect(process.env.MONGODB_URI, {
+      serverSelectionTimeoutMS: 3000 // Fails in 3s instead of 10s if IP is blocked
+    });
+    console.log('MongoDB Connected');
+    next();
+  } catch (err) {
+    console.error('MongoDB connection error:', err);
+    return res.status(500).json({ success: false, message: 'Database Connection Failed. Check your MongoDB Atlas Network Access (IP Whitelist).', error: err.message });
+  }
+};
+
+// Apply DB connection middleware to API routes
+app.use('/api', connectDB);
 
 // Routes
 app.use('/api/auth', authRoutes);
