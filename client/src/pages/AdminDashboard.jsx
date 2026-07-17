@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import api from '../utils/api';
-import { Users, UserPlus, Edit, Trash2, X, ShieldAlert } from 'lucide-react';
+import { UserPlus, Edit, Trash2, X, ShieldAlert } from 'lucide-react';
 import './AdminDashboard.css';
 
 const AdminDashboard = () => {
