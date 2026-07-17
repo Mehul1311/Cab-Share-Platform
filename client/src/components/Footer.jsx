@@ -25,13 +25,13 @@ const Footer = () => {
           </div>
           <div className="link-group">
             <h3>Legal</h3>
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms of Service</a>
+            <a href="/privacy">Privacy Policy</a>
+            <a href="/terms">Terms of Service</a>
           </div>
           <div className="link-group social-links">
             <h3>Follow Us</h3>
             <div className="social-icons">
-              <a href="#"><Mail size={20} /></a>
+              <a href="/contact"><Mail size={20} /></a>
             </div>
           </div>
         </div>
