@@ -10,11 +10,14 @@ router.post('/sync', async (req, res) => {
     let user = await User.findOne({ uid });
     
     if (!user) {
+      // Prevent users from self-assigning Admin role
+      const assignedRole = role === 'Admin' ? 'User' : (role || 'User');
+      
       user = new User({ 
         uid, 
         email, 
         name, 
-        role: role || 'User',
+        role: assignedRole,
         phoneNumber,
         vehicleNumber,
         upiId

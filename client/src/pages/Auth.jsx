@@ -28,53 +28,30 @@ const Auth = () => {
     try {
       let userCredential;
       
-      // We wrap the auth calls in a try/catch, but since Firebase config is a placeholder, 
-      // this will fail. For the sake of UI demonstration, if it fails, we will simulate login.
-      try {
-        if (isLogin) {
-          userCredential = await signInWithEmailAndPassword(auth, formData.email, formData.password);
-        } else {
-          userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
-        }
-        
-        const response = await api.post('/auth/sync', {
-          uid: userCredential.user.uid,
-          email: formData.email,
-          name: formData.name,
-          role: formData.role,
-          phoneNumber: formData.phoneNumber,
-          vehicleNumber: formData.vehicleNumber,
-          upiId: formData.upiId
-        });
-
-        localStorage.setItem('userRole', response.data.user.role);
-        localStorage.setItem('uid', response.data.user.uid);
-        localStorage.setItem('userName', response.data.user.name || response.data.user.email);
-        
-      } catch (err) {
-        console.warn("Firebase Auth failed (likely missing config). Simulating login & DB sync for demo purposes.");
-        const simulatedUid = 'demo_' + formData.email;
-        
-        // Even for demo, we must sync with MongoDB so relations work!
-        const response = await api.post('/auth/sync', {
-          uid: simulatedUid,
-          email: formData.email || 'demo@example.com',
-          name: formData.name || 'Demo User',
-          role: formData.role,
-          phoneNumber: formData.phoneNumber,
-          vehicleNumber: formData.vehicleNumber,
-          upiId: formData.upiId
-        });
-
-        localStorage.setItem('userRole', response.data.user.role);
-        localStorage.setItem('uid', response.data.user.uid);
-        localStorage.setItem('userName', response.data.user.name || response.data.user.email);
+      if (isLogin) {
+        userCredential = await signInWithEmailAndPassword(auth, formData.email, formData.password);
+      } else {
+        userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
       }
+      
+      const response = await api.post('/auth/sync', {
+        uid: userCredential.user.uid,
+        email: formData.email,
+        name: formData.name,
+        role: formData.role,
+        phoneNumber: formData.phoneNumber,
+        vehicleNumber: formData.vehicleNumber,
+        upiId: formData.upiId
+      });
 
+      localStorage.setItem('userRole', response.data.user.role);
+      localStorage.setItem('uid', response.data.user.uid);
+      localStorage.setItem('userName', response.data.user.name || response.data.user.email);
+      
       // Navigate based on role
-      if (formData.role === 'Driver') {
+      if (response.data.user.role === 'Driver') {
         navigate('/driver-dashboard');
-      } else if (formData.role === 'Admin') {
+      } else if (response.data.user.role === 'Admin') {
         navigate('/admin-dashboard');
       } else {
         navigate('/user-dashboard');
@@ -90,62 +67,47 @@ const Auth = () => {
 
   const handleGoogleLogin = async () => {
     setError('');
+    
+    // Check if Firebase is actually configured
+    if (!process.env.REACT_APP_FIREBASE_API_KEY) {
+      setError('Firebase is not configured! Please add the REACT_APP_FIREBASE_* environment variables to your Vercel Dashboard and trigger a new deployment.');
+      return;
+    }
+    
     setLoading(true);
     try {
-      try {
-        const provider = new GoogleAuthProvider();
-        const userCredential = await signInWithPopup(auth, provider);
-        
-        const response = await api.post('/auth/sync', {
-          uid: userCredential.user.uid,
-          email: userCredential.user.email,
-          name: userCredential.user.displayName,
-          role: formData.role,
-          phoneNumber: formData.phoneNumber,
-          vehicleNumber: formData.vehicleNumber,
-          upiId: formData.upiId
-        });
+      const provider = new GoogleAuthProvider();
+      const userCredential = await signInWithPopup(auth, provider);
+      
+      const response = await api.post('/auth/sync', {
+        uid: userCredential.user.uid,
+        email: userCredential.user.email,
+        name: userCredential.user.displayName,
+        role: formData.role,
+        phoneNumber: formData.phoneNumber,
+        vehicleNumber: formData.vehicleNumber,
+        upiId: formData.upiId
+      });
 
-        localStorage.setItem('userRole', response.data.user.role);
-        localStorage.setItem('uid', response.data.user.uid);
-        localStorage.setItem('userName', response.data.user.name || response.data.user.email);
-        localStorage.setItem('userPhoto', userCredential.user.photoURL || '');
-        
-        if (response.data.user.role === 'Driver') {
-          navigate('/driver-dashboard');
-        } else if (response.data.user.role === 'Admin') {
-          navigate('/admin-dashboard');
-        } else {
-          navigate('/user-dashboard');
-        }
-      } catch (err) {
-        console.warn("Google Auth failed. Simulating for demo purposes.", err);
-        const simulatedUid = 'demo_google_' + Date.now();
-        const response = await api.post('/auth/sync', {
-          uid: simulatedUid,
-          email: 'google_demo@example.com',
-          name: 'Google User',
-          role: formData.role,
-          phoneNumber: formData.phoneNumber,
-          vehicleNumber: formData.vehicleNumber,
-          upiId: formData.upiId
-        });
-        localStorage.setItem('userRole', response.data.user.role);
-        localStorage.setItem('uid', response.data.user.uid);
-        localStorage.setItem('userName', response.data.user.name || response.data.user.email);
-        localStorage.setItem('userPhoto', '');
-        
-        if (response.data.user.role === 'Driver') {
-          navigate('/driver-dashboard');
-        } else if (response.data.user.role === 'Admin') {
-          navigate('/admin-dashboard');
-        } else {
-          navigate('/user-dashboard');
-        }
+      localStorage.setItem('userRole', response.data.user.role);
+      localStorage.setItem('uid', response.data.user.uid);
+      localStorage.setItem('userName', response.data.user.name || response.data.user.email);
+      localStorage.setItem('userPhoto', userCredential.user.photoURL || '');
+      
+      if (response.data.user.role === 'Driver') {
+        navigate('/driver-dashboard');
+      } else if (response.data.user.role === 'Admin') {
+        navigate('/admin-dashboard');
+      } else {
+        navigate('/user-dashboard');
       }
     } catch (err) {
-      const errorMsg = err.response?.data?.message || err.response?.data?.error || err.message || 'An error occurred during Google authentication.';
-      setError(errorMsg);
+      if (err.code === 'auth/unauthorized-domain') {
+        setError('Firebase Error: This domain (cab-share-platform.vercel.app) is not authorized for Google Sign-In. Please add it to your Authorized Domains in the Firebase Console under Authentication -> Settings.');
+      } else {
+        const errorMsg = err.response?.data?.message || err.response?.data?.error || err.message || 'An error occurred during Google authentication.';
+        setError(errorMsg);
+      }
     } finally {
       setLoading(false);
     }
@@ -182,7 +144,6 @@ const Auth = () => {
                 >
                   <option value="User">Rider (User)</option>
                   <option value="Driver">Driver</option>
-                  <option value="Admin">Admin</option>
                 </select>
               </div>
               
@@ -225,20 +186,7 @@ const Auth = () => {
             </>
           )}
 
-          {isLogin && (
-            <div className="input-group">
-              <label>Simulate Role Login as:</label>
-              <select 
-                className="input-field"
-                value={formData.role}
-                onChange={(e) => setFormData({...formData, role: e.target.value})}
-              >
-                <option value="User">Rider (User)</option>
-                <option value="Driver">Driver</option>
-                <option value="Admin">Admin</option>
-              </select>
-            </div>
-          )}
+
 
           <div className="input-group">
             <label>Email Address</label>
