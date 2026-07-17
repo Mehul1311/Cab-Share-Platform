@@ -109,6 +109,7 @@ const Auth = () => {
         localStorage.setItem('userRole', response.data.user.role);
         localStorage.setItem('uid', response.data.user.uid);
         localStorage.setItem('userName', response.data.user.name || response.data.user.email);
+        localStorage.setItem('userPhoto', userCredential.user.photoURL || '');
         
         if (response.data.user.role === 'Driver') {
           navigate('/driver-dashboard');
@@ -132,6 +133,7 @@ const Auth = () => {
         localStorage.setItem('userRole', response.data.user.role);
         localStorage.setItem('uid', response.data.user.uid);
         localStorage.setItem('userName', response.data.user.name || response.data.user.email);
+        localStorage.setItem('userPhoto', '');
         
         if (response.data.user.role === 'Driver') {
           navigate('/driver-dashboard');
