@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Car, Mail } from 'lucide-react';
 import './Footer.css';
 
@@ -19,19 +20,19 @@ const Footer = () => {
         <div className="footer-links">
           <div className="link-group">
             <h3>Company</h3>
-            <a href="/about">About Us</a>
-            <a href="/contact">Contact</a>
-            <a href="/query">FAQ & Queries</a>
+            <Link to="/about">About Us</Link>
+            <Link to="/contact">Contact</Link>
+            <Link to="/query">FAQ & Queries</Link>
           </div>
           <div className="link-group">
             <h3>Legal</h3>
-            <a href="/privacy">Privacy Policy</a>
-            <a href="/terms">Terms of Service</a>
+            <Link to="/privacy">Privacy Policy</Link>
+            <Link to="/terms">Terms of Service</Link>
           </div>
           <div className="link-group social-links">
             <h3>Follow Us</h3>
             <div className="social-icons">
-              <a href="/contact"><Mail size={20} /></a>
+              <Link to="/contact"><Mail size={20} /></Link>
             </div>
           </div>
         </div>
