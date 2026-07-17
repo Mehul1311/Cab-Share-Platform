@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Car, Menu, X, LogOut, UserCircle } from 'lucide-react';
+import { Car, Menu, X, LogOut } from 'lucide-react';
 import { auth } from '../firebase';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import './Navbar.css';
@@ -57,15 +57,14 @@ const Navbar = () => {
               {role === 'Admin' && <Link to="/admin-dashboard" className="nav-link highlight" style={{ color: '#ef4444' }}>Admin Panel</Link>}
               {role === 'Driver' && <Link to="/driver-dashboard" className="nav-link highlight">Driver Dashboard</Link>}
               {role === 'User' && <Link to="/user-dashboard" className="nav-link highlight">Find a Ride</Link>}
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '0 8px' }}>
+              <div className="user-profile-nav" style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', transition: 'all 0.3s ease' }} title={`Logged in as ${userName} (${role})`}>
                 {userPhoto ? (
-                  <img src={userPhoto} alt="Profile" style={{ width: '28px', height: '28px', borderRadius: '50%', objectFit: 'cover' }} referrerPolicy="no-referrer" />
+                  <img src={userPhoto} alt={userName} style={{ width: '38px', height: '38px', borderRadius: '50%', objectFit: 'cover', border: '2px solid var(--primary)', boxShadow: '0 0 12px rgba(79, 70, 229, 0.4)' }} referrerPolicy="no-referrer" />
                 ) : (
-                  <UserCircle size={24} color="var(--primary)" />
+                  <div style={{ width: '38px', height: '38px', borderRadius: '50%', background: 'linear-gradient(135deg, var(--primary), #818CF8)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 'bold', fontSize: '1.2rem', border: '2px solid rgba(255,255,255,0.1)', boxShadow: '0 0 12px rgba(79, 70, 229, 0.4)' }}>
+                    {userName ? userName.charAt(0).toUpperCase() : 'U'}
+                  </div>
                 )}
-                <span className="nav-link" style={{ fontWeight: 600, color: 'var(--primary)', padding: 0 }}>
-                  Hi, {userName}
-                </span>
               </div>
               <button onClick={handleLogout} className="btn btn-secondary nav-btn">
                 <LogOut size={18} /> Logout
@@ -90,14 +89,17 @@ const Navbar = () => {
           
           {isLoggedIn ? (
             <>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '12px 16px', borderBottom: '1px solid rgba(255,255,255,0.1)', marginBottom: '8px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '16px', padding: '16px', borderBottom: '1px solid rgba(255,255,255,0.05)', marginBottom: '12px', background: 'rgba(255,255,255,0.02)', borderRadius: '12px' }}>
                 {userPhoto ? (
-                  <img src={userPhoto} alt="Profile" style={{ width: '36px', height: '36px', borderRadius: '50%', objectFit: 'cover' }} referrerPolicy="no-referrer" />
+                  <img src={userPhoto} alt={userName} style={{ width: '48px', height: '48px', borderRadius: '50%', objectFit: 'cover', border: '2px solid var(--primary)', boxShadow: '0 0 15px rgba(79, 70, 229, 0.3)' }} referrerPolicy="no-referrer" />
                 ) : (
-                  <UserCircle size={32} color="var(--primary)" />
+                  <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'linear-gradient(135deg, var(--primary), #818CF8)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 'bold', fontSize: '1.5rem', boxShadow: '0 0 15px rgba(79, 70, 229, 0.3)' }}>
+                    {userName ? userName.charAt(0).toUpperCase() : 'U'}
+                  </div>
                 )}
-                <div style={{ color: 'var(--primary)', fontWeight: 'bold' }}>
-                  Logged in as: <br/>{userName}
+                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                  <span style={{ color: 'var(--text-primary)', fontWeight: '600', fontSize: '1.1rem' }}>{userName}</span>
+                  <span style={{ color: 'var(--primary)', fontSize: '0.85rem', fontWeight: '500', textTransform: 'uppercase', letterSpacing: '0.5px' }}>{role} Account</span>
                 </div>
               </div>
               {role === 'Admin' && <Link to="/admin-dashboard" className="nav-link" onClick={() => setIsOpen(false)} style={{ color: '#ef4444' }}>Admin Panel</Link>}
