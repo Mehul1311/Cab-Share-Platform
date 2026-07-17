@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../utils/api';
 import { Users, UserPlus, Edit, Trash2, X, ShieldAlert } from 'lucide-react';
 import './AdminDashboard.css';
 
@@ -17,16 +17,14 @@ const AdminDashboard = () => {
   const [formData, setFormData] = useState({ name: '', email: '', role: 'User' });
   const [error, setError] = useState('');
 
-  const adminUid = localStorage.getItem('uid');
-
   useEffect(() => {
     fetchUsers();
   }, []);
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/admin/users', {
-        headers: { 'x-admin-uid': adminUid }
+      const response = await api.get('/admin/users', {
+        headers: { 'x-admin-uid': localStorage.getItem('uid') }
       });
       setUsers(response.data.users);
     } catch (err) {
@@ -40,8 +38,8 @@ const AdminDashboard = () => {
   const handleAddSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/admin/users/add', formData, {
-        headers: { 'x-admin-uid': adminUid }
+      const response = await api.post('/admin/users/add', formData, {
+        headers: { 'x-admin-uid': localStorage.getItem('uid') }
       });
       setUsers([response.data.user, ...users]);
       setShowAddModal(false);
@@ -54,11 +52,11 @@ const AdminDashboard = () => {
   const handleEditSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.put(`http://localhost:5000/api/admin/users/${selectedUser._id}`, {
+      const response = await api.put(`/admin/users/${selectedUser._id}`, {
         name: formData.name,
         role: formData.role
       }, {
-        headers: { 'x-admin-uid': adminUid }
+        headers: { 'x-admin-uid': localStorage.getItem('uid') }
       });
       
       setUsers(users.map(u => u._id === selectedUser._id ? response.data.user : u));
@@ -71,8 +69,8 @@ const AdminDashboard = () => {
   const handleDelete = async (id, role) => {
     if (window.confirm(`Are you sure you want to delete this ${role}? This action is irreversible.`)) {
       try {
-        await axios.delete(`http://localhost:5000/api/admin/users/${id}`, {
-          headers: { 'x-admin-uid': adminUid }
+        await api.delete(`/admin/users/${id}`, {
+          headers: { 'x-admin-uid': localStorage.getItem('uid') }
         });
         setUsers(users.filter(u => u._id !== id));
       } catch (err) {

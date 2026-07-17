@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import api from '../utils/api';
 
 const Contact = () => {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
@@ -12,13 +13,13 @@ const Contact = () => {
     setStatus('Sending...');
 
     try {
-      const response = await fetch('http://localhost:5000/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
+      const response = await api.post('/contact', {
+        name: formData.name,
+        email: formData.email,
+        message: formData.message
       });
       
-      const data = await response.json();
+      const data = response.data;
       if (data.success) {
         setStatus('Thank you for contacting us! We will get back to you soon.');
         setFormData({ name: '', email: '', message: '' });

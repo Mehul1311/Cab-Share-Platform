@@ -1,0 +1,8 @@
+{
+  "name": "cab-sharing-platform",
+  "version": "1.0.0",
+  "scripts": {
+    "install": "npm --prefix server install",
+    "build": "npm --prefix client install && npm --prefix client run build"
+  }
+}

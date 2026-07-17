@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../utils/api';
 import { MapPin, Navigation } from 'lucide-react';
 
 const DriverDashboard = () => {
@@ -15,7 +15,7 @@ const DriverDashboard = () => {
     try {
       const driverUid = localStorage.getItem('uid');
       if (!driverUid) return;
-      const response = await axios.get(`http://localhost:5000/api/rides/driver/${driverUid}`);
+      const response = await api.get(`/rides/driver/${driverUid}`);
       if (response.data.success) {
         setRides(response.data.rides);
       }
@@ -35,7 +35,7 @@ const DriverDashboard = () => {
         return;
       }
 
-      const response = await axios.post('http://localhost:5000/api/rides/create', {
+      const response = await api.post('/rides/create', {
         driverUid: driverUid,
         ...formData
       });

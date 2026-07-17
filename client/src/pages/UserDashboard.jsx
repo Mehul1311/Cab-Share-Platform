@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../utils/api';
 import { Search, MapPin, User as UserIcon, CreditCard, X } from 'lucide-react';
 import './UserDashboard.css';
 
@@ -12,7 +12,7 @@ const UserDashboard = () => {
   // Payment Modal State
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [selectedRide, setSelectedRide] = useState(null);
-  const [paymentDetails, setPaymentDetails] = useState({ cardName: '', cardNumber: '', expiry: '', cvc: '' });
+  const [userUpiId, setUserUpiId] = useState('');
 
   useEffect(() => {
     fetchRides();
@@ -20,7 +20,7 @@ const UserDashboard = () => {
 
   const fetchRides = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/rides/available');
+      const response = await api.get('/rides/available');
       setRides(response.data.rides);
     } catch (error) {
       console.error(error);
@@ -49,7 +49,7 @@ const UserDashboard = () => {
         const userUid = localStorage.getItem('uid');
         
         // Actually call the backend to book the ride and decrease seats
-        const response = await axios.post(`http://localhost:5000/api/rides/book/${selectedRide._id}`, {
+        const response = await api.post(`/rides/book/${selectedRide._id}`, {
           userUid: userUid
         });
 
@@ -57,7 +57,7 @@ const UserDashboard = () => {
           setBookingStatus({ id: selectedRide._id, status: 'success' });
           setRides(rides.map(r => r._id === selectedRide._id ? { ...r, availableSeats: r.availableSeats - 1 } : r));
           setShowPaymentModal(false);
-          setPaymentDetails({ cardName: '', cardNumber: '', expiry: '', cvc: '' });
+          setUserUpiId('');
           
           setTimeout(() => setBookingStatus(null), 3000);
         }
@@ -151,61 +151,29 @@ const UserDashboard = () => {
             <div style={{ marginBottom: '24px', padding: '16px', background: 'rgba(79, 70, 229, 0.1)', borderRadius: '8px' }}>
               <p style={{ margin: 0 }}><strong>Route:</strong> {selectedRide.origin} &rarr; {selectedRide.destination}</p>
               <p style={{ margin: '8px 0 0 0' }}><strong>Total Amount:</strong> <span style={{ color: 'var(--secondary)', fontWeight: 'bold', fontSize: '1.2rem' }}>${selectedRide.price}</span></p>
+              <div style={{ marginTop: '16px', padding: '12px', background: 'rgba(0,0,0,0.2)', borderRadius: '8px' }}>
+                <p style={{ margin: 0, fontSize: '0.9rem', color: 'var(--text-secondary)' }}>Pay to Driver UPI ID:</p>
+                <p style={{ margin: '4px 0 0 0', fontWeight: 'bold', fontSize: '1.1rem', color: 'white' }}>
+                  {selectedRide.driverId?.upiId || 'driver@upi'}
+                </p>
+              </div>
             </div>
 
             <form onSubmit={handlePaymentSubmit}>
               <div className="input-group">
-                <label>Cardholder Name</label>
+                <label>Your UPI ID (To verify payment)</label>
                 <input 
                   type="text" 
                   className="input-field" 
-                  placeholder="John Doe"
-                  value={paymentDetails.cardName}
-                  onChange={(e) => setPaymentDetails({...paymentDetails, cardName: e.target.value})}
+                  placeholder="username@upi"
+                  value={userUpiId}
+                  onChange={(e) => setUserUpiId(e.target.value)}
                   required 
                 />
-              </div>
-              <div className="input-group">
-                <label>Card Number</label>
-                <input 
-                  type="text" 
-                  className="input-field" 
-                  placeholder="0000 0000 0000 0000"
-                  maxLength="19"
-                  value={paymentDetails.cardNumber}
-                  onChange={(e) => setPaymentDetails({...paymentDetails, cardNumber: e.target.value})}
-                  required 
-                />
-              </div>
-              <div style={{ display: 'flex', gap: '16px' }}>
-                <div className="input-group" style={{ flex: 1 }}>
-                  <label>Expiry (MM/YY)</label>
-                  <input 
-                    type="text" 
-                    className="input-field" 
-                    placeholder="MM/YY"
-                    maxLength="5"
-                    value={paymentDetails.expiry}
-                    onChange={(e) => setPaymentDetails({...paymentDetails, expiry: e.target.value})}
-                    required 
-                  />
-                </div>
-                <div className="input-group" style={{ flex: 1 }}>
-                  <label>CVC</label>
-                  <input 
-                    type="text" 
-                    className="input-field" 
-                    placeholder="123"
-                    maxLength="4"
-                    value={paymentDetails.cvc}
-                    onChange={(e) => setPaymentDetails({...paymentDetails, cvc: e.target.value})}
-                    required 
-                  />
-                </div>
               </div>
               
               <button type="submit" className="btn btn-primary" style={{ width: '100%', marginTop: '16px' }} disabled={bookingStatus?.status === 'processing'}>
-                {bookingStatus?.status === 'processing' ? 'Processing Payment...' : `Pay $${selectedRide.price}`}
+                {bookingStatus?.status === 'processing' ? 'Processing Payment...' : `Confirm Payment of $${selectedRide.price}`}
               </button>
             </form>
           </div>

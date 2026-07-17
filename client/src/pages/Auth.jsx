@@ -2,11 +2,19 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../firebase';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import axios from 'axios';
+import api from '../utils/api';
 
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
-  const [formData, setFormData] = useState({ email: '', password: '', name: '', role: 'User' });
+  const [formData, setFormData] = useState({ 
+    email: '', 
+    password: '', 
+    name: '', 
+    role: 'User',
+    phoneNumber: '',
+    vehicleNumber: '',
+    upiId: ''
+  });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   
@@ -29,11 +37,14 @@ const Auth = () => {
           userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
         }
         
-        const response = await axios.post('http://localhost:5000/api/auth/sync', {
+        const response = await api.post('/auth/sync', {
           uid: userCredential.user.uid,
           email: formData.email,
           name: formData.name,
-          role: formData.role
+          role: formData.role,
+          phoneNumber: formData.phoneNumber,
+          vehicleNumber: formData.vehicleNumber,
+          upiId: formData.upiId
         });
 
         localStorage.setItem('userRole', response.data.user.role);
@@ -44,11 +55,14 @@ const Auth = () => {
         const simulatedUid = 'demo_' + formData.email;
         
         // Even for demo, we must sync with MongoDB so relations work!
-        const response = await axios.post('http://localhost:5000/api/auth/sync', {
+        const response = await api.post('/auth/sync', {
           uid: simulatedUid,
           email: formData.email || 'demo@example.com',
           name: formData.name || 'Demo User',
-          role: formData.role
+          role: formData.role,
+          phoneNumber: formData.phoneNumber,
+          vehicleNumber: formData.vehicleNumber,
+          upiId: formData.upiId
         });
 
         localStorage.setItem('userRole', response.data.user.role);
@@ -78,11 +92,14 @@ const Auth = () => {
       const provider = new GoogleAuthProvider();
       const userCredential = await signInWithPopup(auth, provider);
       
-      const response = await axios.post('http://localhost:5000/api/auth/sync', {
+      const response = await api.post('/auth/sync', {
         uid: userCredential.user.uid,
         email: userCredential.user.email,
         name: userCredential.user.displayName,
-        role: formData.role
+        role: formData.role,
+        phoneNumber: formData.phoneNumber,
+        vehicleNumber: formData.vehicleNumber,
+        upiId: formData.upiId
       });
 
       localStorage.setItem('userRole', response.data.user.role);
@@ -98,11 +115,14 @@ const Auth = () => {
     } catch (err) {
       console.warn("Google Auth failed. Simulating for demo purposes.", err);
       const simulatedUid = 'demo_google_' + Date.now();
-      const response = await axios.post('http://localhost:5000/api/auth/sync', {
+      const response = await api.post('/auth/sync', {
         uid: simulatedUid,
         email: 'google_demo@example.com',
         name: 'Google User',
-        role: formData.role
+        role: formData.role,
+        phoneNumber: formData.phoneNumber,
+        vehicleNumber: formData.vehicleNumber,
+        upiId: formData.upiId
       });
       localStorage.setItem('userRole', response.data.user.role);
       localStorage.setItem('uid', response.data.user.uid);
@@ -153,6 +173,43 @@ const Auth = () => {
                   <option value="Admin">Admin</option>
                 </select>
               </div>
+              
+              {formData.role === 'Driver' && (
+                <>
+                  <div className="input-group">
+                    <label>Phone Number</label>
+                    <input 
+                      type="tel" 
+                      className="input-field" 
+                      value={formData.phoneNumber}
+                      onChange={(e) => setFormData({...formData, phoneNumber: e.target.value})}
+                      required
+                    />
+                  </div>
+                  <div className="input-group">
+                    <label>Vehicle / Auto Number</label>
+                    <input 
+                      type="text" 
+                      className="input-field" 
+                      placeholder="e.g. MH 12 AB 1234"
+                      value={formData.vehicleNumber}
+                      onChange={(e) => setFormData({...formData, vehicleNumber: e.target.value})}
+                      required
+                    />
+                  </div>
+                  <div className="input-group">
+                    <label>UPI ID (For receiving payments)</label>
+                    <input 
+                      type="text" 
+                      className="input-field" 
+                      placeholder="e.g. driver@upi"
+                      value={formData.upiId}
+                      onChange={(e) => setFormData({...formData, upiId: e.target.value})}
+                      required
+                    />
+                  </div>
+                </>
+              )}
             </>
           )}
 

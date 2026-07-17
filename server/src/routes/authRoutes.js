@@ -5,12 +5,26 @@ const router = express.Router();
 // Synchronize Firebase Auth User with MongoDB
 router.post('/sync', async (req, res) => {
   try {
-    const { uid, email, name, role } = req.body;
+    const { uid, email, name, role, phoneNumber, vehicleNumber, upiId } = req.body;
     
     let user = await User.findOne({ uid });
     
     if (!user) {
-      user = new User({ uid, email, name, role: role || 'User' });
+      user = new User({ 
+        uid, 
+        email, 
+        name, 
+        role: role || 'User',
+        phoneNumber,
+        vehicleNumber,
+        upiId
+      });
+      await user.save();
+    } else {
+      // Update existing user with new details if provided
+      if (phoneNumber) user.phoneNumber = phoneNumber;
+      if (vehicleNumber) user.vehicleNumber = vehicleNumber;
+      if (upiId) user.upiId = upiId;
       await user.save();
     }
     
