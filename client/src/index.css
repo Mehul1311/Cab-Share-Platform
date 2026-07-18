@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
 
 :root {
   /* Color Palette - Premium Cyber Dark theme */
@@ -8,6 +8,13 @@
   --secondary: #10b981;
   --secondary-hover: #059669;
   --secondary-glow: rgba(16, 185, 129, 0.3);
+
+  /* Redesign Vibrant Palette */
+  --electric-blue: #3B82F6;
+  --vibrant-cyan: #06B6D4;
+  --vibrant-emerald: #10B981;
+  --vibrant-indigo: #6366F1;
+  --font-poppins: 'Poppins', sans-serif;
   
   --background: #080b11;
   --surface: #0f131e;

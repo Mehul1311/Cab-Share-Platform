@@ -1,6 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { Car, Menu, X, LogOut } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { 
+  Car, 
+  Menu, 
+  X, 
+  LogOut, 
+  Search, 
+  Bell, 
+  Sun, 
+  Moon, 
+  Globe, 
+  User, 
+  Bookmark, 
+  Settings, 
+  Mail,
+  MapPin,
+  HelpCircle
+} from 'lucide-react';
 import { auth } from '../firebase';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import './Navbar.css';
@@ -8,7 +24,16 @@ import './Navbar.css';
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [user, setUser] = useState(null);
+  const [showProfileMenu, setShowProfileMenu] = useState(false);
+  const [showNotifications, setShowNotifications] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(true);
+  const [searchVal, setSearchVal] = useState('');
+  const [lang, setLang] = useState('EN');
+
   const navigate = useNavigate();
+  const location = useLocation();
+  const profileRef = useRef(null);
+  const notifRef = useRef(null);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -17,18 +42,45 @@ const Navbar = () => {
     return () => unsubscribe();
   }, []);
 
+  // Close menus on outside click
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (profileRef.current && !profileRef.current.contains(e.target)) {
+        setShowProfileMenu(false);
+      }
+      if (notifRef.current && !notifRef.current.contains(e.target)) {
+        setShowNotifications(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
   const handleLogout = async () => {
     try {
       await signOut(auth);
-      // Remove role from local storage on logout
       localStorage.removeItem('userRole');
       localStorage.removeItem('uid');
       localStorage.removeItem('userName');
       localStorage.removeItem('userPhoto');
+      setShowProfileMenu(false);
       navigate('/');
     } catch (error) {
       console.error('Logout error:', error);
     }
+  };
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    if (searchVal.trim()) {
+      alert(`Searching routes for: "${searchVal}"`);
+      setSearchVal('');
+    }
+  };
+
+  const toggleDarkMode = () => {
+    setIsDarkMode(!isDarkMode);
+    alert("Theme mode toggled! (Simulated)");
   };
 
   const role = localStorage.getItem('userRole');
@@ -38,84 +90,243 @@ const Navbar = () => {
   const userPhoto = localStorage.getItem('userPhoto') || (user ? user.photoURL : null);
   const isLoggedIn = user || uid;
 
+  const isActive = (path) => location.pathname === path ? 'active' : '';
+
   return (
-    <nav className="navbar glass-panel">
+    <nav className="navbar">
       <div className="container nav-container">
-        <Link to="/" className="nav-link nav-logo">
-          <Car size={32} className="logo-icon" />
-          <span>RideShare</span>
+        
+        {/* Startup Brand Logo */}
+        <Link to="/" className="nav-logo-custom" onClick={() => setIsOpen(false)}>
+          <div className="nav-logo-graphic">
+            <Car size={24} className="logo-vector-car" />
+            <div className="logo-vector-route"></div>
+            <MapPin size={18} className="logo-vector-pin" />
+          </div>
+          <span className="nav-logo-text">RideShare</span>
         </Link>
 
+        {/* Desktop Navigation Links */}
         <div className="desktop-menu">
-          <Link to="/" className="nav-link">Home</Link>
-          <Link to="/about" className="nav-link">About</Link>
-          <Link to="/query" className="nav-link">Query</Link>
-          <Link to="/contact" className="nav-link">Contact</Link>
+          <Link to="/" className={`nav-link-custom ${isActive('/')}`}>Home</Link>
+          <Link to="/about" className={`nav-link-custom ${isActive('/about')}`}>About</Link>
+          <Link to="/user-dashboard" className={`nav-link-custom ${isActive('/user-dashboard')}`}>Find Ride</Link>
+          <Link to="/driver-dashboard" className={`nav-link-custom ${isActive('/driver-dashboard')}`}>Offer Ride</Link>
+          <Link to="/query" className={`nav-link-custom ${isActive('/query')}`}>Query</Link>
+          <Link to="/contact" className={`nav-link-custom ${isActive('/contact')}`}>Contact</Link>
           
+          {/* Expandable Search Button */}
+          <form onSubmit={handleSearchSubmit} className="nav-search-wrapper">
+            <Search size={16} color="var(--text-secondary)" />
+            <input 
+              type="text" 
+              placeholder="Search routes..." 
+              className="nav-search-input"
+              value={searchVal}
+              onChange={(e) => setSearchVal(e.target.value)}
+            />
+          </form>
+
+          {/* Dark Mode toggle */}
+          <button className="nav-util-btn" onClick={toggleDarkMode} title="Toggle Theme">
+            {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
+          </button>
+
+          {/* Language Selector */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+            <Globe size={16} color="var(--text-secondary)" />
+            <select 
+              className="lang-select-custom" 
+              value={lang} 
+              onChange={(e) => setLang(e.target.value)}
+            >
+              <option value="EN">EN</option>
+              <option value="ES">ES</option>
+              <option value="FR">FR</option>
+            </select>
+          </div>
+
+          {/* Notification Bell */}
+          <div className="nav-profile-container" ref={notifRef}>
+            <button 
+              className="nav-bell-btn" 
+              onClick={() => setShowNotifications(!showNotifications)}
+              title="Notifications"
+            >
+              <Bell size={18} />
+              <span className="bell-badge">3</span>
+            </button>
+
+            {showNotifications && (
+              <div className="bell-dropdown">
+                <div className="bell-dropdown-header">System Notifications</div>
+                <div className="bell-notif-item">🚗 Driver Alex matching your route now active!</div>
+                <div className="bell-notif-item">💳 Payment verified successfully. Receipt synced.</div>
+                <div className="bell-notif-item">✨ Welcome back! 12 new shared rides posted today.</div>
+              </div>
+            )}
+          </div>
+
+          {/* Profile Section or Login CTA */}
           {isLoggedIn ? (
-            <>
-              {role === 'Admin' && <Link to="/admin-dashboard" className="nav-link highlight" style={{ color: '#ef4444' }}>Admin Panel</Link>}
-              {role === 'Driver' && <Link to="/driver-dashboard" className="nav-link highlight">Driver Dashboard</Link>}
-              {role === 'User' && <Link to="/user-dashboard" className="nav-link highlight">Find a Ride</Link>}
-              <div className="user-profile-nav" style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', transition: 'all 0.3s ease' }} title={`Logged in as ${userName} (${role})`}>
+            <div className="nav-profile-container" ref={profileRef}>
+              <div 
+                className="user-profile-nav" 
+                style={{ cursor: 'pointer' }}
+                onClick={() => setShowProfileMenu(!showProfileMenu)}
+              >
                 {userPhoto ? (
-                  <img src={userPhoto} alt={userName} style={{ width: '38px', height: '38px', borderRadius: '50%', objectFit: 'cover', border: '2px solid var(--primary)', boxShadow: '0 0 12px rgba(79, 70, 229, 0.4)' }} referrerPolicy="no-referrer" />
+                  <img 
+                    src={userPhoto} 
+                    alt={userName} 
+                    style={{ width: '38px', height: '38px', borderRadius: '50%', objectFit: 'cover', border: '2px solid var(--electric-blue)' }} 
+                    referrerPolicy="no-referrer" 
+                  />
                 ) : (
-                  <div style={{ width: '38px', height: '38px', borderRadius: '50%', background: 'linear-gradient(135deg, var(--primary), #818CF8)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 'bold', fontSize: '1.2rem', border: '2px solid rgba(255,255,255,0.1)', boxShadow: '0 0 12px rgba(79, 70, 229, 0.4)' }}>
+                  <div style={{ width: '38px', height: '38px', borderRadius: '50%', background: 'linear-gradient(135deg, var(--electric-blue), var(--vibrant-cyan))', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 'bold', fontSize: '1rem', border: '2px solid rgba(255,255,255,0.1)' }}>
                     {userName ? userName.charAt(0).toUpperCase() : 'U'}
                   </div>
                 )}
               </div>
-              <button onClick={handleLogout} className="btn btn-secondary nav-btn">
-                <LogOut size={18} /> Logout
-              </button>
-            </>
+
+              {/* Profile Dropdown Menu */}
+              {showProfileMenu && (
+                <div className="profile-dropdown">
+                  <div className="dropdown-user-header">
+                    <span className="dropdown-user-name">{userName}</span>
+                    <span className="dropdown-user-role">{role || 'Rider'} Account</span>
+                  </div>
+                  
+                  <Link to={role === 'Admin' ? '/admin-dashboard' : role === 'Driver' ? '/driver-dashboard' : '/user-dashboard'} className="dropdown-link" onClick={() => setShowProfileMenu(false)}>
+                    <User size={16} />
+                    <span>My Dashboard</span>
+                  </Link>
+                  
+                  <Link to="/user-dashboard" className="dropdown-link" onClick={() => setShowProfileMenu(false)}>
+                    <Bookmark size={16} />
+                    <span>My Bookings</span>
+                  </Link>
+
+                  <div className="dropdown-link" onClick={() => { alert("Settings page simulated!"); setShowProfileMenu(false); }}>
+                    <Settings size={16} />
+                    <span>Settings</span>
+                  </div>
+
+                  <div className="dropdown-divider"></div>
+                  
+                  <button onClick={handleLogout} className="dropdown-logout-btn">
+                    <LogOut size={16} />
+                    <span>Log Out</span>
+                  </button>
+                </div>
+              )}
+            </div>
           ) : (
-            <Link to="/auth" className="btn btn-primary nav-btn">Login / Signup</Link>
+            <Link to="/auth" className="nav-cta-btn">
+              <span>Login / Signup</span>
+              <ArrowRight size={16} style={{ marginTop: '1px' }} />
+            </Link>
           )}
         </div>
 
-        <button className="mobile-menu-btn" onClick={() => setIsOpen(!isOpen)}>
-          {isOpen ? <X size={28} /> : <Menu size={28} />}
-        </button>
+        {/* Mobile controls & hamburger button */}
+        <div className="mobile-controls">
+          {/* Notification bell on mobile */}
+          {isLoggedIn && (
+            <div className="nav-profile-container" ref={notifRef}>
+              <button className="nav-bell-btn" onClick={() => setShowNotifications(!showNotifications)}>
+                <Bell size={18} />
+                <span className="bell-badge">3</span>
+              </button>
+              {showNotifications && (
+                <div className="bell-dropdown" style={{ right: '-50px' }}>
+                  <div className="bell-dropdown-header">Notifications</div>
+                  <div className="bell-notif-item">🚗 Driver matching Chandigarh is active!</div>
+                  <div className="bell-notif-item">💳 Payment verified. Receipt synced.</div>
+                </div>
+              )}
+            </div>
+          )}
+
+          <button className="mobile-menu-btn" onClick={() => setIsOpen(!isOpen)}>
+            {isOpen ? <X size={26} /> : <Menu size={26} />}
+          </button>
+        </div>
       </div>
 
+      {/* Mobile Glassmorphic Drawer Sidebar */}
       {isOpen && (
-        <div className="mobile-menu glass-panel">
-          <Link to="/" className="nav-link" onClick={() => setIsOpen(false)}>Home</Link>
-          <Link to="/about" className="nav-link" onClick={() => setIsOpen(false)}>About</Link>
-          <Link to="/query" className="nav-link" onClick={() => setIsOpen(false)}>Query</Link>
-          <Link to="/contact" className="nav-link" onClick={() => setIsOpen(false)}>Contact</Link>
-          
-          {isLoggedIn ? (
-            <>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '16px', padding: '16px', borderBottom: '1px solid rgba(255,255,255,0.05)', marginBottom: '12px', background: 'rgba(255,255,255,0.02)', borderRadius: '12px' }}>
-                {userPhoto ? (
-                  <img src={userPhoto} alt={userName} style={{ width: '48px', height: '48px', borderRadius: '50%', objectFit: 'cover', border: '2px solid var(--primary)', boxShadow: '0 0 15px rgba(79, 70, 229, 0.3)' }} referrerPolicy="no-referrer" />
-                ) : (
-                  <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'linear-gradient(135deg, var(--primary), #818CF8)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 'bold', fontSize: '1.5rem', boxShadow: '0 0 15px rgba(79, 70, 229, 0.3)' }}>
-                    {userName ? userName.charAt(0).toUpperCase() : 'U'}
+        <div className="mobile-sidebar-drawer">
+          <div className="mobile-drawer-header">
+            <button className="mobile-drawer-close" onClick={() => setIsOpen(false)}>
+              <X size={28} />
+            </button>
+          </div>
+
+          <div className="mobile-drawer-links">
+            <Link to="/" className={`nav-link-custom ${isActive('/')}`} onClick={() => setIsOpen(false)}>Home</Link>
+            <Link to="/about" className={`nav-link-custom ${isActive('/about')}`} onClick={() => setIsOpen(false)}>About</Link>
+            <Link to="/user-dashboard" className={`nav-link-custom ${isActive('/user-dashboard')}`} onClick={() => setIsOpen(false)}>Find Ride</Link>
+            <Link to="/driver-dashboard" className={`nav-link-custom ${isActive('/driver-dashboard')}`} onClick={() => setIsOpen(false)}>Offer Ride</Link>
+            <Link to="/query" className={`nav-link-custom ${isActive('/query')}`} onClick={() => setIsOpen(false)}>Query</Link>
+            <Link to="/contact" className={`nav-link-custom ${isActive('/contact')}`} onClick={() => setIsOpen(false)}>Contact</Link>
+            
+            {isLoggedIn ? (
+              <>
+                <div className="dropdown-divider"></div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '10px 16px' }}>
+                  {userPhoto ? (
+                    <img src={userPhoto} alt={userName} style={{ width: '38px', height: '38px', borderRadius: '50%' }} />
+                  ) : (
+                    <div style={{ width: '38px', height: '38px', borderRadius: '50%', background: 'var(--electric-blue)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 'bold' }}>
+                      {userName.charAt(0).toUpperCase()}
+                    </div>
+                  )}
+                  <div style={{ display: 'flex', flexDirection: 'column' }}>
+                    <span style={{ fontSize: '0.88rem', fontWeight: 700, color: 'white' }}>{userName}</span>
+                    <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>{role}</span>
                   </div>
-                )}
-                <div style={{ display: 'flex', flexDirection: 'column' }}>
-                  <span style={{ color: 'var(--text-primary)', fontWeight: '600', fontSize: '1.1rem' }}>{userName}</span>
-                  <span style={{ color: 'var(--primary)', fontSize: '0.85rem', fontWeight: '500', textTransform: 'uppercase', letterSpacing: '0.5px' }}>{role} Account</span>
                 </div>
-              </div>
-              {role === 'Admin' && <Link to="/admin-dashboard" className="nav-link" onClick={() => setIsOpen(false)} style={{ color: '#ef4444' }}>Admin Panel</Link>}
-              {role === 'Driver' && <Link to="/driver-dashboard" className="nav-link" onClick={() => setIsOpen(false)}>Driver Dashboard</Link>}
-              {role === 'User' && <Link to="/user-dashboard" className="nav-link" onClick={() => setIsOpen(false)}>Find a Ride</Link>}
-              <button onClick={() => { handleLogout(); setIsOpen(false); }} className="btn btn-secondary w-full mt-4">
-                Logout
-              </button>
-            </>
-          ) : (
-            <Link to="/auth" className="btn btn-primary w-full mt-4" onClick={() => setIsOpen(false)}>Login / Signup</Link>
-          )}
+                <button onClick={handleLogout} className="dropdown-logout-btn" style={{ padding: '12px 16px' }}>
+                  <LogOut size={16} />
+                  <span>Log Out</span>
+                </button>
+              </>
+            ) : (
+              <Link to="/auth" className="nav-cta-btn w-full mt-4" style={{ justifyContent: 'center' }} onClick={() => setIsOpen(false)}>
+                <span>Login / Signup</span>
+              </Link>
+            )}
+          </div>
+
+          <div className="mobile-drawer-footer">
+            <div className="mobile-socials-row">
+              <a href="mailto:support@rideshare.com" className="mobile-social-icon"><Mail size={20} /></a>
+              <a href="#help" className="mobile-social-icon" onClick={() => alert("Help Center loaded!")}><HelpCircle size={20} /></a>
+            </div>
+          </div>
         </div>
       )}
     </nav>
   );
 };
+
+// Simple Arrow Right icon for button CTA
+const ArrowRight = ({ size, style }) => (
+  <svg 
+    width={size} 
+    height={size} 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    stroke="currentColor" 
+    strokeWidth="2.5" 
+    strokeLinecap="round" 
+    strokeLinejoin="round" 
+    style={style}
+  >
+    <line x1="5" y1="12" x2="19" y2="12"></line>
+    <polyline points="12 5 19 12 12 19"></polyline>
+  </svg>
+);
 
 export default Navbar;
