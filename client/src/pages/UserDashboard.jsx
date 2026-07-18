@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import api from '../utils/api';
-import { Search, MapPin, User as UserIcon, CreditCard, X } from 'lucide-react';
+import { Search, CreditCard, X, AlertCircle } from 'lucide-react';
 import './UserDashboard.css';
 
 const UserDashboard = () => {
@@ -75,51 +75,69 @@ const UserDashboard = () => {
   );
 
   return (
-    <div className="container animate-fade-in" style={{ paddingTop: '100px', paddingBottom: '60px', position: 'relative' }}>
+    <div className="container animate-fade-in" style={{ paddingTop: '120px', paddingBottom: '80px', position: 'relative' }}>
       <h1 style={{ marginBottom: '32px' }}>Find a Ride</h1>
       
-      <div className="glass-panel" style={{ padding: '24px', marginBottom: '40px', display: 'flex', gap: '16px', alignItems: 'center' }}>
-        <Search size={24} color="var(--text-secondary)" />
+      {/* Redesigned Search Input bar */}
+      <div className="dashboard-search-container">
+        <Search size={22} color="var(--text-secondary)" style={{ flexShrink: 0 }} />
         <input 
           type="text" 
-          placeholder="Search by destination or origin..." 
-          className="input-field"
-          style={{ marginBottom: 0, border: 'none', background: 'rgba(0,0,0,0.2)' }}
+          placeholder="Where do you want to start or head to?" 
+          className="dashboard-search-input"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
       </div>
 
       {loading ? (
-        <p style={{ textAlign: 'center' }}>Loading available rides...</p>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px', padding: '40px 0' }}>
+          <div style={{ width: '40px', height: '40px', border: '3px solid rgba(255,255,255,0.05)', borderTopColor: 'var(--primary)', borderRadius: '50%', animation: 'spin 1s infinite linear' }}></div>
+          <p style={{ color: 'var(--text-secondary)' }}>Retrieving available active rides...</p>
+          <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+        </div>
       ) : (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))', gap: '24px' }}>
+        <div className="rides-grid">
           {filteredRides.map(ride => (
-            <div key={ride._id} className="glass-panel" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                <div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-                    <MapPin size={18} color="var(--primary)" />
-                    <span style={{ fontWeight: 'bold', fontSize: '1.1rem' }}>{ride.origin} &rarr; {ride.destination}</span>
+            <div key={ride._id} className="ride-card glass-panel">
+              {/* Route Timeline Header */}
+              <div className="ride-card-header">
+                <div className="ride-route-timeline">
+                  <div className="route-step">
+                    <span>Origin</span> <br/>
+                    <strong>{ride.origin}</strong>
                   </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
-                    <UserIcon size={16} />
-                    <span>Driver: {ride.driverId?.name || 'Verified Driver'}</span>
+                  <div className="route-step destination">
+                    <span>Destination</span> <br/>
+                    <strong>{ride.destination}</strong>
                   </div>
                 </div>
-                <div style={{ background: 'rgba(16, 185, 129, 0.1)', color: 'var(--secondary)', padding: '6px 12px', borderRadius: '20px', fontWeight: 'bold' }}>
-                  ${ride.price}
+                
+                <div className="ride-price-tag">
+                  ₹{ride.price}
                 </div>
               </div>
               
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid var(--border)', paddingTop: '16px' }}>
-                <span style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
-                  {ride.availableSeats} seat{ride.availableSeats > 1 ? 's' : ''} available
+              {/* Driver Details Row */}
+              <div className="driver-info-row">
+                <div className="driver-avatar-circle">
+                  {ride.driverId?.name ? ride.driverId.name.charAt(0).toUpperCase() : 'D'}
+                </div>
+                <div className="driver-details-text">
+                  <span className="driver-name-label">{ride.driverId?.name || 'Verified Driver'}</span>
+                  <span className="driver-role-desc">Verified Share Partner</span>
+                </div>
+              </div>
+              
+              {/* Booking Actions */}
+              <div className="ride-card-footer">
+                <span className="seats-indicator">
+                  <span className="seats-count">{ride.availableSeats}</span> seat{ride.availableSeats !== 1 ? 's' : ''} left
                 </span>
                 
                 {bookingStatus?.id === ride._id && bookingStatus.status === 'success' ? (
-                  <button className="btn" disabled style={{ background: 'var(--secondary)', color: 'white' }}>
-                    Payment Successful!
+                  <button className="btn" disabled style={{ background: 'var(--secondary)', color: 'white', cursor: 'default' }}>
+                    Booking Secured!
                   </button>
                 ) : (
                   <button 
@@ -127,53 +145,61 @@ const UserDashboard = () => {
                     onClick={() => initiateBooking(ride)}
                     disabled={ride.availableSeats <= 0 || (bookingStatus?.id === ride._id && bookingStatus?.status === 'processing')}
                   >
-                    <CreditCard size={18} /> Book & Pay
+                    <CreditCard size={18} /> 
+                    <span>Book & Pay</span>
                   </button>
                 )}
               </div>
             </div>
           ))}
           {filteredRides.length === 0 && (
-            <p style={{ gridColumn: '1 / -1', textAlign: 'center', color: 'var(--text-secondary)' }}>No rides found matching your search.</p>
+            <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '60px 24px', background: 'rgba(255,255,255,0.01)', border: '1px dashed rgba(255,255,255,0.05)', borderRadius: '16px' }}>
+              <AlertCircle size={36} color="var(--text-muted)" style={{ marginBottom: '16px' }} />
+              <p style={{ color: 'var(--text-secondary)', fontSize: '1.05rem' }}>No active shared rides found matching your query.</p>
+            </div>
           )}
         </div>
       )}
 
-      {/* Payment Modal */}
+      {/* SECURE CHECKOUT MODAL */}
       {showPaymentModal && selectedRide && (
         <div className="modal-overlay">
           <div className="modal-content glass-panel animate-fade-in">
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
-              <h2>Complete Payment</h2>
-              <button className="close-btn" onClick={() => setShowPaymentModal(false)}><X size={24} /></button>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px' }}>
+              <h2 style={{ fontSize: '1.5rem', fontWeight: 800 }}>Secure Check-out</h2>
+              <button className="close-btn" onClick={() => setShowPaymentModal(false)}><X size={20} /></button>
             </div>
             
-            <div style={{ marginBottom: '24px', padding: '16px', background: 'rgba(79, 70, 229, 0.1)', borderRadius: '8px' }}>
-              <p style={{ margin: 0 }}><strong>Route:</strong> {selectedRide.origin} &rarr; {selectedRide.destination}</p>
-              <p style={{ margin: '8px 0 0 0' }}><strong>Total Amount:</strong> <span style={{ color: 'var(--secondary)', fontWeight: 'bold', fontSize: '1.2rem' }}>${selectedRide.price}</span></p>
-              <div style={{ marginTop: '16px', padding: '12px', background: 'rgba(0,0,0,0.2)', borderRadius: '8px' }}>
-                <p style={{ margin: 0, fontSize: '0.9rem', color: 'var(--text-secondary)' }}>Pay to Driver UPI ID:</p>
-                <p style={{ margin: '4px 0 0 0', fontWeight: 'bold', fontSize: '1.1rem', color: 'white' }}>
+            {/* Interactive Mock Wallet card */}
+            <div className="checkout-card-preview">
+              <div className="checkout-route-summary">{selectedRide.origin} &rarr; {selectedRide.destination}</div>
+              <div className="checkout-amount-row">
+                <span>Journey Fare</span>
+                <span className="checkout-price">₹{selectedRide.price}</span>
+              </div>
+              <div className="checkout-upi-box">
+                <p>Transfer to Driver UPI ID</p>
+                <div className="checkout-upi-id">
                   {selectedRide.driverId?.upiId || 'driver@upi'}
-                </p>
+                </div>
               </div>
             </div>
 
             <form onSubmit={handlePaymentSubmit}>
               <div className="input-group">
-                <label>Your UPI ID (To verify payment)</label>
+                <label>Your Payment UPI ID (For Ledger sync)</label>
                 <input 
                   type="text" 
                   className="input-field" 
-                  placeholder="username@upi"
+                  placeholder="name@upi"
                   value={userUpiId}
                   onChange={(e) => setUserUpiId(e.target.value)}
                   required 
                 />
               </div>
               
-              <button type="submit" className="btn btn-primary" style={{ width: '100%', marginTop: '16px' }} disabled={bookingStatus?.status === 'processing'}>
-                {bookingStatus?.status === 'processing' ? 'Processing Payment...' : `Confirm Payment of $${selectedRide.price}`}
+              <button type="submit" className="btn btn-primary w-full" style={{ marginTop: '12px' }} disabled={bookingStatus?.status === 'processing'}>
+                {bookingStatus?.status === 'processing' ? 'Authorizing peer-to-peer transfer...' : `Approve & Pay ₹${selectedRide.price}`}
               </button>
             </form>
           </div>

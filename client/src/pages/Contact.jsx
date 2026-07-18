@@ -35,7 +35,7 @@ const Contact = () => {
   };
 
   return (
-    <div className="container animate-fade-in" style={{ paddingTop: '100px', paddingBottom: '60px' }}>
+    <div className="container animate-fade-in" style={{ paddingTop: '120px', paddingBottom: '80px' }}>
       <div className="glass-panel" style={{ padding: '40px', maxWidth: '600px', margin: '0 auto' }}>
         <h1 style={{ marginBottom: '24px', textAlign: 'center' }}>Contact Us</h1>
         <form onSubmit={handleSubmit}>

@@ -1,13 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import api from '../utils/api';
-import { MapPin, Navigation } from 'lucide-react';
+import { 
+  MapPin, 
+  Navigation, 
+  IndianRupee, 
+  Users, 
+  AlertCircle, 
+  CheckCircle,
+  PlusCircle
+} from 'lucide-react';
+import './DriverDashboard.css';
 
 const DriverDashboard = () => {
   const [formData, setFormData] = useState({ origin: '', destination: '', price: '', availableSeats: 3 });
   const [status, setStatus] = useState('');
-  const [rides, setRides] = useState([]); // Simulated list of posted rides
+  const [rides, setRides] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetchMyRides();
   }, []);
 
@@ -21,6 +31,8 @@ const DriverDashboard = () => {
       }
     } catch (err) {
       console.error("Error fetching driver rides:", err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -43,89 +55,151 @@ const DriverDashboard = () => {
       
       setStatus('Success! Your ride is now visible to users.');
       setFormData({ origin: '', destination: '', price: '', availableSeats: 3 });
+      
+      setTimeout(() => setStatus(''), 4000);
     } catch (error) {
       setStatus('Error posting ride.');
     }
   };
 
   return (
-    <div className="container animate-fade-in" style={{ paddingTop: '100px', paddingBottom: '60px' }}>
+    <div className="container animate-fade-in" style={{ paddingTop: '120px', paddingBottom: '80px' }}>
       <h1 style={{ marginBottom: '32px' }}>Driver Dashboard</h1>
       
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '40px' }}>
-        <div className="glass-panel" style={{ padding: '32px' }}>
-          <h2 style={{ marginBottom: '24px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <Navigation size={24} color="var(--primary)" /> Post a New Ride
+      <div className="driver-dashboard-grid">
+        
+        {/* Left Column: Post a New Ride */}
+        <div className="driver-form-container glass-panel">
+          <h2 style={{ marginBottom: '28px', display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <PlusCircle size={24} className="gradient-text" /> 
+            <span>Offer a New Ride</span>
           </h2>
           
           <form onSubmit={handleSubmit}>
             <div className="input-group">
-              <label>Origin</label>
-              <input 
-                type="text" 
-                className="input-field" 
-                placeholder="Where are you starting?"
-                value={formData.origin}
-                onChange={(e) => setFormData({...formData, origin: e.target.value})}
-                required 
-              />
+              <label>Origin Point</label>
+              <div className="input-with-icon">
+                <input 
+                  type="text" 
+                  className="input-field" 
+                  placeholder="Where are you starting from?"
+                  value={formData.origin}
+                  onChange={(e) => setFormData({...formData, origin: e.target.value})}
+                  required 
+                />
+                <div className="input-icon-wrapper">
+                  <Navigation size={18} />
+                </div>
+              </div>
             </div>
+
             <div className="input-group">
-              <label>Destination</label>
-              <input 
-                type="text" 
-                className="input-field" 
-                placeholder="Where are you heading?"
-                value={formData.destination}
-                onChange={(e) => setFormData({...formData, destination: e.target.value})}
-                required 
-              />
+              <label>Destination Point</label>
+              <div className="input-with-icon">
+                <input 
+                  type="text" 
+                  className="input-field" 
+                  placeholder="Where are you traveling to?"
+                  value={formData.destination}
+                  onChange={(e) => setFormData({...formData, destination: e.target.value})}
+                  required 
+                />
+                <div className="input-icon-wrapper">
+                  <MapPin size={18} />
+                </div>
+              </div>
             </div>
-            <div className="input-group">
-              <label>Price per Seat ($)</label>
-              <input 
-                type="number" 
-                className="input-field" 
-                placeholder="e.g. 15"
-                value={formData.price}
-                onChange={(e) => setFormData({...formData, price: e.target.value})}
-                required 
-              />
+
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+              <div className="input-group">
+                <label>Fare per Seat</label>
+                <div className="input-with-icon">
+                  <input 
+                    type="number" 
+                    className="input-field" 
+                    placeholder="15"
+                    value={formData.price}
+                    onChange={(e) => setFormData({...formData, price: e.target.value})}
+                    required 
+                  />
+                  <div className="input-icon-wrapper">
+                    <IndianRupee size={18} />
+                  </div>
+                </div>
+              </div>
+
+              <div className="input-group">
+                <label>Seats Available</label>
+                <div className="input-with-icon">
+                  <input 
+                    type="number" 
+                    className="input-field" 
+                    min="1" max="8"
+                    value={formData.availableSeats}
+                    onChange={(e) => setFormData({...formData, availableSeats: parseInt(e.target.value) || 3})}
+                    required 
+                  />
+                  <div className="input-icon-wrapper">
+                    <Users size={18} />
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="input-group">
-              <label>Available Seats</label>
-              <input 
-                type="number" 
-                className="input-field" 
-                min="1" max="6"
-                value={formData.availableSeats}
-                onChange={(e) => setFormData({...formData, availableSeats: e.target.value})}
-                required 
-              />
-            </div>
-            <button type="submit" className="btn btn-primary" style={{ width: '100%' }}>Post Ride</button>
+
+            <button type="submit" className="btn btn-primary w-full" style={{ marginTop: '12px' }}>
+              Offer Shared Ride
+            </button>
           </form>
-          {status && <p style={{ marginTop: '16px', color: status.includes('Error') ? '#ef4444' : 'var(--secondary)' }}>{status}</p>}
+
+          {status && (
+            <div style={{ 
+              marginTop: '20px', 
+              padding: '12px 16px', 
+              borderRadius: '10px', 
+              fontSize: '0.9rem',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              background: status.includes('Error') ? 'rgba(239, 68, 68, 0.1)' : 'rgba(16, 185, 129, 0.1)',
+              border: status.includes('Error') ? '1px solid rgba(239, 68, 68, 0.2)' : '1px solid rgba(16, 185, 129, 0.2)',
+              color: status.includes('Error') ? '#f87171' : 'var(--secondary)'
+            }}>
+              {status.includes('Error') ? <AlertCircle size={18} /> : <CheckCircle size={18} />}
+              <span>{status}</span>
+            </div>
+          )}
         </div>
 
-        <div className="glass-panel" style={{ padding: '32px' }}>
-          <h2 style={{ marginBottom: '24px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <MapPin size={24} color="var(--secondary)" /> Your Active Rides
+        {/* Right Column: Active Posted Rides */}
+        <div className="driver-rides-container glass-panel">
+          <h2 style={{ marginBottom: '28px', display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <MapPin size={24} style={{ color: 'var(--secondary)' }} /> 
+            <span>Your Posted Rides</span>
           </h2>
           
-          {rides.length === 0 ? (
-            <p style={{ color: 'var(--text-secondary)' }}>You haven't posted any rides yet.</p>
+          {loading ? (
+            <p style={{ color: 'var(--text-secondary)', textAlign: 'center' }}>Loading your ride ledger...</p>
+          ) : rides.length === 0 ? (
+            <div style={{ textAlign: 'center', padding: '40px 20px', border: '1px dashed rgba(255,255,255,0.05)', borderRadius: '12px' }}>
+              <AlertCircle size={32} color="var(--text-muted)" style={{ marginBottom: '12px' }} />
+              <p style={{ color: 'var(--text-secondary)' }}>You haven't posted any rides yet.</p>
+            </div>
           ) : (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            <div className="driver-rides-list">
               {rides.map(ride => (
-                <div key={ride._id} style={{ background: 'rgba(255,255,255,0.05)', padding: '16px', borderRadius: '8px', borderLeft: '4px solid var(--primary)' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
-                    <strong>{ride.origin} &rarr; {ride.destination}</strong>
-                    <span style={{ color: 'var(--secondary)', fontWeight: 'bold' }}>${ride.price}</span>
+                <div key={ride._id} className="driver-ride-card">
+                  <div className="driver-ride-header">
+                    <span className="driver-ride-route">{ride.origin} &rarr; {ride.destination}</span>
+                    <span className="driver-ride-price">₹{ride.price}</span>
                   </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
-                    <span>Seats: {ride.availableSeats}</span>
-                    <span>Status: {ride.status}</span>
+                  <div className="driver-ride-details">
+                    <div className="driver-ride-detail-item">
+                      <Users size={16} color="var(--primary)" />
+                      <span>Seats Offered: {ride.availableSeats}</span>
+                    </div>
+                    <span className={`driver-status-badge ${ride.availableSeats > 0 ? 'active' : 'pending'}`}>
+                      {ride.availableSeats > 0 ? 'Booking Active' : 'Booked Out'}
+                    </span>
                   </div>
                 </div>
               ))}

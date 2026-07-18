@@ -1,17 +1,30 @@
-.hero {
-  padding: 60px 0 100px;
+.home {
   position: relative;
+  overflow: hidden;
 }
 
-.hero::before {
+/* Background grid overlay */
+.home::before {
   content: '';
   position: absolute;
-  top: -20%;
-  left: -10%;
-  width: 50%;
-  height: 100%;
-  background: radial-gradient(circle, rgba(79, 70, 229, 0.15) 0%, transparent 70%);
-  z-index: -1;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 600px;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+  background-size: 40px 40px;
+  background-position: center;
+  mask-image: radial-gradient(ellipse at 50% 30%, black, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse at 50% 30%, black, transparent 80%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero {
+  padding: 80px 0 120px;
+  position: relative;
+  z-index: 1;
 }
 
 .hero-content {
@@ -23,59 +36,114 @@
 
 .hero-text h1 {
   font-size: 3.5rem;
+  font-weight: 800;
+  line-height: 1.1;
   margin-bottom: 24px;
-}
-
-.highlight-text {
-  background: linear-gradient(135deg, #818CF8, #4F46E5);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.03em;
 }
 
 .hero-text p {
-  font-size: 1.1rem;
+  font-size: 1.15rem;
+  color: var(--text-secondary);
   margin-bottom: 40px;
-  max-width: 500px;
+  max-width: 540px;
+  line-height: 1.7;
 }
 
 .hero-actions {
   display: flex;
+  flex-wrap: wrap;
   gap: 16px;
 }
 
-.btn-lg {
+.hero-actions .btn {
   padding: 16px 32px;
-  font-size: 1.1rem;
+  font-size: 1.05rem;
 }
 
+/* Redesigned Mock Dashboard Visual */
 .hero-image {
-  height: 400px;
+  height: 420px;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
   overflow: hidden;
+  padding: 30px;
+}
+
+.dashboard-mockup {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  z-index: 2;
+}
+
+.mockup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  padding-bottom: 16px;
+}
+
+.mockup-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mockup-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--secondary);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--secondary);
+  animation: pulseGlow 1.5s infinite;
+}
+
+.mockup-status {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  background: rgba(255,255,255,0.04);
+  padding: 4px 10px;
+  border-radius: 20px;
 }
 
 .route-viz {
   display: flex;
   align-items: center;
   gap: 20px;
-  width: 80%;
+  width: 90%;
+  margin: auto;
+  position: relative;
 }
 
 .viz-point {
-  width: 60px;
-  height: 60px;
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
   background: var(--surface);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: bold;
-  font-size: 1.5rem;
+  font-weight: 800;
+  font-size: 1.25rem;
+  font-family: var(--font-heading);
   border: 2px solid var(--primary);
   z-index: 2;
+  box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+}
+
+.viz-point.end {
+  border-color: var(--secondary);
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
 }
 
 .viz-line {
@@ -84,6 +152,7 @@
   background: linear-gradient(90deg, var(--primary), var(--secondary));
   position: relative;
   overflow: hidden;
+  border-radius: 2px;
 }
 
 .viz-line::after {
@@ -91,29 +160,66 @@
   position: absolute;
   top: 0;
   left: -100%;
-  width: 50%;
+  width: 40px;
   height: 100%;
-  background: rgba(255, 255, 255, 0.8);
-  box-shadow: 0 0 20px rgba(255,255,255,0.8);
-  animation: carMove 2s infinite linear;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+  box-shadow: 0 0 15px rgba(255,255,255,0.8);
+  animation: carMove 2.5s infinite linear;
 }
 
 @keyframes carMove {
-  0% { left: -50%; }
-  100% { left: 100%; }
+  0% { left: -30%; }
+  100% { left: 110%; }
 }
 
-.text-center {
-  text-align: center;
+.mockup-footer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding-top: 16px;
+}
+
+.mockup-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.mockup-stat-val {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: white;
+  font-family: var(--font-heading);
+}
+
+.mockup-stat-lbl {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Features Section */
+.features {
+  padding: 60px 0 120px;
+  position: relative;
+  z-index: 1;
 }
 
 .section-header {
-  margin-bottom: 60px;
+  margin-bottom: 70px;
 }
 
 .section-header h2 {
   font-size: 2.5rem;
+  font-weight: 800;
   margin-bottom: 16px;
+}
+
+.section-header p {
+  font-size: 1.1rem;
+  max-width: 580px;
+  margin: 0 auto;
 }
 
 .feature-grid {
@@ -123,32 +229,58 @@
 }
 
 .feature-card {
-  padding: 32px;
+  padding: 40px 32px;
   text-align: center;
-  transition: transform 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid rgba(255,255,255,0.04);
 }
 
 .feature-card:hover {
-  transform: translateY(-10px);
+  transform: translateY(-8px);
+  border-color: rgba(99, 102, 241, 0.2);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3), 0 0 20px rgba(99, 102, 241, 0.05);
 }
 
 .feature-icon {
   width: 64px;
   height: 64px;
-  margin: 0 auto 24px;
-  background: rgba(79, 70, 229, 0.1);
-  border-radius: 16px;
+  margin: 0 auto 28px;
+  background: rgba(99, 102, 241, 0.08);
+  border: 1px solid rgba(99, 102, 241, 0.15);
+  border-radius: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--primary);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.feature-card:hover .feature-icon {
+  background: var(--primary);
+  color: white;
+  border-color: transparent;
+  transform: scale(1.05);
+  box-shadow: 0 6px 15px rgba(99, 102, 241, 0.3);
 }
 
 .feature-card h3 {
   margin-bottom: 16px;
-  font-size: 1.25rem;
+  font-size: 1.3rem;
+  font-weight: 700;
 }
 
+.feature-card p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.text-center {
+  text-align: center;
+}
+
+/* Responsiveness */
 @media (min-width: 768px) {
   .hero-content {
     grid-template-columns: 1fr 1fr;

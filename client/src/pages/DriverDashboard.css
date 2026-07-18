@@ -1,0 +1,116 @@
+.driver-dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+  align-items: start;
+}
+
+@media (min-width: 992px) {
+  .driver-dashboard-grid {
+    grid-template-columns: 1.1fr 1fr;
+  }
+}
+
+.driver-form-container {
+  padding: 36px;
+  background: var(--surface-card);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.driver-rides-container {
+  padding: 36px;
+  background: var(--surface-card);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+/* Custom posted rides list */
+.driver-rides-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.driver-ride-card {
+  background: rgba(8, 11, 17, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 16px;
+  padding: 24px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.driver-ride-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: linear-gradient(180deg, var(--primary), var(--secondary));
+}
+
+.driver-ride-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(99, 102, 241, 0.15);
+  background: rgba(8, 11, 17, 0.6);
+  box-shadow: var(--shadow-md);
+}
+
+.driver-ride-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+  gap: 12px;
+}
+
+.driver-ride-route {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: white;
+}
+
+.driver-ride-price {
+  color: var(--secondary);
+  font-weight: 800;
+  font-size: 1.15rem;
+  font-family: var(--font-heading);
+}
+
+.driver-ride-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  padding-top: 14px;
+}
+
+.driver-ride-detail-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.driver-status-badge {
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+.driver-status-badge.active {
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--secondary);
+  border: 1px solid rgba(16, 185, 129, 0.15);
+}
+
+.driver-status-badge.pending {
+  background: rgba(245, 158, 11, 0.1);
+  color: #f59e0b;
+  border: 1px solid rgba(245, 158, 11, 0.15);
+}
