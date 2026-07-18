@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import api from '../utils/api';
 import { Search, CreditCard, X, AlertCircle } from 'lucide-react';
+import { FindRideIllustration } from '../components/Illustrations';
 import './UserDashboard.css';
 
 const UserDashboard = () => {
@@ -48,7 +49,7 @@ const UserDashboard = () => {
       try {
         const userUid = localStorage.getItem('uid');
         
-        // Actually call the backend to book the ride and decrease seats
+        // Book the ride on the backend
         const response = await api.post(`/rides/book/${selectedRide._id}`, {
           userUid: userUid
         });
@@ -75,19 +76,35 @@ const UserDashboard = () => {
   );
 
   return (
-    <div className="container animate-fade-in" style={{ paddingTop: '120px', paddingBottom: '80px', position: 'relative' }}>
-      <h1 style={{ marginBottom: '32px' }}>Find a Ride</h1>
+    <div className="container animate-fade-in" style={{ paddingTop: '85px', paddingBottom: '90px', position: 'relative' }}>
       
-      {/* Redesigned Search Input bar */}
-      <div className="dashboard-search-container">
-        <Search size={22} color="var(--text-secondary)" style={{ flexShrink: 0 }} />
-        <input 
-          type="text" 
-          placeholder="Where do you want to start or head to?" 
-          className="dashboard-search-input"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
+      {/* Split Row Header */}
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '40px', alignItems: 'center', marginBottom: '48px' }} className="find-ride-header-split">
+        <div>
+          <h1 style={{ marginBottom: '16px', fontSize: '2.5rem', fontWeight: 800, fontFamily: 'var(--font-heading)' }}>Find a Ride</h1>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '1rem', lineHeight: 1.6, marginBottom: '24px' }}>
+            Enter your destination coordinates below to find verified drivers heading your way. Split travel costs instantly.
+          </p>
+          
+          {/* Search bar */}
+          <div className="dashboard-search-container">
+            <Search size={22} color="var(--text-secondary)" style={{ flexShrink: 0 }} />
+            <input 
+              type="text" 
+              placeholder="Enter origin or destination to search..." 
+              className="dashboard-search-input"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </div>
+        </div>
+
+        {/* Vector SVG Illustration */}
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <div style={{ width: '100%', maxWidth: '320px' }}>
+            <FindRideIllustration />
+          </div>
+        </div>
       </div>
 
       {loading ? (
@@ -100,16 +117,17 @@ const UserDashboard = () => {
         <div className="rides-grid">
           {filteredRides.map(ride => (
             <div key={ride._id} className="ride-card glass-panel">
+              
               {/* Route Timeline Header */}
               <div className="ride-card-header">
                 <div className="ride-route-timeline">
                   <div className="route-step">
-                    <span>Origin</span> <br/>
-                    <strong>{ride.origin}</strong>
+                    <span className="route-label">Origin</span>
+                    <strong style={{ color: 'white' }}>{ride.origin}</strong>
                   </div>
                   <div className="route-step destination">
-                    <span>Destination</span> <br/>
-                    <strong>{ride.destination}</strong>
+                    <span className="route-label">Destination</span>
+                    <strong style={{ color: 'var(--orange-accent)' }}>{ride.destination}</strong>
                   </div>
                 </div>
                 
@@ -120,11 +138,11 @@ const UserDashboard = () => {
               
               {/* Driver Details Row */}
               <div className="driver-info-row">
-                <div className="driver-avatar-circle">
+                <div className="driver-avatar-circle" style={{ background: 'linear-gradient(135deg, var(--primary), var(--soft-purple))' }}>
                   {ride.driverId?.name ? ride.driverId.name.charAt(0).toUpperCase() : 'D'}
                 </div>
                 <div className="driver-details-text">
-                  <span className="driver-name-label">{ride.driverId?.name || 'Verified Driver'}</span>
+                  <span className="driver-name-label" style={{ color: 'white' }}>{ride.driverId?.name || 'Verified Driver'}</span>
                   <span className="driver-role-desc">Verified Share Partner</span>
                 </div>
               </div>
@@ -132,11 +150,11 @@ const UserDashboard = () => {
               {/* Booking Actions */}
               <div className="ride-card-footer">
                 <span className="seats-indicator">
-                  <span className="seats-count">{ride.availableSeats}</span> seat{ride.availableSeats !== 1 ? 's' : ''} left
+                  <span className="seats-count" style={{ color: 'var(--vibrant-cyan)' }}>{ride.availableSeats}</span> seat{ride.availableSeats !== 1 ? 's' : ''} left
                 </span>
                 
                 {bookingStatus?.id === ride._id && bookingStatus.status === 'success' ? (
-                  <button className="btn" disabled style={{ background: 'var(--secondary)', color: 'white', cursor: 'default' }}>
+                  <button className="btn" disabled style={{ background: 'var(--vibrant-cyan)', color: 'white', cursor: 'default' }}>
                     Booking Secured!
                   </button>
                 ) : (
@@ -164,22 +182,22 @@ const UserDashboard = () => {
       {/* SECURE CHECKOUT MODAL */}
       {showPaymentModal && selectedRide && (
         <div className="modal-overlay">
-          <div className="modal-content glass-panel animate-fade-in">
+          <div className="modal-content glass-panel animate-fade-in" style={{ background: 'rgba(15,23,42,0.95)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px' }}>
-              <h2 style={{ fontSize: '1.5rem', fontWeight: 800 }}>Secure Check-out</h2>
-              <button className="close-btn" onClick={() => setShowPaymentModal(false)}><X size={20} /></button>
+              <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'white' }}>Secure Check-out</h2>
+              <button className="close-btn" onClick={() => setShowPaymentModal(false)} style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer' }}><X size={20} /></button>
             </div>
             
             {/* Interactive Mock Wallet card */}
-            <div className="checkout-card-preview">
-              <div className="checkout-route-summary">{selectedRide.origin} &rarr; {selectedRide.destination}</div>
-              <div className="checkout-amount-row">
+            <div className="checkout-card-preview" style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)' }}>
+              <div className="checkout-route-summary" style={{ color: 'white' }}>{selectedRide.origin} &rarr; {selectedRide.destination}</div>
+              <div className="checkout-amount-row" style={{ borderTop: '1px solid rgba(255,255,255,0.04)', paddingTop: '12px', marginTop: '12px' }}>
                 <span>Journey Fare</span>
-                <span className="checkout-price">₹{selectedRide.price}</span>
+                <span className="checkout-price" style={{ color: 'var(--orange-accent)' }}>₹{selectedRide.price}</span>
               </div>
-              <div className="checkout-upi-box">
-                <p>Transfer to Driver UPI ID</p>
-                <div className="checkout-upi-id">
+              <div className="checkout-upi-box" style={{ background: 'rgba(6,182,212,0.04)', borderRadius: '12px', padding: '12px', marginTop: '16px' }}>
+                <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--text-muted)' }}>Transfer to Driver UPI ID</p>
+                <div className="checkout-upi-id" style={{ color: 'var(--vibrant-cyan)', fontWeight: 700, marginTop: '2px' }}>
                   {selectedRide.driverId?.upiId || 'driver@upi'}
                 </div>
               </div>
@@ -205,6 +223,21 @@ const UserDashboard = () => {
           </div>
         </div>
       )}
+
+      <style>{`
+        @media (min-width: 992px) {
+          .find-ride-header-split {
+            grid-template-columns: 1.3fr 0.7fr !important;
+          }
+        }
+        .route-label {
+          font-size: 0.72rem;
+          color: var(--text-muted);
+          text-transform: uppercase;
+          font-weight: 700;
+        }
+      `}</style>
+
     </div>
   );
 };

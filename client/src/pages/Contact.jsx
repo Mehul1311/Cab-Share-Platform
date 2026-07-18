@@ -17,6 +17,7 @@ import {
   Flag,
   Car
 } from 'lucide-react';
+import { ContactIllustration } from '../components/Illustrations';
 import './Contact.css';
 
 const Contact = () => {
@@ -74,8 +75,8 @@ const Contact = () => {
     <div className="container contact-page-container animate-fade-in">
       
       {/* Background Blobs */}
-      <div className="contact-blob contact-blob-1"></div>
-      <div className="contact-blob contact-blob-2"></div>
+      <div className="contact-blob contact-blob-1" style={{ background: 'var(--electric-blue)' }}></div>
+      <div className="contact-blob contact-blob-2" style={{ background: 'var(--soft-purple)' }}></div>
 
       <div className="contact-split-grid">
         
@@ -84,6 +85,10 @@ const Contact = () => {
           <div className="contact-info-header">
             <h2>Contact Information</h2>
             <p>Reach out through any of our channels or visit our regional office.</p>
+          </div>
+
+          <div style={{ maxWidth: '240px', margin: '0 auto', display: 'flex', justifyContent: 'center' }}>
+            <ContactIllustration />
           </div>
 
           <div className="info-items-list">
@@ -142,14 +147,26 @@ const Contact = () => {
               {/* Moving Car */}
               <div className="map-route-connector">
                 <div className="map-moving-car">
-                  <Car size={16} />
+                  <svg viewBox="0 0 48 30" width="26" height="16" style={{ overflow: 'visible' }}>
+                    <path d="M 3,22 L 3,18 Q 5,18 8,13 Q 10,10 18,10 L 26,10 Q 31,10 35,16 L 43,16 Q 45,16 45,22 Z" fill="var(--vibrant-cyan)" />
+                    <path d="M 10,12 L 17,12 L 17,15 L 8,15 Z" fill="#08111F" opacity="0.8" />
+                    <path d="M 20,12 L 26,12 L 30,15 L 20,15 Z" fill="#08111F" opacity="0.8" />
+                    <g className="spin-wheel">
+                      <circle cx="12" cy="22" r="5" fill="#070A13" stroke="white" strokeWidth="1.5" />
+                      <line x1="12" y1="17" x2="12" y2="27" stroke="white" strokeWidth="1" />
+                    </g>
+                    <g className="spin-wheel">
+                      <circle cx="32" cy="22" r="5" fill="#070A13" stroke="white" strokeWidth="1.5" />
+                      <line x1="32" y1="17" x2="32" y2="27" stroke="white" strokeWidth="1" />
+                    </g>
+                  </svg>
                 </div>
               </div>
 
               {/* Delhi Pin */}
-              <div className="map-node destination">
+              <div className="map-node destination" style={{ borderColor: 'var(--orange-accent)', color: 'var(--orange-accent)', boxShadow: '0 0 10px rgba(249, 115, 22, 0.5)' }}>
                 <Flag size={14} />
-                <div className="map-node-pulse destination"></div>
+                <div className="map-node-pulse destination" style={{ borderColor: 'var(--orange-accent)' }}></div>
               </div>
             </div>
 
@@ -299,24 +316,24 @@ const Contact = () => {
         </div>
 
         <div className="help-grid-cards">
-          <div className="help-glass-card" onClick={() => handleHelpCardClick("Ride Issues")}>
-            <div className="help-card-icon-box">
+          <div className="help-glass-card" onClick={() => handleHelpCardClick("Ride Issues")} style={{ cursor: 'pointer' }}>
+            <div className="help-card-icon-box" style={{ background: 'rgba(37,99,235,0.08)', color: 'var(--electric-blue)', borderColor: 'rgba(37,99,235,0.2)' }}>
               <Car size={24} />
             </div>
             <h4>Ride Issues</h4>
             <p>Problems with a current match, delay reports, or passenger feedback.</p>
           </div>
 
-          <div className="help-glass-card" onClick={() => handleHelpCardClick("Payment Support")}>
-            <div className="help-card-icon-box">
+          <div className="help-glass-card" onClick={() => handleHelpCardClick("Payment Support")} style={{ cursor: 'pointer' }}>
+            <div className="help-card-icon-box" style={{ background: 'rgba(249,115,22,0.08)', color: 'var(--orange-accent)', borderColor: 'rgba(249,115,22,0.2)' }}>
               <CreditCard size={24} />
             </div>
             <h4>Payment Support</h4>
             <p>Simulated refund claims, transaction history details, or fare splits.</p>
           </div>
 
-          <div className="help-glass-card" onClick={() => handleHelpCardClick("Partnership")}>
-            <div className="help-card-icon-box">
+          <div className="help-glass-card" onClick={() => handleHelpCardClick("Partnership")} style={{ cursor: 'pointer' }}>
+            <div className="help-card-icon-box" style={{ background: 'rgba(139,92,246,0.08)', color: 'var(--soft-purple)', borderColor: 'rgba(139,92,246,0.2)' }}>
               <HelpCircle size={24} />
             </div>
             <h4>Partnership</h4>
@@ -328,7 +345,7 @@ const Contact = () => {
       {/* FLOATING SUPPORT CHAT BUTTON */}
       <div className="floating-chat-container">
         <div className="chat-tooltip-bubble">Need Help?</div>
-        <button className="floating-chat-btn" onClick={handleFloatingChatClick}>
+        <button className="floating-chat-btn" onClick={handleFloatingChatClick} style={{ background: 'linear-gradient(135deg, var(--electric-blue) 0%, var(--soft-purple) 100%)' }}>
           <MessageCircle size={24} />
         </button>
       </div>

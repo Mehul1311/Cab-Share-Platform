@@ -14,13 +14,11 @@ import {
   Sparkles, 
   ArrowRight,
   MapPin,
-  Flag,
-  Users,
-  Star,
-  Shield,
   Eye,
-  EyeOff
+  EyeOff,
+  ShieldCheck
 } from 'lucide-react';
+import { LoginIllustration } from '../components/Illustrations';
 import './Auth.css';
 
 const Auth = () => {
@@ -144,7 +142,7 @@ const Auth = () => {
       {/* Background Animated Gradient Blobs */}
       <div className="floating-blob blob-blue"></div>
       <div className="floating-blob blob-cyan"></div>
-      <div className="floating-blob blob-emerald"></div>
+      <div className="floating-blob blob-purple"></div>
       <div className="floating-blob blob-indigo"></div>
 
       {/* Floating Background Map Pins */}
@@ -166,90 +164,21 @@ const Auth = () => {
           
           <div className="auth-visual-content">
             {/* Headline */}
-            <h1>Travel Smarter, <br/><span className="gradient-text-vibrant">Together.</span></h1>
+            <h1>Secure Access, <br/><span className="gradient-text-vibrant">Simplified.</span></h1>
             
             {/* Description */}
-            <p>Find verified rides, save money, reduce traffic, and travel comfortably with trusted companions.</p>
+            <p>Your safety is our priority. Access India's trusted peer-to-peer ride matching network with peace of mind.</p>
             
-            {/* Interactive GPS Route Animation Card */}
-            <div className="route-card">
-              <div className="route-map-overlay"></div>
-              
-              <div className="route-viz-container">
-                {/* Source Node (Chandigarh) */}
-                <div className="location-node">
-                  <div className="node-icon-wrapper">
-                    <MapPin size={18} />
-                    <div className="node-pulse-ring"></div>
-                  </div>
-                  <span className="node-label">Source</span>
-                  <span className="node-city">Chandigarh</span>
-                </div>
-                
-                {/* Moving Car animation */}
-                <div className="moving-car-path">
-                  <Car size={18} style={{ transform: 'scaleX(-1)' }} />
-                </div>
-                
-                {/* SVG Curve Line */}
-                <svg className="route-path-svg" viewBox="0 0 400 90" fill="none">
-                  <path 
-                    d="M 60,45 Q 200,-5 340,45" 
-                    stroke="rgba(255,255,255,0.06)" 
-                    strokeWidth="3.5" 
-                    strokeLinecap="round"
-                  />
-                  <path 
-                    className="gps-dashed-line"
-                    d="M 60,45 Q 200,-5 340,45" 
-                    stroke="url(#glowGpsGrad)" 
-                    strokeWidth="3.5" 
-                    strokeLinecap="round"
-                  />
-                  <defs>
-                    <linearGradient id="glowGpsGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                      <stop offset="0%" stopColor="#3B82F6" />
-                      <stop offset="50%" stopColor="#06B6D4" />
-                      <stop offset="100%" stopColor="#10B981" />
-                    </linearGradient>
-                  </defs>
-                </svg>
-
-                {/* Destination Node (Delhi) */}
-                <div className="location-node">
-                  <div className="node-icon-wrapper destination">
-                    <Flag size={18} />
-                    <div className="node-pulse-ring destination"></div>
-                  </div>
-                  <span className="node-label">Destination</span>
-                  <span className="node-city">Delhi</span>
-                </div>
-              </div>
+            {/* Custom vector illustration of secure unlock */}
+            <div style={{ maxWidth: '320px', margin: '0 auto 20px', display: 'flex', justifyContent: 'center' }}>
+              <LoginIllustration />
             </div>
             
-            {/* Stats Cards Section */}
-            <div className="stats-cards-grid">
-              <div className="stat-lift-card">
-                <Users size={20} className="stat-card-icon" />
-                <span className="stat-card-num">25K+</span>
-                <span className="stat-card-lbl">Verified Users</span>
-              </div>
-              <div className="stat-lift-card">
-                <Star size={20} className="stat-card-icon" style={{ color: '#FBBF24' }} />
-                <span className="stat-card-num">4.9</span>
-                <span className="stat-card-lbl">User Rating</span>
-              </div>
-              <div className="stat-lift-card">
-                <Shield size={20} className="stat-card-icon" style={{ color: '#10B981' }} />
-                <span className="stat-card-num">100%</span>
-                <span className="stat-card-lbl">Secure & Verified</span>
-              </div>
+            {/* Trust Section */}
+            <div className="auth-trust-badge-row" style={{ display: 'flex', justifyContent: 'center', gap: '10px', alignItems: 'center', color: 'var(--orange-accent)', fontSize: '0.88rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+              <ShieldCheck size={18} />
+              <span>100% Cryptographic Identity Sync</span>
             </div>
-          </div>
-          
-          {/* Decorative floating icon */}
-          <div className="floating-car-hero">
-            <Car size={70} />
           </div>
         </div>
 

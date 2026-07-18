@@ -9,6 +9,7 @@ import {
   CheckCircle,
   PlusCircle
 } from 'lucide-react';
+import { OfferRideIllustration } from '../components/Illustrations';
 import './DriverDashboard.css';
 
 const DriverDashboard = () => {
@@ -63,15 +64,31 @@ const DriverDashboard = () => {
   };
 
   return (
-    <div className="container animate-fade-in" style={{ paddingTop: '120px', paddingBottom: '80px' }}>
-      <h1 style={{ marginBottom: '32px' }}>Driver Dashboard</h1>
+    <div className="container animate-fade-in" style={{ paddingTop: '85px', paddingBottom: '90px', position: 'relative' }}>
       
+      {/* Header block with Illustration */}
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '40px', alignItems: 'center', marginBottom: '48px' }} className="driver-header-split">
+        <div>
+          <h1 style={{ marginBottom: '16px', fontSize: '2.5rem', fontWeight: 800, fontFamily: 'var(--font-heading)' }}>Driver Dashboard</h1>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '1rem', lineHeight: 1.6, marginBottom: '24px' }}>
+            Offer empty seats on your route to matching passengers. Save fuel, toll charges, and travel comfortably with companions.
+          </p>
+        </div>
+
+        {/* Vector SVG Illustration */}
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <div style={{ width: '100%', maxWidth: '320px' }}>
+            <OfferRideIllustration />
+          </div>
+        </div>
+      </div>
+
       <div className="driver-dashboard-grid">
         
         {/* Left Column: Post a New Ride */}
         <div className="driver-form-container glass-panel">
-          <h2 style={{ marginBottom: '28px', display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <PlusCircle size={24} className="gradient-text" /> 
+          <h2 style={{ marginBottom: '28px', display: 'flex', alignItems: 'center', gap: '12px', color: 'white' }}>
+            <PlusCircle size={24} style={{ color: 'var(--vibrant-cyan)' }} /> 
             <span>Offer a New Ride</span>
           </h2>
           
@@ -117,7 +134,7 @@ const DriverDashboard = () => {
                   <input 
                     type="number" 
                     className="input-field" 
-                    placeholder="15"
+                    placeholder="150"
                     value={formData.price}
                     onChange={(e) => setFormData({...formData, price: e.target.value})}
                     required 
@@ -160,9 +177,9 @@ const DriverDashboard = () => {
               display: 'flex',
               alignItems: 'center',
               gap: '8px',
-              background: status.includes('Error') ? 'rgba(239, 68, 68, 0.1)' : 'rgba(16, 185, 129, 0.1)',
-              border: status.includes('Error') ? '1px solid rgba(239, 68, 68, 0.2)' : '1px solid rgba(16, 185, 129, 0.2)',
-              color: status.includes('Error') ? '#f87171' : 'var(--secondary)'
+              background: status.includes('Error') ? 'rgba(239, 68, 68, 0.1)' : 'rgba(6, 182, 212, 0.1)',
+              border: status.includes('Error') ? '1px solid rgba(239, 68, 68, 0.2)' : '1px solid rgba(6, 182, 212, 0.2)',
+              color: status.includes('Error') ? '#f87171' : 'var(--vibrant-cyan)'
             }}>
               {status.includes('Error') ? <AlertCircle size={18} /> : <CheckCircle size={18} />}
               <span>{status}</span>
@@ -172,8 +189,8 @@ const DriverDashboard = () => {
 
         {/* Right Column: Active Posted Rides */}
         <div className="driver-rides-container glass-panel">
-          <h2 style={{ marginBottom: '28px', display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <MapPin size={24} style={{ color: 'var(--secondary)' }} /> 
+          <h2 style={{ marginBottom: '28px', display: 'flex', alignItems: 'center', gap: '12px', color: 'white' }}>
+            <MapPin size={24} style={{ color: 'var(--orange-accent)' }} /> 
             <span>Your Posted Rides</span>
           </h2>
           
@@ -189,8 +206,8 @@ const DriverDashboard = () => {
               {rides.map(ride => (
                 <div key={ride._id} className="driver-ride-card">
                   <div className="driver-ride-header">
-                    <span className="driver-ride-route">{ride.origin} &rarr; {ride.destination}</span>
-                    <span className="driver-ride-price">₹{ride.price}</span>
+                    <span className="driver-ride-route" style={{ color: 'white' }}>{ride.origin} &rarr; {ride.destination}</span>
+                    <span className="driver-ride-price" style={{ color: 'var(--orange-accent)' }}>₹{ride.price}</span>
                   </div>
                   <div className="driver-ride-details">
                     <div className="driver-ride-detail-item">
@@ -207,6 +224,19 @@ const DriverDashboard = () => {
           )}
         </div>
       </div>
+
+      <style>{`
+        @media (min-width: 992px) {
+          .driver-header-split {
+            grid-template-columns: 1.3fr 0.7fr !important;
+          }
+        }
+        .driver-status-badge.active {
+          background: rgba(6, 182, 212, 0.1) !important;
+          color: var(--vibrant-cyan) !important;
+        }
+      `}</style>
+
     </div>
   );
 };

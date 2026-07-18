@@ -5,7 +5,7 @@
 }
 
 .contact-page-container {
-  padding-top: 130px;
+  padding-top: 85px;
   padding-bottom: 90px;
   background: linear-gradient(180deg, #0b1120 0%, #111827 50%, #0f172a 100%);
   position: relative;
@@ -206,9 +206,9 @@
 }
 
 .map-node.destination {
-  border-color: var(--vibrant-emerald);
-  color: var(--vibrant-emerald);
-  box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+  border-color: var(--orange-accent);
+  color: var(--orange-accent);
+  box-shadow: 0 0 10px rgba(249, 115, 22, 0.5);
 }
 
 .map-node-pulse {
@@ -222,7 +222,7 @@
 }
 
 .map-node-pulse.destination {
-  border-color: var(--vibrant-emerald);
+  border-color: var(--orange-accent);
 }
 
 @keyframes pulseNode {
@@ -233,7 +233,7 @@
 .map-route-connector {
   flex: 1;
   height: 2px;
-  background: linear-gradient(90deg, var(--electric-blue), var(--vibrant-cyan), var(--vibrant-emerald));
+  background: linear-gradient(90deg, var(--electric-blue), var(--vibrant-cyan), var(--orange-accent));
   position: relative;
   overflow: hidden;
 }
@@ -241,7 +241,7 @@
 .map-moving-car {
   position: absolute;
   top: 50%;
-  transform: translateY(-50%) scaleX(-1);
+  transform: translateY(-50%);
   color: var(--vibrant-cyan);
   filter: drop-shadow(0 0 4px rgba(6, 182, 212, 0.6));
   animation: mapCarMove 8s infinite linear;
@@ -282,7 +282,7 @@
   left: 0;
   width: 100%;
   height: 3px;
-  background: linear-gradient(90deg, var(--electric-blue), var(--vibrant-cyan), var(--vibrant-emerald));
+  background: linear-gradient(90deg, var(--electric-blue), var(--vibrant-cyan), var(--orange-accent));
 }
 
 .contact-form-header {
@@ -326,7 +326,7 @@
 
 /* Send Button style */
 .btn-send {
-  background: linear-gradient(135deg, var(--electric-blue) 0%, var(--vibrant-cyan) 50%, var(--vibrant-emerald) 100%);
+  background: linear-gradient(135deg, var(--electric-blue) 0%, var(--vibrant-cyan) 50%, var(--orange-accent) 100%);
   color: white;
   border-radius: 12px;
   padding: 14px 28px;
@@ -500,4 +500,15 @@
 @keyframes bounceSlow {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-10px); }
+}
+
+.spin-wheel {
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: spinWheel 1.2s infinite linear;
+}
+
+@keyframes spinWheel {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
