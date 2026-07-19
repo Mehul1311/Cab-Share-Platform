@@ -1,40 +1,70 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
 
 :root {
-  /* Color Palette - Premium Cyber Dark theme */
-  --primary: #6366f1;
-  --primary-hover: #4f46e5;
-  --primary-glow: rgba(99, 102, 241, 0.4);
-  --secondary: #10b981;
-  --secondary-hover: #059669;
-  --secondary-glow: rgba(16, 185, 129, 0.3);
+  /* Futuristic Dark Theme Variables */
+  --background: #0B0F17; /* Deep charcoal */
+  --surface: #131A26;
+  --surface-card: rgba(19, 26, 38, 0.6);
+  --glass-bg: rgba(11, 15, 23, 0.7);
+  
+  --primary: #00E5FF; /* Electric Cyan */
+  --primary-hover: #00B8D4;
+  --primary-glow: rgba(0, 229, 255, 0.4);
+  
+  --secondary: #7C4DFF; /* Neon Purple */
+  --secondary-hover: #651FFF;
+  --secondary-glow: rgba(124, 77, 255, 0.3);
 
-  /* Redesign Vibrant Palette */
-  --electric-blue: #3B82F6;
-  --vibrant-cyan: #06B6D4;
-  --vibrant-emerald: #10B981;
-  --vibrant-indigo: #6366F1;
-  --font-poppins: 'Poppins', sans-serif;
+  --electric-blue: #00E5FF;
+  --vibrant-cyan: #18FFFF;
+  --vibrant-emerald: #00E676;
+  --vibrant-indigo: #7C4DFF;
+  
+  --text-primary: #FFFFFF;
+  --text-secondary: #B0BEC5;
+  --text-muted: #78909C;
 
-  --background: #080b11;
-  --surface: #0f131e;
-  --surface-card: rgba(17, 24, 39, 0.7);
-  --text-primary: #f9fafb;
-  --text-secondary: #9ca3af;
-  --text-muted: #6b7280;
+  --border: rgba(255, 255, 255, 0.1);
+  --border-hover: rgba(255, 255, 255, 0.2);
+  --glass-border: rgba(255, 255, 255, 0.08);
 
-  --border: rgba(255, 255, 255, 0.08);
-  --border-hover: rgba(255, 255, 255, 0.16);
-  --glass-bg: rgba(15, 23, 42, 0.65);
-  --glass-border: rgba(255, 255, 255, 0.07);
+  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.6);
+  --shadow-glow: 0 0 25px var(--primary-glow);
 
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.6);
-  --shadow-glow: 0 0 30px var(--primary-glow);
+  --font-heading: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-poppins: 'Space Grotesk', sans-serif; /* Fallback for legacy class names */
+}
 
-  --font-heading: 'Outfit', sans-serif;
-  --font-body: 'Plus Jakarta Sans', sans-serif;
+/* Light Theme Variables (High Contrast) */
+.light-theme {
+  --background: #F4F6F8;
+  --surface: #FFFFFF;
+  --surface-card: rgba(255, 255, 255, 0.8);
+  --glass-bg: rgba(255, 255, 255, 0.75);
+  
+  --primary: #00B8D4;
+  --primary-glow: rgba(0, 184, 212, 0.3);
+  
+  --secondary: #651FFF;
+  --secondary-glow: rgba(101, 31, 255, 0.2);
+
+  --electric-blue: #00B8D4;
+  --vibrant-cyan: #0097A7;
+  
+  --text-primary: #1E293B;
+  --text-secondary: #475569;
+  --text-muted: #94A3B8;
+
+  --border: rgba(0, 0, 0, 0.1);
+  --border-hover: rgba(0, 0, 0, 0.2);
+  --glass-border: rgba(0, 0, 0, 0.08);
+
+  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.12);
 }
 
 * {
@@ -42,14 +72,14 @@
   margin: 0;
   padding: 0;
   font-family: var(--font-body);
-  transition: background-color 0.3s ease, border-color 0.3s ease;
+  transition: background-color 0.4s ease, border-color 0.4s ease, color 0.4s ease;
 }
 
 body {
   background-color: var(--background);
-  background-image:
-    radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.08) 0%, transparent 40%),
-    radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.08) 0%, transparent 40%);
+  background-image: 
+    radial-gradient(circle at 15% 50%, rgba(0, 229, 255, 0.05), transparent 40%),
+    radial-gradient(circle at 85% 30%, rgba(124, 77, 255, 0.05), transparent 40%);
   background-attachment: fixed;
   color: var(--text-primary);
   min-height: 100vh;

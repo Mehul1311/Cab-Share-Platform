@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { 
   MapPin, 
   Shield, 
@@ -8,13 +8,36 @@ import {
   ArrowRight
 } from 'lucide-react';
 import { MobileAppIllustration } from '../components/Illustrations';
+import Query from './Query';
 import './Home.css';
 
 const Home = () => {
+  const navigate = useNavigate();
+  
   // Live ride counter state starting at 2347
   const [rideCount, setRideCount] = useState(2347);
   // Active step state for the interactive route timeline
   const [activeStep, setActiveStep] = useState(0);
+
+  // Search state for Quick Search Box
+  const [searchSource, setSearchSource] = useState('');
+  const [searchDestination, setSearchDestination] = useState('');
+
+  // Auth state for dynamic button rendering
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    setIsLoggedIn(!!localStorage.getItem('uid'));
+  }, []);
+
+  const handleSearchClick = () => {
+    const uid = localStorage.getItem('uid');
+    if (!uid) {
+      navigate('/auth');
+    } else {
+      navigate('/user-dashboard', { state: { source: searchSource, destination: searchDestination } });
+    }
+  };
 
   // Increment counter every 3 seconds simulating live bookings
   useEffect(() => {
@@ -42,6 +65,11 @@ const Home = () => {
   return (
     <div className="home animate-fade-in">
       
+      {/* 🔮 Animated Floating Orbs / Moving Elements */}
+      <div className="moving-orb orb-1"></div>
+      <div className="moving-orb orb-2"></div>
+      <div className="moving-orb orb-3"></div>
+      
       {/* 🚀 HERO SECTION */}
       <section className="hero">
         <div className="container hero-content">
@@ -61,40 +89,73 @@ const Home = () => {
             <p>Connect with verified drivers heading your way. Enjoy a premium, safe, and comfortable ride sharing experience built on collaboration.</p>
             
             <div className="hero-actions">
-              <Link to="/auth" className="btn btn-primary">
-                <span>Get Started</span>
-                <ArrowRight size={18} />
-              </Link>
+              {isLoggedIn ? (
+                <Link to="/user-dashboard" className="btn btn-primary">
+                  <span>Go to Dashboard</span>
+                  <ArrowRight size={18} />
+                </Link>
+              ) : (
+                <Link to="/auth" className="btn btn-primary">
+                  <span>Get Started</span>
+                  <ArrowRight size={18} />
+                </Link>
+              )}
               <Link to="/about" className="btn btn-secondary">Learn More</Link>
             </div>
 
-            {/* Interactive Route Timeline Section */}
-            <div className="timeline-interactive-box">
-              <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: 'white', marginBottom: '20px' }}>Interactive Journey Flow</h3>
-              <div className="timeline-nav-row">
-                <div className="timeline-bar-line"></div>
-                <div 
-                  className="timeline-bar-fill" 
-                  style={{ width: `${activeStep * 40}%` }}
-                ></div>
-
-                {timelineSteps.map((step, idx) => (
-                  <div 
-                    key={idx} 
-                    className={`timeline-node-step ${activeStep === idx ? 'active' : ''}`}
-                    onClick={() => setActiveStep(idx)}
-                  >
-                    <div className="timeline-node-circle">{idx + 1}</div>
-                    <span className="timeline-node-lbl">Step {idx + 1}</span>
-                  </div>
-                ))}
+            {/* 3D Dashboard Mockup Preview */}
+            <div className="dashboard-mockup-3d">
+              <div className="mockup-header">
+                <div className="mockup-dots">
+                  <span></span><span></span><span></span>
+                </div>
+                <div className="mockup-search">
+                  <MapPin size={12} className="text-muted" />
+                  <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Current Location → Destination</span>
+                </div>
               </div>
-
-              <div className="timeline-detail-card">
-                <strong style={{ display: 'block', color: 'white', marginBottom: '6px', fontSize: '0.95rem' }}>
-                  {timelineSteps[activeStep].title}
-                </strong>
-                <span>{timelineSteps[activeStep].desc}</span>
+              <div className="mockup-body">
+                <div className="mockup-sidebar"></div>
+                <div className="mockup-main">
+                  <div className="mockup-card">
+                    <div className="mockup-card-title"></div>
+                    <div className="mockup-card-line"></div>
+                    <div className="mockup-card-line w-75"></div>
+                  </div>
+                  <div className="mockup-card">
+                    <div className="mockup-card-title"></div>
+                    <div className="mockup-card-line"></div>
+                    <div className="mockup-card-line w-50"></div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Glassmorphism Quick Search Box Overlay */}
+              <div className="quick-search-glass">
+                <div className="glass-input-wrapper">
+                  <div className="glass-input-label">Leaving from</div>
+                  <input 
+                    type="text" 
+                    placeholder="Enter City" 
+                    className="glass-input-clean" 
+                    value={searchSource}
+                    onChange={(e) => setSearchSource(e.target.value)}
+                  />
+                </div>
+                <div className="glass-input-divider"></div>
+                <div className="glass-input-wrapper">
+                  <div className="glass-input-label">Going to</div>
+                  <input 
+                    type="text" 
+                    placeholder="Enter City" 
+                    className="glass-input-clean" 
+                    value={searchDestination}
+                    onChange={(e) => setSearchDestination(e.target.value)}
+                  />
+                </div>
+                <button className="glass-search-btn" onClick={handleSearchClick}>
+                  <ArrowRight size={18} />
+                </button>
               </div>
             </div>
 
@@ -102,21 +163,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* 🤝 PARTNERS / TRUSTED COMPANIES STRIP */}
-      <section className="partners-strip">
-        <div className="container">
-          <p style={{ textAlign: 'center', color: 'var(--text-muted)', fontSize: '0.78rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '24px' }}>
-            Collaborating with leading innovators
-          </p>
-          <div className="partners-logos-flex">
-            <span className="partner-logo-item">TESLA</span>
-            <span className="partner-logo-item">GOOGLE</span>
-            <span className="partner-logo-item">STRIPE</span>
-            <span className="partner-logo-item">APPLE</span>
-            <span className="partner-logo-item">UBER</span>
-          </div>
-        </div>
-      </section>
 
       {/* ⚙️ FEATURE SECTION */}
       <section className="features container">
@@ -153,7 +199,7 @@ const Home = () => {
       </section>
 
       {/* ⚙️ HOW IT WORKS SECTION */}
-      <section className="container" style={{ marginBottom: '100px' }}>
+      <section className="container" style={{ marginBottom: '30px', marginTop: '20px' }}>
         <div className="section-header text-center">
           <h2>How RideShare Works</h2>
           <p>Three simple steps to start saving money and cutting down traffic.</p>
@@ -180,35 +226,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* 🌱 ECO-FRIENDLY ENVIRONMENTAL SAVINGS SECTION */}
-      <section className="eco-friendly-section container">
-        <div className="glass-panel" style={{ padding: '48px 40px' }}>
-          <div className="section-header text-center" style={{ marginBottom: '24px' }}>
-            <h2 style={{ color: 'var(--vibrant-cyan)' }}>Our Eco-Friendly Impact</h2>
-            <p>By traveling together, we save fuel and restore clean air to our cities.</p>
-          </div>
-
-          <div className="eco-impact-grid">
-            <div className="eco-impact-card">
-              <h4>12,450 kg</h4>
-              <strong style={{ display: 'block', color: 'white', margin: '6px 0' }}>CO₂ Emissions Saved</strong>
-              <p style={{ fontSize: '0.85rem' }}>Equal to planting over 500 mature trees in urban cities.</p>
-            </div>
-            
-            <div className="eco-impact-card">
-              <h4>4,890 Liters</h4>
-              <strong style={{ display: 'block', color: 'white', margin: '6px 0' }}>Fuel Conserved</strong>
-              <p style={{ fontSize: '0.85rem' }}>Reducing fuel usage and lowering travel costs for everyone.</p>
-            </div>
-
-            <div className="eco-impact-card">
-              <h4>25,000+</h4>
-              <strong style={{ display: 'block', color: 'white', margin: '6px 0' }}>Shared Kilometers</strong>
-              <p style={{ fontSize: '0.85rem' }}>Shortening traffic queues and cleaning up main roads.</p>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* 📱 DOWNLOAD APP MOCKUPS SECTION */}
       <section className="download-app-section container">
@@ -220,18 +237,18 @@ const Home = () => {
             </p>
             
             <div className="download-badges-row">
-              <a href="#playstore" className="btn-store" onClick={(e) => { e.preventDefault(); alert("App Store Link simulated!"); }}>
+              <Link to="/coming-soon" className="btn-store">
                 <div style={{ textAlign: 'left' }}>
                   <span style={{ fontSize: '0.65rem', display: 'block', textTransform: 'uppercase', color: 'var(--text-muted)' }}>Get it on</span>
                   <span style={{ fontSize: '1rem', fontWeight: 800 }}>Google Play</span>
                 </div>
-              </a>
-              <a href="#appstore" className="btn-store" onClick={(e) => { e.preventDefault(); alert("App Store Link simulated!"); }}>
+              </Link>
+              <Link to="/coming-soon" className="btn-store">
                 <div style={{ textAlign: 'left' }}>
                   <span style={{ fontSize: '0.65rem', display: 'block', textTransform: 'uppercase', color: 'var(--text-muted)' }}>Download on the</span>
                   <span style={{ fontSize: '1rem', fontWeight: 800 }}>App Store</span>
                 </div>
-              </a>
+              </Link>
             </div>
           </div>
 
@@ -240,55 +257,84 @@ const Home = () => {
           </div>
         </div>
       </section>
-
-      {/* 🗣 CLIENT TESTIMONIALS */}
+      {/* 💬 TESTIMONIALS SECTION */}
       <section className="testimonials-section container">
         <div className="section-header text-center">
-          <h2>Loved by Travelers</h2>
-          <p>Read what our riders and drivers say about the RideShare experience.</p>
+          <h2>Loved by Commuters Everywhere</h2>
+          <p>Join thousands of happy riders and drivers saving time and money daily.</p>
         </div>
 
         <div className="testimonials-grid">
           <div className="testimonial-card">
-            <p className="testimonial-quote">
-              "Splitting Chandigarh-Delhi travel costs with other colleagues saved me over ₹4,000 last month. Highly recommended platform!"
-            </p>
+            <div className="testimonial-quote">
+              "RideShare completely changed how I commute to work. I'm saving almost ₹4000 a month on fuel, and I've made some great friends along the way!"
+            </div>
             <div className="testimonial-profile">
-              <div className="testimonial-avatar">RK</div>
+              <div className="testimonial-avatar">A</div>
               <div>
-                <strong style={{ display: 'block', color: 'white', fontSize: '0.9rem' }}>Rohan Kapoor</strong>
-                <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>Daily Passenger</span>
+                <h4 style={{ fontSize: '1rem', color: 'white', fontWeight: '700', margin: '0 0 2px 0' }}>Aarav Patel</h4>
+                <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Daily Commuter</span>
               </div>
             </div>
           </div>
 
           <div className="testimonial-card">
-            <p className="testimonial-quote">
-              "Verifying riders gives me absolute peace of mind. Offering empty seats on my weekend trips pays for my fuel costs easily."
-            </p>
+            <div className="testimonial-quote">
+              "As a driver, I love the verified profiles. It makes me feel safe knowing exactly who is getting in my car. The instant payment feature is a lifesaver."
+            </div>
             <div className="testimonial-profile">
-              <div className="testimonial-avatar">AS</div>
+              <div className="testimonial-avatar" style={{ background: 'linear-gradient(135deg, var(--orange-accent), var(--vibrant-cyan))' }}>N</div>
               <div>
-                <strong style={{ display: 'block', color: 'white', fontSize: '0.9rem' }}>Ananya Sharma</strong>
-                <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>Verified Driver</span>
+                <h4 style={{ fontSize: '1rem', color: 'white', fontWeight: '700', margin: '0 0 2px 0' }}>Neha Sharma</h4>
+                <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Verified Driver</span>
               </div>
             </div>
           </div>
 
           <div className="testimonial-card">
-            <p className="testimonial-quote">
-              "No cash arguments, clear dashboard statistics, and eco-friendly cost sharing. The layout is beautiful and simple to navigate."
-            </p>
+            <div className="testimonial-quote">
+              "The live map tracking is flawless. It feels exactly like booking a premium cab, but at a fraction of the cost. Highly recommend this for weekend trips!"
+            </div>
             <div className="testimonial-profile">
-              <div className="testimonial-avatar">MD</div>
+              <div className="testimonial-avatar" style={{ background: 'linear-gradient(135deg, var(--vibrant-cyan), var(--electric-blue))' }}>R</div>
               <div>
-                <strong style={{ display: 'block', color: 'white', fontSize: '0.9rem' }}>Manish Das</strong>
-                <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>Regular Rider</span>
+                <h4 style={{ fontSize: '1rem', color: 'white', fontWeight: '700', margin: '0 0 2px 0' }}>Rohan Desai</h4>
+                <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Weekend Traveler</span>
               </div>
             </div>
           </div>
         </div>
       </section>
+
+      {/* 🌿 ECO-FRIENDLY IMPACT SECTION */}
+      <section className="eco-friendly-section container">
+        <div className="section-header text-center">
+          <h2>Our Environmental Impact</h2>
+          <p>Every shared ride contributes to a greener, cleaner planet for future generations.</p>
+        </div>
+
+        <div className="eco-impact-grid">
+          <div className="eco-impact-card">
+            <h4>500+</h4>
+            <span style={{ fontSize: '1rem', color: 'var(--text-secondary)' }}>Tons of CO2 Saved</span>
+          </div>
+          <div className="eco-impact-card">
+            <h4>12,000+</h4>
+            <span style={{ fontSize: '1rem', color: 'var(--text-secondary)' }}>Trees Planted Equivalent</span>
+          </div>
+          <div className="eco-impact-card">
+            <h4>15M+</h4>
+            <span style={{ fontSize: '1rem', color: 'var(--text-secondary)' }}>Liters of Fuel Saved</span>
+          </div>
+        </div>
+      </section>
+
+      {/* ❓ QUERY / FAQ SECTION */}
+      <section className="query-section-wrapper container">
+        <Query isEmbedded={true} />
+      </section>
+
+
 
     </div>
   );

@@ -1,3 +1,56 @@
+/* 🔮 Animated Orbs for Driver Dashboard */
+.driver-page-wrapper {
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh;
+}
+
+.moving-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  z-index: -1;
+  opacity: 0.4;
+  animation: floatOrb 20s infinite alternate ease-in-out;
+}
+
+.orb-1 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.4), transparent);
+  top: 10%;
+  left: -100px;
+  animation-duration: 25s;
+}
+
+.orb-2 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(6, 182, 212, 0.3), transparent);
+  bottom: 20%;
+  right: -150px;
+  animation-duration: 30s;
+  animation-delay: -5s;
+}
+
+.orb-3 {
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.2), transparent);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation-duration: 35s;
+}
+
+@keyframes floatOrb {
+  0% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(50px, -50px) scale(1.1); }
+  66% { transform: translate(-30px, 30px) scale(0.9); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+/* Dashboard Grid */
 .driver-dashboard-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -11,16 +64,34 @@
   }
 }
 
-.driver-form-container {
+/* Glass Panels */
+.driver-form-container, .driver-rides-container {
   padding: 36px;
-  background: var(--surface-card);
-  border: 1px solid rgba(255, 255, 255, 0.04);
+  background: rgba(15, 23, 42, 0.5);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.driver-rides-container {
-  padding: 36px;
-  background: var(--surface-card);
-  border: 1px solid rgba(255, 255, 255, 0.04);
+.driver-form-container:hover, .driver-rides-container:hover {
+  border-color: rgba(6, 182, 212, 0.2);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+}
+
+/* Inputs in Driver Dashboard */
+.input-field {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.3s ease;
+  color: white;
+}
+
+.input-field:focus {
+  background: rgba(15, 23, 42, 0.7);
+  border-color: var(--vibrant-cyan);
+  box-shadow: 0 0 0 4px rgba(6, 182, 212, 0.15);
 }
 
 /* Custom posted rides list */
@@ -31,13 +102,15 @@
 }
 
 .driver-ride-card {
-  background: rgba(8, 11, 17, 0.45);
-  border: 1px solid rgba(255, 255, 255, 0.04);
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 16px;
   padding: 24px;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
   overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
 }
 
 .driver-ride-card::before {
@@ -47,14 +120,20 @@
   top: 0;
   bottom: 0;
   width: 4px;
-  background: linear-gradient(180deg, var(--primary), var(--secondary));
+  background: linear-gradient(180deg, var(--electric-blue), var(--vibrant-cyan));
+  opacity: 0;
+  transition: opacity 0.4s ease;
 }
 
 .driver-ride-card:hover {
-  transform: translateY(-2px);
-  border-color: rgba(99, 102, 241, 0.15);
-  background: rgba(8, 11, 17, 0.6);
-  box-shadow: var(--shadow-md);
+  transform: translateY(-4px);
+  border-color: rgba(6, 182, 212, 0.3);
+  background: rgba(15, 23, 42, 0.8);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3), 0 0 20px rgba(6, 182, 212, 0.1);
+}
+
+.driver-ride-card:hover::before {
+  opacity: 1;
 }
 
 .driver-ride-header {
@@ -69,13 +148,15 @@
   font-size: 1.05rem;
   font-weight: 700;
   color: white;
+  letter-spacing: 0.3px;
 }
 
 .driver-ride-price {
-  color: var(--secondary);
+  color: var(--orange-accent);
   font-weight: 800;
   font-size: 1.15rem;
   font-family: var(--font-heading);
+  text-shadow: 0 0 10px rgba(249, 115, 22, 0.3);
 }
 
 .driver-ride-details {
@@ -84,33 +165,112 @@
   align-items: center;
   font-size: 0.88rem;
   color: var(--text-secondary);
-  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  border-top: 1px dashed rgba(255, 255, 255, 0.1);
   padding-top: 14px;
 }
 
 .driver-ride-detail-item {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
+  font-weight: 500;
 }
 
 .driver-status-badge {
   text-transform: uppercase;
   font-size: 0.75rem;
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: 0.05em;
-  padding: 4px 10px;
+  padding: 6px 14px;
   border-radius: 20px;
+  box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.05);
 }
 
 .driver-status-badge.active {
-  background: rgba(16, 185, 129, 0.1);
-  color: var(--secondary);
-  border: 1px solid rgba(16, 185, 129, 0.15);
+  background: rgba(6, 182, 212, 0.15) !important;
+  color: var(--vibrant-cyan) !important;
+  border: 1px solid rgba(6, 182, 212, 0.3) !important;
+  box-shadow: 0 0 10px rgba(6, 182, 212, 0.1);
 }
 
 .driver-status-badge.pending {
-  background: rgba(245, 158, 11, 0.1);
-  color: #f59e0b;
-  border: 1px solid rgba(245, 158, 11, 0.15);
+  background: rgba(239, 68, 68, 0.15) !important;
+  color: #f87171 !important;
+  border: 1px solid rgba(239, 68, 68, 0.3) !important;
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.1);
+}
+
+/* 📡 Live Matching Radar */
+.live-matching-status {
+  margin-top: 24px;
+  padding: 16px;
+  background: rgba(6, 182, 212, 0.05);
+  border: 1px solid rgba(6, 182, 212, 0.15);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.radar-spinner {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+}
+
+.radar-circle {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(6, 182, 212, 0.4);
+  box-shadow: inset 0 0 10px rgba(6, 182, 212, 0.2);
+}
+
+.radar-circle::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 4px; height: 4px;
+  background: var(--vibrant-cyan);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 8px var(--vibrant-cyan);
+}
+
+.radar-sweep {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  border-radius: 50%;
+  background: conic-gradient(transparent 270deg, rgba(6, 182, 212, 0.6) 360deg);
+  animation: radarSpin 2s linear infinite;
+}
+
+@keyframes radarSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.matching-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.pulse-text {
+  color: var(--vibrant-cyan);
+  font-weight: 700;
+  font-size: 0.9rem;
+  animation: textPulse 2s ease-in-out infinite;
+}
+
+@keyframes textPulse {
+  0% { opacity: 0.7; }
+  50% { opacity: 1; text-shadow: 0 0 8px rgba(6, 182, 212, 0.5); }
+  100% { opacity: 0.7; }
+}
+
+.matching-stats {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  margin-top: 4px;
 }
