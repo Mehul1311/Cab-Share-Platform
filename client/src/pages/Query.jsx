@@ -36,13 +36,13 @@ const Query = ({ isEmbedded = false }) => {
   };
 
   return (
-    <div className="container animate-fade-in" style={{ paddingTop: isEmbedded ? '20px' : '80px', paddingBottom: isEmbedded ? '20px' : '90px', position: 'relative', minHeight: isEmbedded ? 'auto' : '100vh' }}>
+    <div className="container animate-fade-in" style={{ paddingTop: isEmbedded ? '0px' : '60px', paddingBottom: isEmbedded ? '0px' : '60px', position: 'relative', minHeight: 'fit-content' }}>
       
       {/* Decorative blurred background blobs */}
       <div className="contact-blob contact-blob-1" style={{ top: '0', right: '-10%', width: '400px', height: '400px', opacity: 0.1 }}></div>
       <div className="contact-blob contact-blob-2" style={{ bottom: '10%', left: '-10%', width: '400px', height: '400px', opacity: 0.1, background: 'var(--orange-accent)' }}></div>
 
-      <div style={{ textAlign: 'center', marginBottom: '56px', position: 'relative', zIndex: 10 }}>
+      <div style={{ textAlign: 'center', marginBottom: '24px', position: 'relative', zIndex: 10 }}>
         <h1 style={{ fontSize: '2.8rem', fontWeight: 900, color: 'var(--text-primary)', fontFamily: 'var(--font-heading)', marginBottom: '16px' }}>
           Ride Share Help Centre
         </h1>
@@ -74,7 +74,7 @@ const Query = ({ isEmbedded = false }) => {
         })}
       </div>
 
-      <div style={{ textAlign: 'center', marginTop: '56px', position: 'relative', zIndex: 10 }}>
+      <div style={{ textAlign: 'center', marginTop: '32px', position: 'relative', zIndex: 10 }}>
         <button className="btn-read-more-help">
           Browse All Help Topics
         </button>
@@ -86,7 +86,7 @@ const Query = ({ isEmbedded = false }) => {
           margin: 0 auto;
           display: flex;
           flex-direction: column;
-          gap: 16px;
+          gap: 10px;
           position: relative;
           z-index: 10;
         }
@@ -116,7 +116,7 @@ const Query = ({ isEmbedded = false }) => {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          padding: 24px;
+          padding: 16px 20px;
         }
 
         .query-accordion-header h3 {
@@ -146,7 +146,7 @@ const Query = ({ isEmbedded = false }) => {
         }
 
         .query-accordion-body {
-          padding: 0 24px;
+          padding: 0 20px;
           transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
           overflow: hidden;
         }
@@ -156,7 +156,7 @@ const Query = ({ isEmbedded = false }) => {
           font-size: 1rem;
           line-height: 1.6;
           margin-top: 0;
-          margin-bottom: 24px;
+          margin-bottom: 16px;
         }
 
         .btn-read-more-help {

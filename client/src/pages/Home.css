@@ -64,7 +64,7 @@
   line-height: 1.05;
   margin-bottom: 24px;
   letter-spacing: -0.04em;
-  color: white;
+  color: var(--text-primary);
   text-shadow: 0 0 40px rgba(0, 229, 255, 0.3);
 }
 
@@ -113,10 +113,19 @@
 .dashboard-mockup-3d {
   margin: 60px auto 0;
   max-width: 700px;
-  width: 100%;
+  width: 90%;
   position: relative;
   perspective: 1200px;
   transform-style: preserve-3d;
+}
+
+@media (max-width: 768px) {
+  .hero-text h1 {
+    font-size: 2.8rem;
+  }
+  .mockup-sidebar {
+    display: none;
+  }
 }
 
 .mockup-header {
@@ -506,7 +515,7 @@
 
 .partner-logo-item:hover {
   opacity: 0.9;
-  color: white;
+  color: var(--text-primary);
 }
 
 /* How it works grid */
@@ -877,12 +886,12 @@
 }
 
 /* Tighter Home Page Sections */
-.features, .eco-friendly-section, .download-app-section, .testimonials-section {
+.features, .eco-friendly-section, .download-app-section, .testimonials-section, .safety-trust-section {
   padding-top: 30px;
   padding-bottom: 30px;
 }
 
-.query-section-wrapper {
+.safety-trust-section {
   margin-top: 20px;
   margin-bottom: 40px;
   position: relative;

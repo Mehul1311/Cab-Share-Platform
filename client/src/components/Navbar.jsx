@@ -84,7 +84,7 @@ const Navbar = () => {
       localStorage.removeItem('userName');
       localStorage.removeItem('userPhoto');
       setShowProfileMenu(false);
-      navigate('/');
+      window.location.href = '/';
     } catch (error) {
       console.error('Logout error:', error);
     }

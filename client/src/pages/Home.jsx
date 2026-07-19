@@ -5,10 +5,11 @@ import {
   Shield, 
   CreditCard, 
   Clock, 
-  ArrowRight
+  ArrowRight,
+  PhoneCall,
+  Star
 } from 'lucide-react';
 import { MobileAppIllustration } from '../components/Illustrations';
-import Query from './Query';
 import './Home.css';
 
 const Home = () => {
@@ -329,9 +330,38 @@ const Home = () => {
         </div>
       </section>
 
-      {/* ❓ QUERY / FAQ SECTION */}
-      <section className="query-section-wrapper container">
-        <Query isEmbedded={true} />
+      {/* 🛡️ SAFETY & TRUST SECTION */}
+      <section className="safety-trust-section container">
+        <div className="section-header text-center">
+          <h2>Safety First. Always.</h2>
+          <p>Your well-being is our top priority. We've built industry-leading safety features into every ride.</p>
+        </div>
+        
+        <div className="feature-grid">
+          <div className="feature-card glass-panel">
+            <div className="feature-icon"><Shield size={24} /></div>
+            <h3>Verified Community</h3>
+            <p>Every driver and rider must pass a stringent ID and liveness check before using the platform.</p>
+          </div>
+          
+          <div className="feature-card glass-panel">
+            <div className="feature-icon"><MapPin size={24} /></div>
+            <h3>Live GPS Tracking</h3>
+            <p>Share your live route with friends and family. We track every ride from start to finish.</p>
+          </div>
+          
+          <div className="feature-card glass-panel">
+            <div className="feature-icon"><PhoneCall size={24} /></div>
+            <h3>24/7 Incident Support</h3>
+            <p>Our dedicated safety team is available around the clock to assist you with any emergencies.</p>
+          </div>
+
+          <div className="feature-card glass-panel">
+            <div className="feature-icon"><Star size={24} /></div>
+            <h3>Strict Rating System</h3>
+            <p>We monitor post-ride ratings closely to ensure only the best drivers and riders stay active.</p>
+          </div>
+        </div>
       </section>
 
 
