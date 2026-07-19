@@ -138,7 +138,7 @@ const Auth = () => {
   };
 
   return (
-    <div className="container auth-page-container animate-fade-in">
+    <div className="container auth-page-container animate-rotate-scale">
       {/* Background Animated Gradient Blobs */}
       <div className="floating-blob blob-blue"></div>
       <div className="floating-blob blob-cyan"></div>

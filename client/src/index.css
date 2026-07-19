@@ -37,12 +37,58 @@
   --font-body: 'Plus Jakarta Sans', sans-serif;
 }
 
+.light-theme {
+  --primary: #ff6b00; /* Vibrant Apricot */
+  --primary-hover: #e65c00;
+  --secondary: #f59e0b; /* Vibrant Citrus */
+  --electric-blue: #2563EB; /* Vibrant Blueberry/Electric Blue */
+  
+  --background: #fffbeb; /* warm bright ivory */
+  --surface: rgba(255, 255, 255, 0.9);
+  --surface-card: rgba(255, 255, 255, 0.85);
+  --text-primary: #1e293b; /* dark slate */
+  --text-secondary: #475569; /* slate */
+  --text-muted: #64748b; /* muted slate */
+
+  --border: rgba(255, 107, 0, 0.18);
+  --border-hover: rgba(255, 107, 0, 0.4);
+  --glass-bg: rgba(255, 255, 255, 0.85);
+  --glass-border: rgba(255, 107, 0, 0.18);
+
+  --shadow-sm: 0 2px 8px rgba(255, 107, 0, 0.06);
+  --shadow-md: 0 12px 30px rgba(255, 107, 0, 0.12);
+  --shadow-lg: 0 20px 48px rgba(255, 107, 0, 0.18);
+  --shadow-glow: 0 0 30px rgba(255, 107, 0, 0.25);
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
   font-family: var(--font-body);
-  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+body, 
+.navbar, 
+.footer-wrapper, 
+.glass-panel, 
+.profile-dropdown, 
+.mobile-sidebar-drawer, 
+.step-card, 
+.testimonial-card, 
+.feature-card, 
+.info-card-item, 
+.mini-map-card, 
+.auth-split-wrapper, 
+.auth-form-side, 
+.newsletter-input, 
+.input-field,
+.btn-secondary,
+.nav-link-custom {
+  transition: background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+              border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+              color 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+              box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 body {
@@ -55,6 +101,32 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
   line-height: 1.6;
+}
+
+body.light-theme {
+  background-color: #fffbeb;
+  background-image:
+    radial-gradient(circle at 10% 20%, rgba(255, 107, 0, 0.12) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(37, 99, 235, 0.12) 0%, transparent 40%),
+    linear-gradient(135deg, #ffedd5 0%, #fef3c7 50%, #dbeafe 100%);
+  background-attachment: fixed;
+}
+
+body.light-theme .input-field {
+  background: rgba(255, 255, 255, 0.8);
+  border-color: rgba(15, 23, 42, 0.12);
+}
+
+body.light-theme .input-field:focus {
+  background: #ffffff;
+}
+
+body.light-theme .btn-secondary {
+  background: rgba(15, 23, 42, 0.04);
+}
+
+body.light-theme .btn-secondary:hover {
+  background: rgba(15, 23, 42, 0.08);
 }
 
 a {
@@ -121,7 +193,7 @@ a {
 
 .main-content {
   flex: 1;
-  padding: 100px 0 60px;
+  padding: 0 0 60px;
 }
 
 /* Typography */
@@ -378,4 +450,74 @@ p {
   background: rgba(239, 68, 68, 0.15);
   color: #f87171;
   border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+body.light-theme .about-page-container h1,
+body.light-theme .about-page-container h3,
+body.light-theme .about-page-container h4 {
+  color: var(--text-primary) !important;
+}
+
+/* Unique Entrance Animations */
+@keyframes zoomFade {
+  from { opacity: 0; transform: scale(0.97); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slideLeft {
+  from { opacity: 0; transform: translateX(-40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideRight {
+  from { opacity: 0; transform: translateX(40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes rotateScale {
+  from { opacity: 0; transform: scale(0.95) rotate(-1deg); }
+  to { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes clipReveal {
+  from { opacity: 0; clip-path: inset(0 50% 0 50%); }
+  to { opacity: 1; clip-path: inset(0 0 0 0); }
+}
+
+@keyframes skewReveal {
+  from { opacity: 0; transform: skewY(2deg) translateY(20px); }
+  to { opacity: 1; transform: skewY(0) translateY(0); }
+}
+
+.animate-zoom-fade {
+  animation: zoomFade 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-slide-left {
+  animation: slideLeft 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-slide-right {
+  animation: slideRight 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-rotate-scale {
+  animation: rotateScale 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-slide-down {
+  animation: slideDown 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-clip-reveal {
+  animation: clipReveal 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-skew-reveal {
+  animation: skewReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }

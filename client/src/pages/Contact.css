@@ -512,3 +512,72 @@
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+/* Light theme contact overrides */
+body.light-theme .contact-page-container {
+  background: transparent !important;
+}
+
+body.light-theme .contact-info-panel,
+body.light-theme .contact-form-panel {
+  background: var(--surface-card);
+  border-color: var(--border);
+}
+
+body.light-theme .contact-info-header h2,
+body.light-theme .info-val {
+  color: var(--text-primary);
+}
+
+body.light-theme .info-card-item {
+  background: var(--surface);
+  border-color: var(--border);
+}
+
+body.light-theme .info-card-item:hover {
+  background: rgba(255, 255, 255, 0.85);
+  border-color: rgba(6, 182, 212, 0.2);
+}
+
+body.light-theme .mini-map-card {
+  background: var(--surface);
+  border-color: var(--border);
+}
+
+body.light-theme .mini-map-grid {
+  background-image: 
+    radial-gradient(rgba(15, 23, 42, 0.02) 1px, transparent 0),
+    linear-gradient(rgba(15, 23, 42, 0.008) 1px, transparent 0),
+    linear-gradient(90deg, rgba(15, 23, 42, 0.008) 1px, transparent 0);
+}
+
+body.light-theme .map-node {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+body.light-theme .quick-help-section .help-glass-card {
+  background: var(--surface-card);
+  border-color: var(--border);
+}
+
+body.light-theme .quick-help-section .help-glass-card:hover {
+  background: rgba(255, 255, 255, 0.85);
+  border-color: var(--electric-blue);
+  box-shadow: var(--shadow-md);
+}
+
+body.light-theme .quick-help-section .help-glass-card h4 {
+  color: var(--text-primary);
+}
+
+body.light-theme .contact-blob {
+  opacity: 0.05 !important;
+}
+
+body.light-theme .contact-blob-1 {
+  background: var(--electric-blue) !important;
+}
+
+body.light-theme .contact-blob-2 {
+  background: var(--primary) !important;
+}

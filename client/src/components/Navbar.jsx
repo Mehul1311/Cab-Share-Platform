@@ -136,8 +136,12 @@ const Navbar = () => {
         <div className="desktop-menu">
           <Link to="/" className={`nav-link-custom ${isActive('/')}`} onClick={handleLinkClick}>Home</Link>
           <Link to="/about" className={`nav-link-custom ${isActive('/about')}`} onClick={handleLinkClick}>About</Link>
-          <Link to="/user-dashboard" className={`nav-link-custom ${isActive('/user-dashboard')}`} onClick={handleLinkClick}>Find Ride</Link>
-          <Link to="/driver-dashboard" className={`nav-link-custom ${isActive('/driver-dashboard')}`} onClick={handleLinkClick}>Offer Ride</Link>
+          {isLoggedIn && (
+            <>
+              <Link to="/user-dashboard" className={`nav-link-custom ${isActive('/user-dashboard')}`} onClick={handleLinkClick}>Find Ride</Link>
+              <Link to="/driver-dashboard" className={`nav-link-custom ${isActive('/driver-dashboard')}`} onClick={handleLinkClick}>Offer Ride</Link>
+            </>
+          )}
           <Link to="/contact" className={`nav-link-custom ${isActive('/contact')}`} onClick={handleLinkClick}>Contact</Link>
           
           {isLoggedIn ? (
@@ -198,7 +202,7 @@ const Navbar = () => {
 
           {/* Theme Toggle Button */}
           <button type="button" onClick={toggleTheme} className="theme-toggle-btn" title="Toggle theme" style={{ marginLeft: '8px' }}>
-            {theme === 'dark' ? <Sun size={18} style={{ pointerEvents: 'none' }} /> : <Moon size={18} style={{ pointerEvents: 'none' }} />}
+            {theme === 'dark' ? <Moon size={18} style={{ pointerEvents: 'none' }} /> : <Sun size={18} style={{ pointerEvents: 'none' }} />}
           </button>
         </div>
 
@@ -224,13 +228,17 @@ const Navbar = () => {
             <div className="mobile-drawer-links">
               <Link to="/" className={`nav-link-custom ${isActive('/')}`} onClick={handleLinkClick}>Home</Link>
               <Link to="/about" className={`nav-link-custom ${isActive('/about')}`} onClick={handleLinkClick}>About</Link>
-              <Link to="/user-dashboard" className={`nav-link-custom ${isActive('/user-dashboard')}`} onClick={handleLinkClick}>Find Ride</Link>
-              <Link to="/driver-dashboard" className={`nav-link-custom ${isActive('/driver-dashboard')}`} onClick={handleLinkClick}>Offer Ride</Link>
+              {isLoggedIn && (
+                <>
+                  <Link to="/user-dashboard" className={`nav-link-custom ${isActive('/user-dashboard')}`} onClick={handleLinkClick}>Find Ride</Link>
+                  <Link to="/driver-dashboard" className={`nav-link-custom ${isActive('/driver-dashboard')}`} onClick={handleLinkClick}>Offer Ride</Link>
+                </>
+              )}
               <Link to="/contact" className={`nav-link-custom ${isActive('/contact')}`} onClick={handleLinkClick}>Contact</Link>
               
               {/* Mobile Theme Toggle Button */}
               <button type="button" onClick={toggleTheme} className="theme-toggle-btn mobile-theme-btn" title="Toggle theme">
-                {theme === 'dark' ? <Sun size={18} style={{ pointerEvents: 'none' }} /> : <Moon size={18} style={{ pointerEvents: 'none' }} />}
+                {theme === 'dark' ? <Moon size={18} style={{ pointerEvents: 'none' }} /> : <Sun size={18} style={{ pointerEvents: 'none' }} />}
                 <span>{theme === 'dark' ? 'Bright Theme' : 'Dark Theme'}</span>
               </button>
 
@@ -246,7 +254,7 @@ const Navbar = () => {
                       </div>
                     )}
                     <div style={{ display: 'flex', flexDirection: 'column' }}>
-                      <span style={{ fontSize: '0.88rem', fontWeight: 700, color: 'white' }}>{userName}</span>
+                      <span className="mobile-drawer-username" style={{ fontSize: '0.88rem', fontWeight: 700, color: 'white' }}>{userName}</span>
                       <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>{role}</span>
                     </div>
                   </div>

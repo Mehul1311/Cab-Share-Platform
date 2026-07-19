@@ -88,7 +88,7 @@ const AdminDashboard = () => {
   const filteredUsers = users.filter(u => filter === 'All' || u.role === filter);
 
   return (
-    <div className="container animate-fade-in" style={{ paddingTop: '120px', paddingBottom: '80px' }}>
+    <div className="container animate-clip-reveal" style={{ paddingTop: '120px', paddingBottom: '80px' }}>
       <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '20px', marginBottom: '36px' }}>
         <h1 style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           <ShieldAlert size={36} color="var(--primary)" style={{ filter: 'drop-shadow(0 0 10px rgba(99,102,241,0.4))' }} /> 

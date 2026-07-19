@@ -72,11 +72,11 @@ const Contact = () => {
   };
 
   return (
-    <div className="container contact-page-container animate-fade-in">
+    <div className="container contact-page-container animate-slide-right">
       
       {/* Background Blobs */}
-      <div className="contact-blob contact-blob-1" style={{ background: 'var(--electric-blue)' }}></div>
-      <div className="contact-blob contact-blob-2" style={{ background: 'var(--soft-purple)' }}></div>
+      <div className="contact-blob contact-blob-1"></div>
+      <div className="contact-blob contact-blob-2"></div>
 
       <div className="contact-split-grid">
         

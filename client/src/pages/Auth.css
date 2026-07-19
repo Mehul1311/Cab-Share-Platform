@@ -570,3 +570,47 @@
     display: flex;
   }
 }
+
+/* Light theme auth overrides */
+body.light-theme .auth-split-wrapper {
+  background: var(--surface-card);
+  border-color: var(--border);
+  box-shadow: var(--shadow-lg);
+}
+
+body.light-theme .auth-visual-side {
+  background: linear-gradient(145deg, rgba(253, 242, 248, 0.8) 0%, rgba(224, 242, 254, 0.6) 100%);
+  border-right-color: var(--border);
+}
+
+body.light-theme .auth-visual-logo,
+body.light-theme .auth-visual-content h1 {
+  color: var(--text-primary);
+}
+
+body.light-theme .auth-form-side {
+  background: var(--surface);
+}
+
+body.light-theme .auth-form-header h2,
+body.light-theme .stat-card-num,
+body.light-theme .node-city {
+  color: var(--text-primary);
+}
+
+body.light-theme .blob-blue {
+  background: var(--electric-blue) !important;
+  opacity: 0.06 !important;
+}
+body.light-theme .blob-cyan {
+  background: var(--secondary) !important;
+  opacity: 0.06 !important;
+}
+body.light-theme .blob-purple {
+  background: var(--primary) !important;
+  opacity: 0.06 !important;
+}
+body.light-theme .blob-indigo {
+  background: var(--primary) !important;
+  opacity: 0.04 !important;
+}

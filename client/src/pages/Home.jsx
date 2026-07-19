@@ -40,7 +40,7 @@ const Home = () => {
   ];
 
   return (
-    <div className="home animate-fade-in">
+    <div className="home animate-zoom-fade">
       
       {/* 🚀 HERO SECTION */}
       <section className="hero">
@@ -105,15 +105,23 @@ const Home = () => {
       {/* 🤝 PARTNERS / TRUSTED COMPANIES STRIP */}
       <section className="partners-strip">
         <div className="container">
-          <p style={{ textAlign: 'center', color: 'var(--text-muted)', fontSize: '0.78rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '24px' }}>
+          <p style={{ textAlign: 'center', color: 'var(--text-muted)', fontSize: '0.82rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: '24px' }}>
             Collaborating with leading innovators
           </p>
-          <div className="partners-logos-flex">
-            <span className="partner-logo-item">TESLA</span>
-            <span className="partner-logo-item">GOOGLE</span>
-            <span className="partner-logo-item">STRIPE</span>
-            <span className="partner-logo-item">APPLE</span>
-            <span className="partner-logo-item">UBER</span>
+          <div className="partners-logos-track">
+            <div className="partners-logos-scroll">
+              <span className="partner-logo-item">TESLA</span>
+              <span className="partner-logo-item">GOOGLE</span>
+              <span className="partner-logo-item">STRIPE</span>
+              <span className="partner-logo-item">APPLE</span>
+              <span className="partner-logo-item">UBER</span>
+              {/* Duplicate for infinite marquee loop */}
+              <span className="partner-logo-item">TESLA</span>
+              <span className="partner-logo-item">GOOGLE</span>
+              <span className="partner-logo-item">STRIPE</span>
+              <span className="partner-logo-item">APPLE</span>
+              <span className="partner-logo-item">UBER</span>
+            </div>
           </div>
         </div>
       </section>

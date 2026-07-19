@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   Car, 
@@ -12,10 +12,20 @@ import {
   ArrowRight,
   Flag
 } from 'lucide-react';
+import { auth } from '../firebase';
+import { onAuthStateChanged } from 'firebase/auth';
 import './Footer.css';
 
 const Footer = () => {
   const [newsletterEmail, setNewsletterEmail] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setIsLoggedIn(!!user || !!localStorage.getItem('uid'));
+    });
+    return () => unsubscribe();
+  }, []);
 
   const handleNewsletterSubmit = (e) => {
     e.preventDefault();
@@ -44,14 +54,23 @@ const Footer = () => {
           <h2>Ready for Your Next Journey?</h2>
           <p>Book a ride or offer one today and become part of India's fastest-growing ride-sharing community.</p>
           <div className="footer-cta-actions">
-            <Link to="/user-dashboard" className="btn btn-primary">
-              <Car size={18} />
-              <span>Find Ride</span>
-            </Link>
-            <Link to="/driver-dashboard" className="btn btn-secondary">
-              <span>Offer Ride</span>
-              <ArrowRight size={18} />
-            </Link>
+            {isLoggedIn ? (
+              <>
+                <Link to="/user-dashboard" className="btn btn-primary">
+                  <Car size={18} />
+                  <span>Find Ride</span>
+                </Link>
+                <Link to="/driver-dashboard" className="btn btn-secondary">
+                  <span>Offer Ride</span>
+                  <ArrowRight size={18} />
+                </Link>
+              </>
+            ) : (
+              <Link to="/auth" className="btn btn-primary">
+                <span>Login / Signup</span>
+                <ArrowRight size={18} />
+              </Link>
+            )}
           </div>
         </div>
       </div>
@@ -160,8 +179,12 @@ const Footer = () => {
             <h4>Quick Links</h4>
             <Link to="/">Home</Link>
             <Link to="/about">About Us</Link>
-            <Link to="/user-dashboard">Find Ride</Link>
-            <Link to="/driver-dashboard">Offer Ride</Link>
+            {isLoggedIn && (
+              <>
+                <Link to="/user-dashboard">Find Ride</Link>
+                <Link to="/driver-dashboard">Offer Ride</Link>
+              </>
+            )}
             <Link to="/contact">Contact</Link>
             <Link to="/query">FAQ</Link>
           </div>

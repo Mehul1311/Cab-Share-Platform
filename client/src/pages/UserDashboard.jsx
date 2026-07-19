@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import api from '../utils/api';
 import { Search, CreditCard, X, AlertCircle } from 'lucide-react';
 import { FindRideIllustration } from '../components/Illustrations';
 import './UserDashboard.css';
 
 const UserDashboard = () => {
+  const navigate = useNavigate();
   const [rides, setRides] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
@@ -16,8 +18,13 @@ const UserDashboard = () => {
   const [userUpiId, setUserUpiId] = useState('');
 
   useEffect(() => {
+    const userUid = localStorage.getItem('uid');
+    if (!userUid) {
+      navigate('/auth');
+      return;
+    }
     fetchRides();
-  }, []);
+  }, [navigate]);
 
   const fetchRides = async () => {
     try {
@@ -76,7 +83,7 @@ const UserDashboard = () => {
   );
 
   return (
-    <div className="container animate-fade-in" style={{ paddingTop: '85px', paddingBottom: '90px', position: 'relative' }}>
+    <div className="container animate-slide-up" style={{ paddingTop: '85px', paddingBottom: '90px', position: 'relative' }}>
       
       {/* Split Row Header */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '40px', alignItems: 'center', marginBottom: '48px' }} className="find-ride-header-split">

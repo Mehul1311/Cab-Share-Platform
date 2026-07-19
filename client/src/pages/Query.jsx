@@ -17,7 +17,7 @@ const Query = () => {
   };
 
   return (
-    <div className="container animate-fade-in" style={{ paddingTop: '85px', paddingBottom: '90px', position: 'relative' }}>
+    <div className="container animate-skew-reveal" style={{ paddingTop: '85px', paddingBottom: '90px', position: 'relative' }}>
       
       {/* Decorative blurred background blobs */}
       <div className="contact-blob contact-blob-1" style={{ top: '-100px', right: '-100px', width: '300px', height: '300px' }}></div>
