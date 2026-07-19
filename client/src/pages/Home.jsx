@@ -18,6 +18,7 @@ import {
   Check
 } from 'lucide-react';
 import { MobileAppIllustration } from '../components/Illustrations';
+import Query from './Query';
 import './Home.css';
 
 const Home = () => {
@@ -405,6 +406,11 @@ const Home = () => {
             </div>
           </div>
         </div>
+      </section>
+
+      {/* ❓ FREQUENTLY ASKED QUESTIONS / QUERY SECTION */}
+      <section className="query-home-section container" style={{ marginBottom: '80px' }}>
+        <Query isEmbedded={true} />
       </section>
 
       {/* 🌿 ECO-FRIENDLY IMPACT SECTION */}
