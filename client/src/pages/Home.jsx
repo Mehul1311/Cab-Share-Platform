@@ -17,10 +17,13 @@ import {
   Navigation,
   Check,
   Search,
-  Car
+  Car,
+  Calculator,
+  PiggyBank,
+  Leaf,
+  Compass
 } from 'lucide-react';
 import { MobileAppIllustration } from '../components/Illustrations';
-import Query from './Query';
 import './Home.css';
 
 const Home = () => {
@@ -36,16 +39,24 @@ const Home = () => {
   // Auth state for dynamic button rendering
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  // Fare Estimator State
+  const [distance, setDistance] = useState(120);
+  const [vehicleType, setVehicleType] = useState('Sedan');
+  const [passengers, setPassengers] = useState(2);
+  const [activeRouteIndex, setActiveRouteIndex] = useState(1);
+
   useEffect(() => {
     setIsLoggedIn(!!localStorage.getItem('uid'));
   }, []);
 
-  const handleSearchClick = () => {
+  const handleSearchClick = (src, dest) => {
+    const finalSrc = src || searchSource;
+    const finalDest = dest || searchDestination;
     const uid = localStorage.getItem('uid');
     if (!uid) {
       navigate('/auth');
     } else {
-      navigate('/user-dashboard', { state: { source: searchSource, destination: searchDestination } });
+      navigate('/user-dashboard', { state: { source: finalSrc, destination: finalDest } });
     }
   };
 
@@ -56,6 +67,27 @@ const Home = () => {
     }, 3000);
     return () => clearInterval(timer);
   }, []);
+
+  // Fare Estimator Calculations
+  const ratePerKm = vehicleType === 'SUV' ? 7.5 : vehicleType === 'EV' ? 5.2 : 6.0;
+  const totalCost = Math.round(distance * ratePerKm);
+  const perSeatFare = Math.round(totalCost / (passengers + 1));
+  const monthlySavings = Math.round(perSeatFare * 22 * 1.4);
+  const co2Saved = Math.round(distance * 0.14);
+
+  const popularRoutes = [
+    { from: 'Delhi', to: 'Gurgaon', km: 32, fare: '₹90', time: '45 mins', badge: 'Commuter Hub' },
+    { from: 'Mumbai', to: 'Pune', km: 148, fare: '₹350', time: '2.5 hrs', badge: 'Most Popular' },
+    { from: 'Bangalore', to: 'Mysore', km: 144, fare: '₹320', time: '2.5 hrs', badge: 'Weekend Getaway' },
+    { from: 'Chandigarh', to: 'Shimla', km: 112, fare: '₹280', time: '3.5 hrs', badge: 'Scenic Route' }
+  ];
+
+  const handleSelectRoute = (index, route) => {
+    setActiveRouteIndex(index);
+    setDistance(route.km);
+    setSearchSource(route.from);
+    setSearchDestination(route.to);
+  };
 
   return (
     <div className="home animate-fade-in">
@@ -211,7 +243,7 @@ const Home = () => {
                     onChange={(e) => setSearchDestination(e.target.value)}
                   />
                 </div>
-                <button className="glass-search-btn" onClick={handleSearchClick} aria-label="Search Rides">
+                <button className="glass-search-btn" onClick={() => handleSearchClick()} aria-label="Search Rides">
                   <span>Search Rides</span>
                   <ArrowRight size={18} />
                 </button>
@@ -315,6 +347,152 @@ const Home = () => {
               <span className="step-hint">💰 Save Up To 50% Fare</span>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* 🧮 INTERACTIVE FARE ESTIMATOR & POPULAR ROUTES SECTION (WOW REPLACEMENT) */}
+      <section className="fare-estimator-section container">
+        <div className="estimator-wrapper glass-panel">
+          <div className="estimator-grid">
+            
+            {/* Left Column: Interactive Calculator Form */}
+            <div className="estimator-controls">
+              <div className="section-pill pill-cyan" style={{ marginBottom: '16px' }}>
+                <Calculator size={14} /> Instant Cost Calculator
+              </div>
+              <h2>Estimate Your Trip Savings</h2>
+              <p>Calculate instant fare splits and see how much you save compared to solo cabs.</p>
+
+              {/* Distance Slider */}
+              <div className="estimator-input-group">
+                <div className="input-group-header">
+                  <label>Trip Distance</label>
+                  <span className="highlight-val">{distance} km</span>
+                </div>
+                <input 
+                  type="range" 
+                  min="10" 
+                  max="300" 
+                  step="5" 
+                  value={distance} 
+                  onChange={(e) => setDistance(Number(e.target.value))}
+                  className="custom-range-slider"
+                />
+                <div className="range-marks">
+                  <span>10 km</span>
+                  <span>150 km</span>
+                  <span>300 km</span>
+                </div>
+              </div>
+
+              {/* Vehicle Type Selection */}
+              <div className="estimator-input-group">
+                <label style={{ marginBottom: '10px', display: 'block' }}>Vehicle Category</label>
+                <div className="vehicle-selector-row">
+                  {['Sedan', 'SUV', 'EV'].map((type) => (
+                    <button
+                      key={type}
+                      className={`type-btn ${vehicleType === type ? 'active' : ''}`}
+                      onClick={() => setVehicleType(type)}
+                    >
+                      {type === 'EV' ? '⚡ ' : type === 'SUV' ? '🚙 ' : '🚗 '}
+                      {type}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Passengers Count */}
+              <div className="estimator-input-group">
+                <div className="input-group-header">
+                  <label>Sharing Passengers</label>
+                  <span className="highlight-val">{passengers} Co-Riders</span>
+                </div>
+                <div className="passenger-selector-row">
+                  {[1, 2, 3].map((num) => (
+                    <button
+                      key={num}
+                      className={`passenger-btn ${passengers === num ? 'active' : ''}`}
+                      onClick={() => setPassengers(num)}
+                    >
+                      {num} {num === 1 ? 'Person' : 'People'}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Right Column: Live Savings Calculation Cards */}
+            <div className="estimator-results">
+              <div className="savings-card-primary">
+                <div className="savings-badge">ESTIMATED FARE</div>
+                <div className="fare-display-row">
+                  <span className="currency-symbol">₹</span>
+                  <span className="fare-amount">{perSeatFare}</span>
+                  <span className="fare-unit">/ seat</span>
+                </div>
+                <p className="fare-subnote">Split seamlessly between driver & co-riders</p>
+                
+                <div className="savings-metrics-grid">
+                  <div className="metric-box">
+                    <PiggyBank size={18} className="text-orange" />
+                    <div>
+                      <span className="metric-val">₹{monthlySavings.toLocaleString()}</span>
+                      <span className="metric-lbl">Monthly Savings</span>
+                    </div>
+                  </div>
+                  <div className="metric-box">
+                    <Leaf size={18} className="text-green" />
+                    <div>
+                      <span className="metric-val">{co2Saved} kg</span>
+                      <span className="metric-lbl">CO₂ Reduced</span>
+                    </div>
+                  </div>
+                </div>
+
+                <button 
+                  className="btn btn-primary w-full btn-glow" 
+                  style={{ marginTop: '24px', justifyContent: 'center' }}
+                  onClick={() => handleSearchClick(searchSource || 'Delhi', searchDestination || 'Gurgaon')}
+                >
+                  <span>Book This Shared Ride</span>
+                  <ArrowRight size={18} />
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+          {/* Popular Intercity Routes Bar */}
+          <div className="popular-routes-bar">
+            <div className="routes-bar-header">
+              <div className="routes-bar-title">
+                <Compass size={16} className="text-cyan" />
+                <span>Top Active Commute Routes</span>
+              </div>
+              <span className="routes-bar-subtitle">Click to auto-fill trip details</span>
+            </div>
+
+            <div className="routes-chip-grid">
+              {popularRoutes.map((route, idx) => (
+                <div 
+                  key={idx} 
+                  className={`route-chip ${activeRouteIndex === idx ? 'active' : ''}`}
+                  onClick={() => handleSelectRoute(idx, route)}
+                >
+                  <div className="route-chip-top">
+                    <span className="route-names">{route.from} ➔ {route.to}</span>
+                    <span className="route-badge-small">{route.badge}</span>
+                  </div>
+                  <div className="route-chip-bottom">
+                    <span>{route.km} km • {route.time}</span>
+                    <span className="route-price-tag">{route.fare}/seat</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
         </div>
       </section>
 
@@ -432,11 +610,6 @@ const Home = () => {
             </div>
           </div>
         </div>
-      </section>
-
-      {/* ❓ FREQUENTLY ASKED QUESTIONS / QUERY SECTION */}
-      <section className="query-home-section container" style={{ marginBottom: '80px' }}>
-        <Query isEmbedded={true} />
       </section>
 
       {/* 🌿 ECO-FRIENDLY IMPACT SECTION */}

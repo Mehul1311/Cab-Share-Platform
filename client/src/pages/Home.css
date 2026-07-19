@@ -1080,10 +1080,334 @@
   font-family: var(--font-heading);
 }
 
-.eco-impact-card span {
-  font-size: 0.95rem;
+/* --------------------------------------------------------------------------
+   🧮 INTERACTIVE FARE ESTIMATOR & POPULAR ROUTES WIDGET
+   -------------------------------------------------------------------------- */
+.fare-estimator-section {
+  margin-bottom: 70px;
+}
+
+.estimator-wrapper {
+  padding: 48px 40px;
+  background: rgba(15, 23, 42, 0.55);
+  border: 1px solid rgba(0, 229, 255, 0.25);
+  border-radius: 32px;
+  backdrop-filter: blur(20px);
+  box-shadow: 
+    0 24px 48px rgba(0, 0, 0, 0.5),
+    0 0 30px rgba(0, 229, 255, 0.08);
+}
+
+.estimator-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+@media (min-width: 992px) {
+  .estimator-grid {
+    grid-template-columns: 1.1fr 0.9fr;
+  }
+}
+
+.estimator-controls h2 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: white;
+  margin-bottom: 10px;
+  font-family: var(--font-heading);
+}
+
+.estimator-controls p {
   color: var(--text-secondary);
-  font-weight: 500;
+  font-size: 1.05rem;
+  margin-bottom: 28px;
+}
+
+.estimator-input-group {
+  margin-bottom: 24px;
+}
+
+.input-group-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.estimator-input-group label {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.highlight-val {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--vibrant-cyan);
+}
+
+/* Custom Range Slider */
+.custom-range-slider {
+  width: 100%;
+  height: 8px;
+  border-radius: 99px;
+  background: rgba(255, 255, 255, 0.1);
+  outline: none;
+  -webkit-appearance: none;
+}
+
+.custom-range-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--vibrant-cyan);
+  box-shadow: 0 0 15px var(--vibrant-cyan);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.custom-range-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+.range-marks {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 6px;
+}
+
+/* Vehicle Selector Buttons */
+.vehicle-selector-row, .passenger-selector-row {
+  display: flex;
+  gap: 12px;
+}
+
+.type-btn, .passenger-btn {
+  flex: 1;
+  padding: 10px 16px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  color: var(--text-secondary);
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.type-btn:hover, .passenger-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: white;
+}
+
+.type-btn.active, .passenger-btn.active {
+  background: rgba(6, 182, 212, 0.15);
+  border-color: var(--vibrant-cyan);
+  color: var(--vibrant-cyan);
+  box-shadow: 0 0 15px rgba(6, 182, 212, 0.2);
+}
+
+/* Results Card */
+.savings-card-primary {
+  padding: 36px 30px;
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 41, 59, 0.8) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 28px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
+}
+
+.savings-card-primary::before {
+  content: '';
+  position: absolute;
+  top: -60px;
+  right: -60px;
+  width: 180px;
+  height: 180px;
+  background: radial-gradient(circle, rgba(0, 229, 255, 0.2), transparent 70%);
+  pointer-events: none;
+}
+
+.savings-badge {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  padding: 4px 12px;
+  background: rgba(6, 182, 212, 0.12);
+  color: var(--vibrant-cyan);
+  border-radius: 99px;
+  margin-bottom: 12px;
+}
+
+.fare-display-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 4px;
+}
+
+.currency-symbol {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--vibrant-cyan);
+}
+
+.fare-amount {
+  font-size: 4rem;
+  font-weight: 900;
+  color: white;
+  line-height: 1;
+  font-family: var(--font-heading);
+}
+
+.fare-unit {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.fare-subnote {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  margin-top: 6px;
+  margin-bottom: 24px;
+}
+
+.savings-metrics-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.metric-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 14px;
+  text-align: left;
+}
+
+.metric-val {
+  display: block;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: white;
+  line-height: 1.1;
+}
+
+.metric-lbl {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+/* Popular Routes Bar */
+.popular-routes-bar {
+  padding-top: 32px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.routes-bar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.routes-bar-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1rem;
+  font-weight: 800;
+  color: white;
+}
+
+.routes-bar-subtitle {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.routes-chip-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+@media (min-width: 768px) {
+  .routes-chip-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1200px) {
+  .routes-chip-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.route-chip {
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.route-chip:hover, .route-chip.active {
+  background: rgba(6, 182, 212, 0.08);
+  border-color: rgba(6, 182, 212, 0.3);
+  transform: translateY(-2px);
+}
+
+.route-chip-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.route-names {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: white;
+}
+
+.route-badge-small {
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--vibrant-cyan);
+  border-radius: 99px;
+}
+
+.route-chip-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.route-price-tag {
+  font-weight: 800;
+  color: white;
 }
 
 /* --------------------------------------------------------------------------
