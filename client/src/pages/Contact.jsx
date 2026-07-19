@@ -17,7 +17,6 @@ import {
   Car,
   HelpCircle
 } from 'lucide-react';
-import { ContactIllustration } from '../components/Illustrations';
 import './Contact.css';
 
 const Contact = () => {

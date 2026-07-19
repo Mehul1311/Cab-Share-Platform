@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, Polyline } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -53,12 +53,12 @@ const destIcon = L.divIcon({
 
 const LiveMap = ({ role = 'User' }) => {
   // Demonstration Coordinates (Mumbai)
-  const routePoints = [
+  const routePoints = useMemo(() => [
     [19.0760, 72.8777], // Origin
     [19.0960, 72.8977], // Midpoint 1
     [19.1160, 72.8877], // Midpoint 2
     [19.1360, 72.9077]  // Destination
-  ];
+  ], []);
 
   const origin = routePoints[0];
   const destination = routePoints[routePoints.length - 1];
@@ -92,7 +92,7 @@ const LiveMap = ({ role = 'User' }) => {
     }, 50); // 20fps updates
 
     return () => clearInterval(interval);
-  }, []);
+  }, [routePoints]);
 
   return (
     <div className="live-map-container glass-panel">

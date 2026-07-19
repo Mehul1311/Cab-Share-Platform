@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { 
   Car, 
   Menu, 
@@ -21,7 +21,6 @@ const Navbar = () => {
   const [user, setUser] = useState(null);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
 
-  const navigate = useNavigate();
   const location = useLocation();
   const profileRef = useRef(null);
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, BookOpen, Clock } from 'lucide-react';
+import { ArrowRight, Clock } from 'lucide-react';
 import './StaticPages.css';
 
 const Blog = () => {
