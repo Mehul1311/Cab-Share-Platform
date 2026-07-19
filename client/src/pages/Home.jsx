@@ -15,7 +15,9 @@ import {
   Sparkles,
   Award,
   Navigation,
-  Check
+  Check,
+  Search,
+  Car
 } from 'lucide-react';
 import { MobileAppIllustration } from '../components/Illustrations';
 import Query from './Query';
@@ -272,22 +274,46 @@ const Home = () => {
         </div>
 
         <div className="how-it-works-grid">
-          <div className="step-card glass-panel">
-            <div className="step-number-badge">1</div>
+          <div className="step-card glass-panel step-card-1">
+            <div className="step-card-header">
+              <div className="step-icon-wrap icon-cyan">
+                <Search size={22} />
+              </div>
+              <span className="step-number-tag tag-cyan">STEP 01</span>
+            </div>
             <h3>Publish or Search</h3>
             <p>Drivers enter their route and schedule. Riders search for pickup coordinates along the path.</p>
+            <div className="step-card-footer">
+              <span className="step-hint">⚡ Instant Route Matching</span>
+            </div>
           </div>
 
-          <div className="step-card glass-panel">
-            <div className="step-number-badge">2</div>
+          <div className="step-card glass-panel step-card-2">
+            <div className="step-card-header">
+              <div className="step-icon-wrap icon-purple">
+                <Users size={22} />
+              </div>
+              <span className="step-number-tag tag-purple">STEP 02</span>
+            </div>
             <h3>Match & Connect</h3>
             <p>Review verified profiles, rating scores, vehicle specs, and confirm your seat in seconds.</p>
+            <div className="step-card-footer">
+              <span className="step-hint">🛡️ Identity & UPI Verified</span>
+            </div>
           </div>
 
-          <div className="step-card glass-panel">
-            <div className="step-number-badge">3</div>
+          <div className="step-card glass-panel step-card-3">
+            <div className="step-card-header">
+              <div className="step-icon-wrap icon-orange">
+                <Car size={22} />
+              </div>
+              <span className="step-number-tag tag-orange">STEP 03</span>
+            </div>
             <h3>Ride & Save</h3>
             <p>Meet at the pickup spot, enjoy a comfortable trip together, and split fuel costs automatically.</p>
+            <div className="step-card-footer">
+              <span className="step-hint">💰 Save Up To 50% Fare</span>
+            </div>
           </div>
         </div>
       </section>

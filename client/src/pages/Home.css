@@ -684,16 +684,19 @@
 }
 
 /* --------------------------------------------------------------------------
-   ⚙️ HOW IT WORKS SECTION
+   ⚙️ HOW IT WORKS SECTION (REDESIGNED STEP CARDS)
    -------------------------------------------------------------------------- */
 .how-it-works-section {
-  padding: 40px 0 60px;
+  padding: 50px 0 70px;
+  position: relative;
 }
 
 .how-it-works-grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 28px;
+  position: relative;
+  z-index: 1;
 }
 
 @media (min-width: 768px) {
@@ -703,38 +706,121 @@
 }
 
 .step-card {
-  padding: 36px 28px;
-  background: rgba(15, 23, 42, 0.45);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 32px 28px;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 24px;
-  text-align: center;
+  text-align: left;
   position: relative;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(12px);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  backdrop-filter: blur(16px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+  overflow: hidden;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
 }
+
+.step-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: transparent;
+  transition: all 0.3s ease;
+}
+
+.step-card-1::before { background: linear-gradient(90deg, var(--vibrant-cyan), transparent); }
+.step-card-2::before { background: linear-gradient(90deg, var(--soft-purple), transparent); }
+.step-card-3::before { background: linear-gradient(90deg, var(--orange-accent), transparent); }
 
 .step-card:hover {
-  transform: translateY(-6px);
-  border-color: rgba(99, 102, 241, 0.3);
-  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.35);
+  transform: translateY(-8px);
+  background: rgba(15, 23, 42, 0.8);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.5),
+    0 0 25px rgba(0, 229, 255, 0.12);
 }
 
-.step-number-badge {
-  position: absolute;
-  top: -16px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--orange-accent) 0%, #EA580C 100%);
-  color: white;
-  font-size: 0.95rem;
-  font-weight: 800;
+.step-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.step-icon-wrap {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 0 15px rgba(249, 115, 22, 0.5);
+  transition: transform 0.3s ease;
+}
+
+.step-card:hover .step-icon-wrap {
+  transform: scale(1.1);
+}
+
+.step-number-tag {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  padding: 4px 12px;
+  border-radius: 99px;
+  text-transform: uppercase;
+}
+
+.tag-cyan {
+  background: rgba(6, 182, 212, 0.12);
+  color: var(--vibrant-cyan);
+  border: 1px solid rgba(6, 182, 212, 0.3);
+}
+
+.tag-purple {
+  background: rgba(139, 92, 246, 0.12);
+  color: var(--soft-purple);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+}
+
+.tag-orange {
+  background: rgba(249, 115, 22, 0.12);
+  color: var(--orange-accent);
+  border: 1px solid rgba(249, 115, 22, 0.3);
+}
+
+.step-card h3 {
+  font-size: 1.3rem;
+  color: white;
+  margin: 0;
+  font-weight: 700;
+  font-family: var(--font-heading);
+}
+
+.step-card p {
+  font-size: 0.93rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  margin: 0;
+}
+
+.step-card-footer {
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.step-hint {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .step-card h3 {
