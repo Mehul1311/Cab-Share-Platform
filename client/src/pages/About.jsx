@@ -58,10 +58,44 @@ const About = () => {
 
         {/* Team block */}
         <div className="glass-panel" style={{ padding: '40px', textAlign: 'center' }}>
-          <h3 style={{ fontSize: '1.4rem', fontWeight: 800, color: 'white', marginBottom: '16px' }}>The Tech Team</h3>
-          <p style={{ fontSize: '0.98rem', color: 'var(--text-secondary)', lineHeight: 1.7, maxWidth: '600px', margin: '0 auto' }}>
+          <h3 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'white', marginBottom: '16px' }}>The Tech Team</h3>
+          <p style={{ fontSize: '0.98rem', color: 'var(--text-secondary)', lineHeight: 1.7, maxWidth: '600px', margin: '0 auto 40px auto' }}>
             We are a group of passionate technologists who believe in the power of shared mobility to reduce traffic congestion and carbon footprints. Join us in our journey to revolutionize transportation!
           </p>
+
+          <div className="team-grid">
+            <div className="team-card">
+              <div className="team-avatar-container">
+                <img src="/images/komal.png" alt="Komal Singh" className="team-avatar" />
+              </div>
+              <h4 className="team-name">Komal Singh</h4>
+              <p className="team-role">Frontend Engineer & UI Designer</p>
+            </div>
+
+            <div className="team-card">
+              <div className="team-avatar-container">
+                <img src="/images/anandu.png" alt="Anandu" className="team-avatar" />
+              </div>
+              <h4 className="team-name">Anandu</h4>
+              <p className="team-role">Full Stack Developer & Architect</p>
+            </div>
+
+            <div className="team-card">
+              <div className="team-avatar-container">
+                <img src="/images/mehul.png" alt="Mehul" className="team-avatar" />
+              </div>
+              <h4 className="team-name">Mehul</h4>
+              <p className="team-role">Backend & Database Engineer</p>
+            </div>
+
+            <div className="team-card">
+              <div className="team-avatar-container">
+                <img src="/images/pritam.jpg" alt="Pritam" className="team-avatar" />
+              </div>
+              <h4 className="team-name">Pritam</h4>
+              <p className="team-role">DevOps & System Administrator</p>
+            </div>
+          </div>
         </div>
 
       </div>
@@ -71,6 +105,68 @@ const About = () => {
           .pillar-grid {
             grid-template-columns: repeat(3, 1fr) !important;
           }
+        }
+        .team-grid {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 24px;
+          margin-top: 32px;
+        }
+        @media (min-width: 576px) {
+          .team-grid {
+            grid-template-columns: repeat(2, 1fr);
+          }
+        }
+        @media (min-width: 992px) {
+          .team-grid {
+            grid-template-columns: repeat(4, 1fr);
+          }
+        }
+        .team-card {
+          background: rgba(255, 255, 255, 0.02);
+          border: 1px solid rgba(255, 255, 255, 0.05);
+          border-radius: 16px;
+          padding: 24px 16px;
+          transition: transform 0.3s ease, background 0.3s ease;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+        .team-card:hover {
+          transform: translateY(-5px);
+          background: rgba(255, 255, 255, 0.04);
+          border-color: rgba(255, 255, 255, 0.1);
+        }
+        .team-avatar-container {
+          width: 90px;
+          height: 90px;
+          border-radius: 50%;
+          overflow: hidden;
+          margin-bottom: 16px;
+          border: 2px solid rgba(255, 255, 255, 0.1);
+          transition: border-color 0.3s ease;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        .team-card:hover .team-avatar-container {
+          border-color: var(--primary);
+        }
+        .team-avatar {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+        .team-name {
+          color: white;
+          font-size: 1.05rem;
+          font-weight: 700;
+          margin: 0 0 6px 0;
+        }
+        .team-role {
+          color: var(--text-secondary);
+          font-size: 0.8rem;
+          margin: 0;
         }
       `}</style>
 

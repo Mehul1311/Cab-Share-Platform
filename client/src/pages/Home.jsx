@@ -5,8 +5,7 @@ import {
   Shield, 
   CreditCard, 
   Clock, 
-  ArrowRight,
-  User
+  ArrowRight
 } from 'lucide-react';
 import { MobileAppIllustration } from '../components/Illustrations';
 import './Home.css';
@@ -272,7 +271,9 @@ const Home = () => {
               "Splitting Chandigarh-Delhi travel costs with other colleagues saved me over ₹4,000 last month. Highly recommended platform!"
             </p>
             <div className="testimonial-profile">
-              <div className="testimonial-avatar"><User size={20} /></div>
+              <div className="testimonial-avatar">
+                <img src="/images/komal.png" alt="Komal Singh" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              </div>
               <div>
                 <strong style={{ display: 'block', color: 'white', fontSize: '0.9rem' }}>Komal Singh</strong>
                 <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>Daily Passenger</span>
@@ -282,12 +283,29 @@ const Home = () => {
 
           <div className="testimonial-card">
             <p className="testimonial-quote">
+              "Finding verified, polite co-travelers has never been easier. I love the simple interface and prompt support from the team!"
+            </p>
+            <div className="testimonial-profile">
+              <div className="testimonial-avatar">
+                <img src="/images/anandu.png" alt="Anandu" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              </div>
+              <div>
+                <strong style={{ display: 'block', color: 'white', fontSize: '0.9rem' }}>Anandu</strong>
+                <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>Daily Commuter</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="testimonial-card">
+            <p className="testimonial-quote">
               "Verifying riders gives me absolute peace of mind. Offering empty seats on my weekend trips pays for my fuel costs easily."
             </p>
             <div className="testimonial-profile">
-              <div className="testimonial-avatar"><User size={20} /></div>
+              <div className="testimonial-avatar">
+                <img src="/images/mehul.png" alt="Mehul" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              </div>
               <div>
-                <strong style={{ display: 'block', color: 'white', fontSize: '0.9rem' }}>Mihul</strong>
+                <strong style={{ display: 'block', color: 'white', fontSize: '0.9rem' }}>Mehul</strong>
                 <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>Verified Driver</span>
               </div>
             </div>
@@ -298,23 +316,12 @@ const Home = () => {
               "No cash arguments, clear dashboard statistics, and eco-friendly cost sharing. The layout is beautiful and simple to navigate."
             </p>
             <div className="testimonial-profile">
-              <div className="testimonial-avatar"><User size={20} /></div>
+              <div className="testimonial-avatar">
+                <img src="/images/pritam.jpg" alt="Pritam" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              </div>
               <div>
                 <strong style={{ display: 'block', color: 'white', fontSize: '0.9rem' }}>Pritam</strong>
                 <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>Regular Rider</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="testimonial-card">
-            <p className="testimonial-quote">
-              "Finding verified, polite co-travelers has never been easier. I love the simple interface and prompt support from the team!"
-            </p>
-            <div className="testimonial-profile">
-              <div className="testimonial-avatar"><User size={20} /></div>
-              <div>
-                <strong style={{ display: 'block', color: 'white', fontSize: '0.9rem' }}>Anandu</strong>
-                <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>Daily Commuter</span>
               </div>
             </div>
           </div>

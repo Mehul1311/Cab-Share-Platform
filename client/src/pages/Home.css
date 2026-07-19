@@ -431,6 +431,7 @@
   color: white;
   font-weight: 800;
   font-size: 0.95rem;
+  overflow: hidden;
 }
 
 /* Feature grid and interactive card styles */
