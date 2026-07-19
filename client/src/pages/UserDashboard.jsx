@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import api from '../utils/api';
 import { Search, CreditCard, X, AlertCircle } from 'lucide-react';
-import { FindRideIllustration } from '../components/Illustrations';
+import LiveMap from '../components/LiveMap';
 import './UserDashboard.css';
 
 const UserDashboard = () => {
@@ -76,8 +76,12 @@ const UserDashboard = () => {
   );
 
   return (
-    <div className="container animate-fade-in" style={{ paddingTop: '85px', paddingBottom: '90px', position: 'relative' }}>
+    <div className="container animate-fade-in dashboard-page-wrapper" style={{ paddingTop: '85px', paddingBottom: '90px', position: 'relative', minHeight: '100vh' }}>
       
+      {/* Animated Background Orbs */}
+      <div className="moving-orb orb-1"></div>
+      <div className="moving-orb orb-2"></div>
+
       {/* Split Row Header */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '40px', alignItems: 'center', marginBottom: '48px' }} className="find-ride-header-split">
         <div>
@@ -99,11 +103,9 @@ const UserDashboard = () => {
           </div>
         </div>
 
-        {/* Vector SVG Illustration */}
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <div style={{ width: '100%', maxWidth: '320px' }}>
-            <FindRideIllustration />
-          </div>
+        {/* Live Map Component */}
+        <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+          <LiveMap role="User" />
         </div>
       </div>
 
