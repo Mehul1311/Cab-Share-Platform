@@ -12,12 +12,18 @@ import {
   CreditCard, 
   AlertCircle, 
   Sparkles, 
-  ArrowRight
+  ArrowRight,
+  MapPin,
+  Eye,
+  EyeOff,
+  ShieldCheck
 } from 'lucide-react';
+import { LoginIllustration } from '../components/Illustrations';
 import './Auth.css';
 
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({ 
     email: '', 
     password: '', 
@@ -29,6 +35,7 @@ const Auth = () => {
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
   
   const navigate = useNavigate();
 
@@ -80,9 +87,9 @@ const Auth = () => {
   const handleGoogleLogin = async () => {
     setError('');
     
-    // Check if Firebase is actually configured
+    // Check if Firebase is configured
     if (!process.env.REACT_APP_FIREBASE_API_KEY) {
-      setError('Firebase is not configured! Please add the REACT_APP_FIREBASE_* environment variables.');
+      setError('Firebase is not configured! Please configure the environment variables.');
       return;
     }
     
@@ -115,7 +122,7 @@ const Auth = () => {
       }
     } catch (err) {
       if (err.code === 'auth/unauthorized-domain') {
-        setError('Firebase Error: This domain is not authorized for Google Sign-In in Firebase authentication settings.');
+        setError('Firebase Error: This domain is not authorized for Google Sign-In.');
       } else {
         const errorMsg = err.response?.data?.message || err.response?.data?.error || err.message || 'An error occurred during Google authentication.';
         setError(errorMsg);
@@ -125,48 +132,52 @@ const Auth = () => {
     }
   };
 
+  const handleForgotPassword = (e) => {
+    e.preventDefault();
+    alert("Password reset simulation: A link has been sent to " + (formData.email || "your email."));
+  };
+
   return (
     <div className="container auth-page-container animate-fade-in">
-      <div className="auth-split-wrapper glass-panel">
+      {/* Background Animated Gradient Blobs */}
+      <div className="floating-blob blob-blue"></div>
+      <div className="floating-blob blob-cyan"></div>
+      <div className="floating-blob blob-purple"></div>
+      <div className="floating-blob blob-indigo"></div>
+
+      {/* Floating Background Map Pins */}
+      <div className="floating-pin" style={{ top: '15%', left: '8%', animationDelay: '0s' }}><MapPin size={22} /></div>
+      <div className="floating-pin" style={{ top: '75%', left: '3%', animationDelay: '2s' }}><MapPin size={20} /></div>
+      <div className="floating-pin" style={{ top: '82%', right: '5%', animationDelay: '1s' }}><MapPin size={24} /></div>
+      <div className="floating-pin" style={{ top: '12%', right: '22%', animationDelay: '3s' }}><MapPin size={18} /></div>
+
+      <div className="auth-split-wrapper">
         
-        {/* Left Column - Visual side (hidden on small devices) */}
+        {/* Left Column - Visual side (Hero) */}
         <div className="auth-visual-side">
-          <div className="auth-visual-glow"></div>
-          <div className="auth-visual-glow-sec"></div>
-          
           <div className="auth-visual-header">
             <div className="auth-visual-logo">
-              <Car size={32} className="logo-icon" />
+              <Car size={34} className="logo-icon" />
               <span>RideShare</span>
             </div>
           </div>
           
           <div className="auth-visual-content">
-            <h1>Share the Ride, <br/><span className="gradient-text">Split the Expense.</span></h1>
-            <p>Experience a premium, community-driven commuting platform connecting verified drivers and riders going the same way.</p>
+            {/* Headline */}
+            <h1>Secure Access, <br/><span className="gradient-text-vibrant">Simplified.</span></h1>
             
-            {/* Interactive Route Illustration */}
-            <div className="visual-route">
-              <div className="route-node">A</div>
-              <div className="route-connector">
-                <div className="route-car-pulse"></div>
-              </div>
-              <div className="route-node route-node-sec">B</div>
+            {/* Description */}
+            <p>Your safety is our priority. Access India's trusted peer-to-peer ride matching network with peace of mind.</p>
+            
+            {/* Custom vector illustration of secure unlock */}
+            <div style={{ maxWidth: '320px', margin: '0 auto 20px', display: 'flex', justifyContent: 'center' }}>
+              <LoginIllustration />
             </div>
-          </div>
-          
-          <div className="auth-visual-footer">
-            <div className="auth-stat">
-              <span className="auth-stat-value">12k+</span>
-              <span className="auth-stat-label">Riders</span>
-            </div>
-            <div className="auth-stat">
-              <span className="auth-stat-value">4.9/5</span>
-              <span className="auth-stat-label">Rating</span>
-            </div>
-            <div className="auth-stat">
-              <span className="auth-stat-value">100%</span>
-              <span className="auth-stat-label">Verified</span>
+            
+            {/* Trust Section */}
+            <div className="auth-trust-badge-row" style={{ display: 'flex', justifyContent: 'center', gap: '10px', alignItems: 'center', color: 'var(--orange-accent)', fontSize: '0.88rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+              <ShieldCheck size={18} />
+              <span>100% Cryptographic Identity Sync</span>
             </div>
           </div>
         </div>
@@ -174,8 +185,8 @@ const Auth = () => {
         {/* Right Column - Form side */}
         <div className="auth-form-side">
           <div className="auth-form-header">
-            <h2>{isLogin ? 'Welcome Back' : 'Create Account'}</h2>
-            <p>{isLogin ? 'Enter details to access your account' : 'Sign up to start sharing journeys'}</p>
+            <h2>{isLogin ? 'Welcome Back 👋' : 'Create Account'}</h2>
+            <p>{isLogin ? 'Login to continue your journey.' : 'Sign up to start sharing journeys'}</p>
           </div>
           
           {error && (
@@ -194,7 +205,7 @@ const Auth = () => {
                     <input 
                       type="text" 
                       className="input-field" 
-                      placeholder="John Doe"
+                      placeholder="Enter your full name"
                       value={formData.name}
                       onChange={(e) => setFormData({...formData, name: e.target.value})}
                       required={!isLogin}
@@ -223,7 +234,7 @@ const Auth = () => {
                   </div>
                 </div>
                 
-                {/* Accordion animation wrapper for Driver details */}
+                {/* Accordion driver fields */}
                 <div className={`driver-accordion ${formData.role === 'Driver' ? 'visible' : ''}`}>
                   <div className="input-group">
                     <label>Phone Number</label>
@@ -231,7 +242,7 @@ const Auth = () => {
                       <input 
                         type="tel" 
                         className="input-field" 
-                        placeholder="+1 (555) 000-0000"
+                        placeholder="Enter phone number"
                         value={formData.phoneNumber}
                         onChange={(e) => setFormData({...formData, phoneNumber: e.target.value})}
                         required={formData.role === 'Driver'}
@@ -285,7 +296,7 @@ const Auth = () => {
                 <input 
                   type="email" 
                   className="input-field" 
-                  placeholder="name@example.com"
+                  placeholder="Enter your email address"
                   value={formData.email}
                   onChange={(e) => setFormData({...formData, email: e.target.value})}
                   required 
@@ -298,11 +309,11 @@ const Auth = () => {
             
             <div className="input-group">
               <label>Password</label>
-              <div className="input-with-icon">
+              <div className="password-input-wrapper">
                 <input 
-                  type="password" 
+                  type={showPassword ? "text" : "password"} 
                   className="input-field" 
-                  placeholder="••••••••"
+                  placeholder="Enter your password"
                   value={formData.password}
                   onChange={(e) => setFormData({...formData, password: e.target.value})}
                   required 
@@ -310,12 +321,42 @@ const Auth = () => {
                 <div className="input-icon-wrapper">
                   <Lock size={18} />
                 </div>
+                <button 
+                  type="button" 
+                  className="password-toggle-btn"
+                  onClick={() => setShowPassword(!showPassword)}
+                  title={showPassword ? "Hide password" : "Show password"}
+                >
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
               </div>
             </div>
 
-            <button type="submit" className="btn btn-primary w-full" style={{ marginTop: '8px' }} disabled={loading}>
-              <span>{loading ? 'Processing...' : (isLogin ? 'Login' : 'Create Account')}</span>
-              <ArrowRight size={18} />
+            {isLogin && (
+              <div className="form-options-row">
+                <label className="checkbox-container">
+                  <input 
+                    type="checkbox" 
+                    checked={rememberMe}
+                    onChange={(e) => setRememberMe(e.target.checked)}
+                  />
+                  <span>Remember Me</span>
+                </label>
+                <a href="#forgot" className="forgot-password-link" onClick={handleForgotPassword}>
+                  Forgot Password?
+                </a>
+              </div>
+            )}
+
+            <button type="submit" className="btn-signin" disabled={loading}>
+              {loading ? (
+                <div className="button-loader"></div>
+              ) : (
+                <>
+                  <span>{isLogin ? 'Sign In' : 'Create Account'}</span>
+                  <ArrowRight size={18} />
+                </>
+              )}
             </button>
           </form>
 
@@ -328,9 +369,9 @@ const Auth = () => {
           <button 
             onClick={handleGoogleLogin} 
             disabled={loading}
-            className="google-btn"
+            className="google-white-btn"
           >
-            <svg viewBox="0 0 24 24" width="20" height="20" xmlns="http://www.w3.org/2000/svg">
+            <svg viewBox="0 0 24 24" width="20" height="20" xmlns="http://www.w3.org/2000/svg" style={{ flexShrink: 0 }}>
               <g transform="matrix(1, 0, 0, 1, 27.009001, -39.238998)">
                 <path fill="#4285F4" d="M -3.264 51.509 C -3.264 50.719 -3.334 49.969 -3.454 49.239 L -14.754 49.239 L -14.754 53.749 L -8.284 53.749 C -8.574 55.229 -9.424 56.479 -10.684 57.329 L -10.684 60.329 L -6.824 60.329 C -4.564 58.239 -3.264 55.159 -3.264 51.509 Z"/>
                 <path fill="#34A853" d="M -14.754 63.239 C -11.514 63.239 -8.804 62.159 -6.824 60.329 L -10.684 57.329 C -11.764 58.049 -13.134 58.489 -14.754 58.489 C -17.884 58.489 -20.534 56.379 -21.484 53.529 L -25.464 53.529 L -25.464 56.619 C -23.494 60.539 -19.444 63.239 -14.754 63.239 Z"/>
@@ -341,7 +382,7 @@ const Auth = () => {
             <span>Continue with Google</span>
           </button>
 
-          <p style={{ textAlign: 'center', marginTop: '32px', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
+          <p style={{ textAlign: 'center', marginTop: '36px', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
             {isLogin ? "Don't have an account? " : "Already have an account? "}
             <span 
               className="toggle-auth-span"
