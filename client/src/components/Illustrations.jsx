@@ -461,7 +461,25 @@ export const MobileAppIllustration = () => (
       
       {/* Map visual inside Mockup screen */}
       <circle cx="100" cy="140" r="60" fill="none" stroke="#2563EB" strokeWidth="1" opacity="0.2" />
-      <path d="M 30,120 Q 90,80 160,170" stroke="#06B6D4" strokeWidth="3" fill="none" opacity="0.6" />
+      <path id="routePath" d="M 30,120 Q 90,80 160,170" stroke="#06B6D4" strokeWidth="3" fill="none" opacity="0.6" />
+      
+      {/* Animated Car following the path */}
+      <g>
+        <g transform="translate(-9, -4)">
+          {/* Car body */}
+          <rect x="0" y="2" width="18" height="6" rx="2.2" fill="#F97316" />
+          <path d="M 3,2 L 6,-2 L 12,-2 L 15,2 Z" fill="#F97316" />
+          {/* Windows */}
+          <path d="M 6,-1 L 8,-1 L 8,1.5 L 4.5,1.5 Z" fill="#070A13" />
+          <path d="M 9.5,-1 L 12,-1 L 13.5,1.5 L 9.5,1.5 Z" fill="#070A13" />
+          {/* Wheels */}
+          <circle cx="4" cy="8" r="2" fill="#1E293B" stroke="#FFF" strokeWidth="0.5" />
+          <circle cx="14" cy="8" r="2" fill="#1E293B" stroke="#FFF" strokeWidth="0.5" />
+        </g>
+        <animateMotion dur="6s" repeatCount="indefinite" rotate="auto">
+          <mpath href="#routePath" />
+        </animateMotion>
+      </g>
       
       {/* Location Pin */}
       <g className="pulse-pin" transform="translate(90, 100)">

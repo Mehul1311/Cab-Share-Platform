@@ -244,7 +244,7 @@ const Footer = () => {
       {/* 🌍 SOCIAL MEDIA CIRCULAR BUTTONS */}
       <div className="footer-socials-wrapper">
         <a 
-          href="https://instagram.com" 
+          href="https://www.instagram.com/komal.singh.rajput?utm_source=qr&igsh=MTkwbWFpOGg3N3MwOQ==" 
           target="_blank" 
           rel="noopener noreferrer" 
           className="social-circle-btn instagram"
@@ -254,23 +254,13 @@ const Footer = () => {
         </a>
         
         <a 
-          href="https://linkedin.com" 
+          href="https://www.linkedin.com/in/komalsingh1512/" 
           target="_blank" 
           rel="noopener noreferrer" 
           className="social-circle-btn linkedin"
           data-tooltip="Connect on LinkedIn"
         >
           <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
-        </a>
-
-        <a 
-          href="https://facebook.com" 
-          target="_blank" 
-          rel="noopener noreferrer" 
-          className="social-circle-btn facebook"
-          data-tooltip="Like us on Facebook"
-        >
-          <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
         </a>
 
         <a 
@@ -284,7 +274,7 @@ const Footer = () => {
         </a>
 
         <a 
-          href="https://twitter.com" 
+          href="https://x.com/komalsingh512" 
           target="_blank" 
           rel="noopener noreferrer" 
           className="social-circle-btn twitter"
@@ -294,7 +284,7 @@ const Footer = () => {
         </a>
 
         <a 
-          href="https://github.com" 
+          href="https://github.com/Komalsingh1512" 
           target="_blank" 
           rel="noopener noreferrer" 
           className="social-circle-btn github"
