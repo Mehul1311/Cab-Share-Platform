@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import api from '../utils/api';
 import { Search, CreditCard, X, AlertCircle } from 'lucide-react';
 import LiveMap from '../components/LiveMap';
 import './UserDashboard.css';
 
 const UserDashboard = () => {
+  const navigate = useNavigate();
   const [rides, setRides] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
@@ -16,8 +18,13 @@ const UserDashboard = () => {
   const [userUpiId, setUserUpiId] = useState('');
 
   useEffect(() => {
+    const userUid = localStorage.getItem('uid');
+    if (!userUid) {
+      navigate('/auth');
+      return;
+    }
     fetchRides();
-  }, []);
+  }, [navigate]);
 
   const fetchRides = async () => {
     try {
@@ -76,7 +83,7 @@ const UserDashboard = () => {
   );
 
   return (
-    <div className="container animate-fade-in dashboard-page-wrapper" style={{ paddingTop: '85px', paddingBottom: '90px', position: 'relative', minHeight: '100vh' }}>
+    <div className="container animate-fade-in dashboard-page-wrapper" style={{ paddingTop: '20px', paddingBottom: '90px', position: 'relative', minHeight: '100vh' }}>
       
       {/* Animated Background Orbs */}
       <div className="moving-orb orb-1"></div>

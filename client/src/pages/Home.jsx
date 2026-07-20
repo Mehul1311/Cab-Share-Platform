@@ -90,7 +90,7 @@ const Home = () => {
   };
 
   return (
-    <div className="home animate-fade-in">
+    <div className="home animate-zoom-fade">
       
       {/* 🔮 Animated Floating Ambient Orbs */}
       <div className="moving-orb orb-1"></div>
@@ -254,6 +254,29 @@ const Home = () => {
         </div>
       </section>
 
+      {/* 🤝 PARTNERS / TRUSTED COMPANIES STRIP */}
+      <section className="partners-strip">
+        <div className="container">
+          <p style={{ textAlign: 'center', color: 'var(--text-muted)', fontSize: '0.82rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: '24px' }}>
+            Collaborating with leading innovators
+          </p>
+          <div className="partners-logos-track">
+            <div className="partners-logos-scroll">
+              <span className="partner-logo-item">TESLA</span>
+              <span className="partner-logo-item">GOOGLE</span>
+              <span className="partner-logo-item">STRIPE</span>
+              <span className="partner-logo-item">APPLE</span>
+              <span className="partner-logo-item">UBER</span>
+              {/* Duplicate for infinite marquee loop */}
+              <span className="partner-logo-item">TESLA</span>
+              <span className="partner-logo-item">GOOGLE</span>
+              <span className="partner-logo-item">STRIPE</span>
+              <span className="partner-logo-item">APPLE</span>
+              <span className="partner-logo-item">UBER</span>
+            </div>
+          </div>
+        </div>
+      </section>
       {/* ⚙️ FEATURE SECTION */}
       <section className="features container">
         <div className="section-header text-center">
@@ -524,16 +547,25 @@ const Home = () => {
             </div>
 
             <div className="download-badges-row">
-              <Link to="/coming-soon" className="btn-store glow-on-hover">
-                <div style={{ textAlign: 'left' }}>
-                  <span className="store-sub">Get it on</span>
-                  <span className="store-title">Google Play</span>
+              <Link to="/coming-soon" className="btn-store">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16" className="btn-store-icon">
+                  <path d="M11.182.008C11.148-.03 9.923.023 8.857 1.18c-1.066 1.156-.902 2.482-.878 2.516s1.52.087 2.475-1.258.762-2.391.728-2.43m3.314 11.733c-.048-.096-2.325-1.234-2.113-3.422s1.675-2.789 1.698-2.854-.597-.79-1.254-1.157a3.7 3.7 0 0 0-1.563-.434c-.108-.003-.483-.095-1.254.116-.508.139-1.653.589-1.968.607-.316.018-1.256-.522-2.267-.665-.647-.125-1.333.131-1.824.328-.49.196-1.422.754-2.074 2.237-.652 1.482-.311 3.83-.067 4.56s.625 1.924 1.273 2.796c.576.984 1.34 1.667 1.659 1.899s1.219.386 1.843.067c.502-.308 1.408-.485 1.766-.472.357.013 1.061.154 1.782.539.571.197 1.111.115 1.652-.105.541-.221 1.324-1.059 2.238-2.758q.52-1.185.473-1.282"/>
+                </svg>
+                <div style={{ textAlign: 'left', lineHeight: 1.15 }}>
+                  <span style={{ fontSize: '0.55rem', display: 'block', color: '#c1c1c1' }}>Download on the</span>
+                  <span style={{ fontSize: '0.95rem', fontWeight: 700, display: 'block', color: 'white', letterSpacing: '-0.2px' }}>App Store</span>
                 </div>
               </Link>
-              <Link to="/coming-soon" className="btn-store glow-on-hover">
-                <div style={{ textAlign: 'left' }}>
-                  <span className="store-sub">Download on the</span>
-                  <span className="store-title">App Store</span>
+              <Link to="/coming-soon" className="btn-store">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 466 512" className="btn-store-icon">
+                  <path fill="#EA4335" d="M199.9 237.8 1.4 470.17c7.22 24.57 30.16 41.81 55.8 41.81 11.16 0 20.93-2.79 29.3-8.37l244.16-139.46L199.9 237.8z"/>
+                  <path fill="#FBBC04" d="m433.91 205.1-104.65-60-111.61 110.22 113.01 108.83 104.64-58.6c18.14-9.77 30.7-29.3 30.7-50.23-1.4-20.93-13.95-40.46-32.09-50.22z"/>
+                  <path fill="#34A853" d="M199.42 273.45 329.27 145.1 87.9 8.37C79.53 2.79 68.36 0 57.2 0 30.7 0 6.98 18.14 1.4 41.86l198.02 231.59z"/>
+                  <path fill="#4285F4" d="M1.39 41.86C0 46.04 0 51.63 0 57.2v397.64c0 5.57 0 9.76 1.4 15.34l216.27-214.86L1.39 41.86z"/>
+                </svg>
+                <div style={{ textAlign: 'left', lineHeight: 1.15 }}>
+                  <span style={{ fontSize: '0.52rem', display: 'block', color: '#c1c1c1', letterSpacing: '0.2px' }}>GET IT ON</span>
+                  <span style={{ fontSize: '0.95rem', fontWeight: 700, display: 'block', color: 'white', letterSpacing: '-0.2px' }}>Google Play</span>
                 </div>
               </Link>
             </div>
@@ -559,17 +591,19 @@ const Home = () => {
           <div className="testimonial-card glass-panel">
             <div className="star-rating-row">
               {[...Array(5)].map((_, i) => (
-                <Star key={i} size={16} className="star-gold" fill="#F59E0B" />
+                <Star key={i} size={15} className="star-gold" fill="#F59E0B" color="#F59E0B" />
               ))}
             </div>
-            <div className="testimonial-quote">
-              "RideShare completely changed how I commute to work. I'm saving almost ₹4,000 a month on fuel, and I've made great friends along the way!"
-            </div>
+            <p className="testimonial-quote">
+              "Splitting Chandigarh-Delhi travel costs with other colleagues saved me over ₹4,000 last month. Highly recommended platform!"
+            </p>
             <div className="testimonial-profile">
-              <div className="testimonial-avatar avatar-cyan">A</div>
+              <div className="testimonial-avatar">
+                <img src="/images/komal.png" alt="Komal Singh" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
+              </div>
               <div>
-                <h4>Aarav Patel</h4>
-                <span>Daily Commuter • Bangalore</span>
+                <h4>Komal Singh</h4>
+                <span>Daily Passenger • Phagwara</span>
               </div>
             </div>
           </div>
@@ -577,17 +611,19 @@ const Home = () => {
           <div className="testimonial-card glass-panel">
             <div className="star-rating-row">
               {[...Array(5)].map((_, i) => (
-                <Star key={i} size={16} className="star-gold" fill="#F59E0B" />
+                <Star key={i} size={15} className="star-gold" fill="#F59E0B" color="#F59E0B" />
               ))}
             </div>
-            <div className="testimonial-quote">
-              "As a driver, I love the verified profiles. It gives complete safety knowing who is riding with me. The instant payments are smooth and reliable."
-            </div>
+            <p className="testimonial-quote">
+              "Finding verified, polite co-travelers has never been easier. I love the simple interface and prompt support from the team!"
+            </p>
             <div className="testimonial-profile">
-              <div className="testimonial-avatar avatar-orange">N</div>
+              <div className="testimonial-avatar">
+                <img src="/images/anandu.png" alt="Anandu" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
+              </div>
               <div>
-                <h4>Neha Sharma</h4>
-                <span>Verified Driver • Mumbai</span>
+                <h4>Anandu</h4>
+                <span>Daily Commuter • Phagwara</span>
               </div>
             </div>
           </div>
@@ -595,17 +631,39 @@ const Home = () => {
           <div className="testimonial-card glass-panel">
             <div className="star-rating-row">
               {[...Array(5)].map((_, i) => (
-                <Star key={i} size={16} className="star-gold" fill="#F59E0B" />
+                <Star key={i} size={15} className="star-gold" fill="#F59E0B" color="#F59E0B" />
               ))}
             </div>
-            <div className="testimonial-quote">
-              "The live map tracking is flawless! It feels like booking a luxury cab, but at half the price. Highly recommended for weekend intercity travel."
-            </div>
+            <p className="testimonial-quote">
+              "Verifying riders gives me absolute peace of mind. Offering empty seats on my weekend trips pays for my fuel costs easily."
+            </p>
             <div className="testimonial-profile">
-              <div className="testimonial-avatar avatar-blue">R</div>
+              <div className="testimonial-avatar">
+                <img src="/images/mehul.png" alt="Mehul" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
+              </div>
               <div>
-                <h4>Rohan Desai</h4>
-                <span>Weekend Traveler • Pune</span>
+                <h4>Mehul</h4>
+                <span>Verified Driver • Phagwara</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="testimonial-card glass-panel">
+            <div className="star-rating-row">
+              {[...Array(5)].map((_, i) => (
+                <Star key={i} size={15} className="star-gold" fill="#F59E0B" color="#F59E0B" />
+              ))}
+            </div>
+            <p className="testimonial-quote">
+              "No cash arguments, clear dashboard statistics, and eco-friendly cost sharing. The layout is beautiful and simple to navigate."
+            </p>
+            <div className="testimonial-profile">
+              <div className="testimonial-avatar">
+                <img src="/images/pritam.jpg" alt="Pritam" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
+              </div>
+              <div>
+                <h4>Pritam</h4>
+                <span>Regular Rider • Phagwara</span>
               </div>
             </div>
           </div>

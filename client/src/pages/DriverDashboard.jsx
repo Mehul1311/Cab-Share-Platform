@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import api from '../utils/api';
 import { 
   MapPin, 
@@ -13,14 +14,20 @@ import LiveMap from '../components/LiveMap';
 import './DriverDashboard.css';
 
 const DriverDashboard = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({ origin: '', destination: '', price: '', availableSeats: 3 });
   const [status, setStatus] = useState('');
   const [rides, setRides] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const userUid = localStorage.getItem('uid');
+    if (!userUid) {
+      navigate('/auth');
+      return;
+    }
     fetchMyRides();
-  }, []);
+  }, [navigate]);
 
   const fetchMyRides = async () => {
     try {
@@ -64,7 +71,7 @@ const DriverDashboard = () => {
   };
 
   return (
-    <div className="container animate-fade-in driver-page-wrapper" style={{ paddingTop: '85px', paddingBottom: '90px', position: 'relative' }}>
+    <div className="container animate-fade-in driver-page-wrapper" style={{ paddingTop: '20px', paddingBottom: '90px', position: 'relative' }}>
       
       {/* 🔮 Animated Floating Orbs */}
       <div className="moving-orb orb-1"></div>

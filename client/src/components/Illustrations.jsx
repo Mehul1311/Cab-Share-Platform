@@ -353,39 +353,90 @@ export const FAQIllustration = () => (
   </svg>
 );
 
-// 6. Login Page - Lock & Security Graphics
+// 6. Login Page - Map Routing Visual Illustration
 export const LoginIllustration = () => (
-  <svg viewBox="0 0 400 300" width="100%" height="100%">
+  <svg viewBox="0 0 400 320" width="100%" height="100%" style={{ borderRadius: '16px', overflow: 'hidden', boxShadow: 'var(--shadow-md)' }}>
     <style>{inlineStyles}</style>
-    <defs>
-      <linearGradient id="securityBlue" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stopColor="#2563EB" />
-        <stop offset="100%" stopColor="#06B6D4" />
-      </linearGradient>
-    </defs>
     
-    <circle cx="200" cy="150" r="110" fill="none" stroke="#2563EB" strokeWidth="2" opacity="0.1" />
-    <circle cx="200" cy="150" r="70" fill="none" stroke="#06B6D4" strokeWidth="1.5" strokeDasharray="6 4" opacity="0.2" className="spin-wheel" style={{ animationDuration: '20s' }} />
+    {/* Ocean/Water Body */}
+    <rect x="0" y="0" width="400" height="320" fill="#a0c4eb" />
+    
+    {/* Sandy Beach Coastline Edge */}
+    <path d="M 80,0 L 400,0 L 400,320 L 280,320 C 270,250 250,220 230,200 C 210,180 180,170 160,150 C 130,120 110,80 80,0 Z" fill="none" stroke="#e6d6b8" strokeWidth="8" />
+    
+    {/* Coastline Landmass */}
+    <path d="M 80,0 L 400,0 L 400,320 L 280,320 C 270,250 250,220 230,200 C 210,180 180,170 160,150 C 130,120 110,80 80,0 Z" fill="#fcfbf7" />
 
-    {/* Digital shield authentication */}
-    <g className="glow-lock" transform="translate(160, 100)">
-      {/* Shield backdrop */}
-      <path d="M 0,20 Q 40,0 80,20 Q 80,60 40,90 Q 0,60 0,20 Z" fill="url(#securityBlue)" opacity="0.9" />
-      
-      {/* Lock Shackle */}
-      <path d="M 28,45 L 28,32 Q 28,20 40,20 Q 52,20 52,32 L 52,45" fill="none" stroke="#0F172A" strokeWidth="4" />
-      {/* Lock Body */}
-      <rect x="22" y="42" width="36" height="28" rx="6" fill="#0F172A" />
-      {/* Keyhole */}
-      <circle cx="40" cy="52" r="3" fill="#06B6D4" />
-      <line x1="40" y1="55" x2="40" y2="64" stroke="#06B6D4" strokeWidth="2" />
+    {/* Street Grids (Wide yellow/warm roads) */}
+    <g fill="none" strokeLinecap="round">
+      {/* Coastal avenue */}
+      <path d="M 95,0 C 125,75 145,115 175,145 C 195,165 225,175 245,195 C 265,215 285,245 295,320" stroke="#fff2d4" strokeWidth="12" />
+      <path d="M 95,0 C 125,75 145,115 175,145 C 195,165 225,175 245,195 C 265,215 285,245 295,320" stroke="#ffe4ab" strokeWidth="6" />
+
+      {/* Main avenues */}
+      <path d="M 220,0 L 220,320" stroke="#fff1d4" strokeWidth="10" />
+      <path d="M 220,0 L 220,320" stroke="#ffe4ab" strokeWidth="4" />
+
+      <path d="M 320,0 L 320,320" stroke="#fff1d4" strokeWidth="10" />
+      <path d="M 320,0 L 320,320" stroke="#ffe4ab" strokeWidth="4" />
+
+      {/* Secondary streets */}
+      <path d="M 120,40 L 400,40" stroke="#fff5df" strokeWidth="6" />
+      <path d="M 160,90 L 400,90" stroke="#fff5df" strokeWidth="6" />
+      <path d="M 220,150 L 400,150" stroke="#fff5df" strokeWidth="6" />
+      <path d="M 270,220 L 400,220" stroke="#fff5df" strokeWidth="6" />
+      <path d="M 300,280 L 400,280" stroke="#fff5df" strokeWidth="6" />
     </g>
 
-    {/* Floating digital particles */}
-    <circle cx="100" cy="80" r="4" fill="#06B6D4" className="pulse-pin" />
-    <circle cx="300" cy="90" r="5" fill="#8B5CF6" className="pulse-pin" style={{ animationDelay: '1s' }} />
-    <circle cx="90" cy="210" r="3" fill="#F97316" className="pulse-pin" style={{ animationDelay: '1.5s' }} />
-    <circle cx="290" cy="220" r="4" fill="#3B82F6" className="pulse-pin" style={{ animationDelay: '0.5s' }} />
+    {/* Highlighted active route connecting Pin 2 to Pin 1 */}
+    <path d="M 135,100 C 145,115 175,145 195,165 C 225,175 245,195 255,205" fill="none" stroke="var(--primary)" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" opacity="0.85" />
+
+    {/* Amenity pins/Markers on map */}
+    {/* Red Restaurant Pin 1 */}
+    <g transform="translate(260, 60)">
+      <circle cx="0" cy="0" r="9" fill="#ef4444" stroke="#fff" strokeWidth="1" />
+      <path d="M -3,-4 L -3,1 L -1,1 L -1,-4 M 2,-4 L 2,0 C 2,2 0,2 0,0 L 0,-4" fill="none" stroke="#fff" strokeWidth="1" />
+    </g>
+    {/* Red Restaurant Pin 2 */}
+    <g transform="translate(360, 240)">
+      <circle cx="0" cy="0" r="9" fill="#ef4444" stroke="#fff" strokeWidth="1" />
+      <path d="M -3,-4 L -3,1 L -1,1 L -1,-4 M 2,-4 L 2,0 C 2,2 0,2 0,0 L 0,-4" fill="none" stroke="#fff" strokeWidth="1" />
+    </g>
+    
+    {/* Purple Hotel Pin */}
+    <g transform="translate(300, 150)">
+      <circle cx="0" cy="0" r="9" fill="#8b5cf6" stroke="#fff" strokeWidth="1" />
+      <path d="M -4,2 L -4,-3 L -2,-3 M -2,-1 L 3,-1 L 3,2 Z M 1,-1 L 1,-3" fill="none" stroke="#fff" strokeWidth="1" />
+    </g>
+
+    {/* Green Park Pin */}
+    <g transform="translate(105, 75)">
+      <circle cx="0" cy="0" r="9" fill="#10b981" stroke="#fff" strokeWidth="1" />
+      <path d="M -4,3 L 0,-3 L 4,3 Z" fill="none" stroke="#fff" strokeWidth="1" />
+    </g>
+
+    {/* Start Pin 1 (Blueberry theme color) */}
+    <g transform="translate(255, 205)" className="pulse-pin">
+      <path d="M 0 0 C -6 -6 -12 -12 -12 -20 C -12 -28 -6 -34 0 -34 C 6 -34 12 -28 12 -20 C 12 -12 6 -6 0 0 Z" fill="var(--electric-blue)" stroke="#fff" strokeWidth="1.2" />
+      <circle cx="0" cy="-20" r="7" fill="#fff" />
+      <text x="0" y="-17" textAnchor="middle" fill="var(--electric-blue)" fontSize="9" fontWeight="800">1</text>
+    </g>
+
+    {/* End Pin 2 (Apricot theme color) */}
+    <g transform="translate(135, 100)" className="pulse-pin" style={{ animationDelay: '1s' }}>
+      <path d="M 0 0 C -6 -6 -12 -12 -12 -20 C -12 -28 -6 -34 0 -34 C 6 -34 12 -28 12 -20 C 12 -12 6 -6 0 0 Z" fill="var(--primary)" stroke="#fff" strokeWidth="1.2" />
+      <circle cx="0" cy="-20" r="7" fill="#fff" />
+      <text x="0" y="-17" textAnchor="middle" fill="var(--primary)" fontSize="9" fontWeight="800">2</text>
+    </g>
+
+    {/* Floating widget card */}
+    <g transform="translate(265, 12)">
+      <rect x="0" y="0" width="120" height="30" rx="8" fill="#ffffff" stroke="rgba(0,0,0,0.06)" strokeWidth="1" />
+      {/* Map symbol */}
+      <circle cx="16" cy="15" r="7" fill="var(--primary)" />
+      <circle cx="16" cy="15" r="3" fill="#fff" />
+      <text x="32" y="19" fill="#2a323d" fontSize="9" fontWeight="800" style={{ fontFamily: 'Outfit' }}>Waikiki Route</text>
+    </g>
   </svg>
 );
 
@@ -410,7 +461,25 @@ export const MobileAppIllustration = () => (
       
       {/* Map visual inside Mockup screen */}
       <circle cx="100" cy="140" r="60" fill="none" stroke="#2563EB" strokeWidth="1" opacity="0.2" />
-      <path d="M 30,120 Q 90,80 160,170" stroke="#06B6D4" strokeWidth="3" fill="none" opacity="0.6" />
+      <path id="routePath" d="M 30,120 Q 90,80 160,170" stroke="#06B6D4" strokeWidth="3" fill="none" opacity="0.6" />
+      
+      {/* Animated Car following the path */}
+      <g>
+        <g transform="translate(-9, -4)">
+          {/* Car body */}
+          <rect x="0" y="2" width="18" height="6" rx="2.2" fill="#F97316" />
+          <path d="M 3,2 L 6,-2 L 12,-2 L 15,2 Z" fill="#F97316" />
+          {/* Windows */}
+          <path d="M 6,-1 L 8,-1 L 8,1.5 L 4.5,1.5 Z" fill="#070A13" />
+          <path d="M 9.5,-1 L 12,-1 L 13.5,1.5 L 9.5,1.5 Z" fill="#070A13" />
+          {/* Wheels */}
+          <circle cx="4" cy="8" r="2" fill="#1E293B" stroke="#FFF" strokeWidth="0.5" />
+          <circle cx="14" cy="8" r="2" fill="#1E293B" stroke="#FFF" strokeWidth="0.5" />
+        </g>
+        <animateMotion dur="6s" repeatCount="indefinite" rotate="auto">
+          <mpath href="#routePath" />
+        </animateMotion>
+      </g>
       
       {/* Location Pin */}
       <g className="pulse-pin" transform="translate(90, 100)">

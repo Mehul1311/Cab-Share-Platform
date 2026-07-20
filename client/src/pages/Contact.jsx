@@ -71,7 +71,6 @@ const Contact = () => {
 
   return (
     <div className="contact-page-wrapper animate-fade-in">
-      
       {/* 🔮 Background Animated Blobs */}
       <div className="contact-bg-blob top-left"></div>
       <div className="contact-bg-blob bottom-right"></div>
@@ -97,7 +96,7 @@ const Contact = () => {
             </div>
             <div className="info-content">
               <h4>Headquarters</h4>
-              <p>Chandigarh, India</p>
+              <p>Phagwara, Punjab</p>
             </div>
           </div>
 
@@ -107,7 +106,7 @@ const Contact = () => {
             </div>
             <div className="info-content">
               <h4>Email Us</h4>
-              <p>support@rideshare.com</p>
+              <p>rajputkomal7823@gmail.com</p>
             </div>
           </div>
 
@@ -117,7 +116,7 @@ const Contact = () => {
             </div>
             <div className="info-content">
               <h4>Call Us</h4>
-              <p>+91 98765 43210</p>
+              <p>+91 6201912023</p>
             </div>
           </div>
 
@@ -266,6 +265,21 @@ const Contact = () => {
                 </div>
                 
                 <div className="map-route-connector">
+                  {/* Curved dashed route line */}
+                  <svg viewBox="0 0 100 20" preserveAspectRatio="none" className="map-route-svg">
+                    <path d="M 0,20 Q 50,0 100,20" fill="none" stroke="rgba(255, 255, 255, 0.15)" strokeWidth="1.5" strokeDasharray="3 3" />
+                    <path d="M 0,20 Q 50,0 100,20" fill="none" stroke="url(#route-grad)" strokeWidth="2" strokeDasharray="15 85">
+                      <animate attributeName="stroke-dashoffset" values="100;0" dur="4s" repeatCount="indefinite" />
+                    </path>
+                    <defs>
+                      <linearGradient id="route-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stopColor="var(--electric-blue)" />
+                        <stop offset="50%" stopColor="var(--vibrant-cyan)" />
+                        <stop offset="100%" stopColor="var(--orange-accent)" />
+                      </linearGradient>
+                    </defs>
+                  </svg>
+
                   <div className="map-moving-car">
                     <svg viewBox="0 0 48 30" width="28" height="18" style={{ overflow: 'visible' }}>
                       <path d="M 3,22 L 3,18 Q 5,18 8,13 Q 10,10 18,10 L 26,10 Q 31,10 35,16 L 43,16 Q 45,16 45,22 Z" fill="var(--vibrant-cyan)" />
@@ -273,9 +287,11 @@ const Contact = () => {
                       <path d="M 20,12 L 26,12 L 30,15 L 20,15 Z" fill="#08111F" opacity="0.8" />
                       <g className="spin-wheel">
                         <circle cx="12" cy="22" r="5" fill="#070A13" stroke="white" strokeWidth="1.5" />
+                        <line x1="12" y1="17" x2="12" y2="27" stroke="white" strokeWidth="1" />
                       </g>
                       <g className="spin-wheel">
                         <circle cx="32" cy="22" r="5" fill="#070A13" stroke="white" strokeWidth="1.5" />
+                        <line x1="32" y1="17" x2="32" y2="27" stroke="white" strokeWidth="1" />
                       </g>
                     </svg>
                   </div>
@@ -287,7 +303,7 @@ const Contact = () => {
                 </div>
               </div>
               <div className="map-locations">
-                <span>Chandigarh</span>
+                <span>Phagwara</span>
                 <span>Delhi</span>
               </div>
             </div>

@@ -509,3 +509,78 @@ body.light-theme .theme-toggle-btn:hover {
   font-weight: 700;
   margin-top: 10px;
 }
+
+/* Light theme navbar overrides */
+body.light-theme .navbar {
+  background: rgba(255, 255, 255, 0.75);
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 8px 32px rgba(15, 23, 42, 0.06);
+}
+
+body.light-theme .nav-logo-text {
+  background: linear-gradient(135deg, #0f172a 30%, #475569 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+body.light-theme .nav-link-custom:hover {
+  color: var(--text-primary);
+}
+
+body.light-theme .nav-link-custom.active {
+  background: linear-gradient(135deg, #0f172a 0%, var(--electric-blue) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+body.light-theme .profile-dropdown {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(15, 23, 42, 0.08);
+  box-shadow: var(--shadow-lg);
+}
+
+body.light-theme .dropdown-user-header {
+  border-bottom-color: rgba(15, 23, 42, 0.06);
+}
+
+body.light-theme .dropdown-user-header strong {
+  color: var(--text-primary);
+}
+
+body.light-theme .dropdown-link:hover {
+  background: rgba(15, 23, 42, 0.04);
+  color: var(--text-primary);
+}
+
+body.light-theme .dropdown-divider {
+  background: rgba(15, 23, 42, 0.06);
+}
+
+body.light-theme .mobile-sidebar-drawer {
+  background: rgba(255, 255, 255, 0.95);
+  border-left: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: -10px 0 30px rgba(15, 23, 42, 0.06);
+}
+
+body.light-theme .mobile-drawer-logo {
+  color: var(--text-primary);
+}
+
+body.light-theme .mobile-drawer-links .nav-link-custom {
+  background: rgba(15, 23, 42, 0.02);
+  border: 1px solid rgba(15, 23, 42, 0.03);
+}
+
+body.light-theme .mobile-drawer-links .nav-link-custom:hover {
+  background: rgba(15, 23, 42, 0.05);
+  color: var(--text-primary);
+}
+
+body.light-theme .mobile-drawer-links .nav-link-custom.active {
+  color: var(--electric-blue) !important;
+  background: rgba(15, 23, 42, 0.04);
+}
+
+body.light-theme .mobile-drawer-close {
+  color: var(--text-primary);
+}

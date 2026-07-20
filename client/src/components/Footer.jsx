@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Car,
@@ -12,11 +12,21 @@ import {
   ArrowRight,
   Flag
 } from 'lucide-react';
+import { auth } from '../firebase';
+import { onAuthStateChanged } from 'firebase/auth';
 import './Footer.css';
 
 const Footer = () => {
   const [newsletterEmail, setNewsletterEmail] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isSubscribed, setIsSubscribed] = useState(false);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setIsLoggedIn(!!user || !!localStorage.getItem('uid'));
+    });
+    return () => unsubscribe();
+  }, []);
 
   const handleNewsletterSubmit = (e) => {
     e.preventDefault();
@@ -53,10 +63,23 @@ const Footer = () => {
           <h2>Ready for Your Next Journey?</h2>
           <p>Book a ride or offer one today and become part of India's fastest-growing ride-sharing community.</p>
           <div className="footer-cta-actions">
-            <Link to="/user-dashboard" className="btn btn-primary">
-              <Car size={18} />
-              <span>Find Ride</span>
-            </Link>
+            {isLoggedIn ? (
+              <>
+                <Link to="/user-dashboard" className="btn btn-primary">
+                  <Car size={18} />
+                  <span>Find Ride</span>
+                </Link>
+                <Link to="/driver-dashboard" className="btn btn-secondary">
+                  <span>Offer Ride</span>
+                  <ArrowRight size={18} />
+                </Link>
+              </>
+            ) : (
+              <Link to="/auth" className="btn btn-primary">
+                <span>Login / Signup</span>
+                <ArrowRight size={18} />
+              </Link>
+            )}
           </div>
         </div>
       </div>
@@ -165,7 +188,12 @@ const Footer = () => {
             <h4>Quick Links</h4>
             <Link to="/">Home</Link>
             <Link to="/about">About Us</Link>
-            <Link to="/user-dashboard">Find Ride</Link>
+            {isLoggedIn && (
+              <>
+                <Link to="/user-dashboard">Find Ride</Link>
+                <Link to="/driver-dashboard">Offer Ride</Link>
+              </>
+            )}
             <Link to="/contact">Contact</Link>
             <Link to="/query">FAQ</Link>
           </div>
@@ -186,15 +214,15 @@ const Footer = () => {
           <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
             <div className="footer-contact-item">
               <MapPin size={18} />
-              <span>Chandigarh, India</span>
+              <span>Phagwara, Punjab</span>
             </div>
             <div className="footer-contact-item">
               <Mail size={18} />
-              <span>support@rideshare.com</span>
+              <span>rajputkomal7823@gmail.com</span>
             </div>
             <div className="footer-contact-item">
               <Phone size={18} />
-              <span>+91 98765 43210</span>
+              <span>+91 6201912023</span>
             </div>
             <div className="footer-contact-item">
               <Clock size={18} />
@@ -231,20 +259,19 @@ const Footer = () => {
 
       {/* 🌍 SOCIAL MEDIA CIRCULAR BUTTONS */}
       <div className="footer-socials-wrapper">
-        <a
-          href="https://instagram.com"
-          target="_blank"
-          rel="noopener noreferrer"
+        <a 
+          href="https://www.instagram.com/komal.singh.rajput?utm_source=qr&igsh=MTkwbWFpOGg3N3MwOQ==" 
+          target="_blank" 
+          rel="noopener noreferrer" 
           className="social-circle-btn instagram"
           data-tooltip="Follow us on Instagram"
         >
           <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
         </a>
-
-        <a
-          href="https://linkedin.com"
-          target="_blank"
-          rel="noopener noreferrer"
+        <a 
+          href="https://www.linkedin.com/in/komalsingh1512/" 
+          target="_blank" 
+          rel="noopener noreferrer" 
           className="social-circle-btn linkedin"
           data-tooltip="Connect on LinkedIn"
         >
@@ -261,30 +288,30 @@ const Footer = () => {
           <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
         </a>
 
-        <a
-          href="https://telegram.org"
-          target="_blank"
-          rel="noopener noreferrer"
+        <a 
+          href="https://telegram.org" 
+          target="_blank" 
+          rel="noopener noreferrer" 
           className="social-circle-btn telegram"
           data-tooltip="Join Telegram Community"
         >
           <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
         </a>
 
-        <a
-          href="https://twitter.com"
-          target="_blank"
-          rel="noopener noreferrer"
+        <a 
+          href="https://x.com/komalsingh512" 
+          target="_blank" 
+          rel="noopener noreferrer" 
           className="social-circle-btn twitter"
           data-tooltip="Follow us on X (Twitter)"
         >
           <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
         </a>
 
-        <a
-          href="https://github.com"
-          target="_blank"
-          rel="noopener noreferrer"
+        <a 
+          href="https://github.com/Komalsingh1512" 
+          target="_blank" 
+          rel="noopener noreferrer" 
           className="social-circle-btn github"
           data-tooltip="Star our GitHub Repository"
         >

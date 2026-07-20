@@ -135,7 +135,6 @@ const Navbar = () => {
         <div className="desktop-menu">
           <Link to="/" className={`nav-link-custom ${isActive('/')}`} onClick={handleLinkClick}>Home</Link>
           <Link to="/about" className={`nav-link-custom ${isActive('/about')}`} onClick={handleLinkClick}>About</Link>
-          
           {/* Find Ride: Redirect to /auth if not logged in */}
           <Link 
             to={isLoggedIn ? "/user-dashboard" : "/auth"} 
@@ -149,7 +148,6 @@ const Navbar = () => {
           {isLoggedIn && role === 'Driver' && (
             <Link to="/driver-dashboard" className={`nav-link-custom ${isActive('/driver-dashboard')}`} onClick={handleLinkClick}>Offer Ride</Link>
           )}
-
           <Link to="/contact" className={`nav-link-custom ${isActive('/contact')}`} onClick={handleLinkClick}>Contact</Link>
           
           {isLoggedIn ? (
@@ -210,7 +208,7 @@ const Navbar = () => {
 
           {/* Theme Toggle Button */}
           <button type="button" onClick={toggleTheme} className="theme-toggle-btn" title="Toggle theme" style={{ marginLeft: '8px' }}>
-            {theme === 'dark' ? <Sun size={18} style={{ pointerEvents: 'none' }} /> : <Moon size={18} style={{ pointerEvents: 'none' }} />}
+            {theme === 'dark' ? <Moon size={18} style={{ pointerEvents: 'none' }} /> : <Sun size={18} style={{ pointerEvents: 'none' }} />}
           </button>
         </div>
 
@@ -236,7 +234,6 @@ const Navbar = () => {
             <div className="mobile-drawer-links">
               <Link to="/" className={`nav-link-custom ${isActive('/')}`} onClick={handleLinkClick}>Home</Link>
               <Link to="/about" className={`nav-link-custom ${isActive('/about')}`} onClick={handleLinkClick}>About</Link>
-              
               {/* Find Ride: Redirect to /auth if not logged in */}
               <Link 
                 to={isLoggedIn ? "/user-dashboard" : "/auth"} 
@@ -250,12 +247,11 @@ const Navbar = () => {
               {isLoggedIn && role === 'Driver' && (
                 <Link to="/driver-dashboard" className={`nav-link-custom ${isActive('/driver-dashboard')}`} onClick={handleLinkClick}>Offer Ride</Link>
               )}
-
               <Link to="/contact" className={`nav-link-custom ${isActive('/contact')}`} onClick={handleLinkClick}>Contact</Link>
               
               {/* Mobile Theme Toggle Button */}
               <button type="button" onClick={toggleTheme} className="theme-toggle-btn mobile-theme-btn" title="Toggle theme">
-                {theme === 'dark' ? <Sun size={18} style={{ pointerEvents: 'none' }} /> : <Moon size={18} style={{ pointerEvents: 'none' }} />}
+                {theme === 'dark' ? <Moon size={18} style={{ pointerEvents: 'none' }} /> : <Sun size={18} style={{ pointerEvents: 'none' }} />}
                 <span>{theme === 'dark' ? 'Bright Theme' : 'Dark Theme'}</span>
               </button>
 
@@ -271,7 +267,7 @@ const Navbar = () => {
                       </div>
                     )}
                     <div style={{ display: 'flex', flexDirection: 'column' }}>
-                      <span style={{ fontSize: '0.88rem', fontWeight: 700, color: 'white' }}>{userName}</span>
+                      <span className="mobile-drawer-username" style={{ fontSize: '0.88rem', fontWeight: 700, color: 'white' }}>{userName}</span>
                       <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>{role}</span>
                     </div>
                   </div>
@@ -289,7 +285,7 @@ const Navbar = () => {
 
             <div className="mobile-drawer-footer">
               <div className="mobile-socials-row">
-                <a href="mailto:support@rideshare.com" className="mobile-social-icon"><Mail size={20} /></a>
+                <a href="mailto:rajputkomal7823@gmail.com" className="mobile-social-icon"><Mail size={20} /></a>
                 <a href="#help" className="mobile-social-icon" onClick={() => { setIsOpen(false); alert("Help Center loaded!"); }}><HelpCircle size={20} /></a>
               </div>
             </div>
