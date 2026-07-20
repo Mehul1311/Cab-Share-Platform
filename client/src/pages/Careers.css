@@ -1,7 +1,7 @@
 .careers-page {
   position: relative;
   overflow: hidden;
-  padding-top: 100px; /* Account for navbar */
+  padding-top: 20px; /* Account for navbar */
 }
 
 /* Background Orbs reused for consistency */

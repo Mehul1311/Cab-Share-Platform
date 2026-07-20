@@ -3,7 +3,7 @@ import { Shield, Users, Leaf } from 'lucide-react';
 
 const About = () => {
   return (
-    <div className="container about-page-container animate-slide-left" style={{ paddingTop: '85px', paddingBottom: '90px', position: 'relative' }}>
+    <div className="container about-page-container animate-slide-left" style={{ paddingTop: '20px', paddingBottom: '90px', position: 'relative' }}>
       
       {/* Decorative blurred background blobs */}
       <div className="contact-blob contact-blob-1" style={{ top: '-100px', left: '-100px', width: '300px', height: '300px' }}></div>

@@ -83,7 +83,7 @@ const UserDashboard = () => {
   );
 
   return (
-    <div className="container animate-fade-in dashboard-page-wrapper" style={{ paddingTop: '85px', paddingBottom: '90px', position: 'relative', minHeight: '100vh' }}>
+    <div className="container animate-fade-in dashboard-page-wrapper" style={{ paddingTop: '20px', paddingBottom: '90px', position: 'relative', minHeight: '100vh' }}>
       
       {/* Animated Background Orbs */}
       <div className="moving-orb orb-1"></div>

@@ -71,7 +71,7 @@ const DriverDashboard = () => {
   };
 
   return (
-    <div className="container animate-fade-in driver-page-wrapper" style={{ paddingTop: '85px', paddingBottom: '90px', position: 'relative' }}>
+    <div className="container animate-fade-in driver-page-wrapper" style={{ paddingTop: '20px', paddingBottom: '90px', position: 'relative' }}>
       
       {/* 🔮 Animated Floating Orbs */}
       <div className="moving-orb orb-1"></div>

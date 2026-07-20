@@ -36,7 +36,7 @@ const Query = ({ isEmbedded = false }) => {
   };
 
   return (
-    <div className="container animate-fade-in" style={{ paddingTop: isEmbedded ? '0px' : '60px', paddingBottom: isEmbedded ? '0px' : '60px', position: 'relative', minHeight: 'fit-content' }}>
+    <div className="container animate-fade-in" style={{ paddingTop: isEmbedded ? '0px' : '20px', paddingBottom: isEmbedded ? '0px' : '60px', position: 'relative', minHeight: 'fit-content' }}>
       
       {/* Decorative blurred background blobs */}
       <div className="contact-blob contact-blob-1" style={{ top: '0', right: '-10%', width: '400px', height: '400px', opacity: 0.1 }}></div>

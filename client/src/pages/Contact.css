@@ -60,7 +60,7 @@
 /* HERO SECTION */
 .contact-hero {
   position: relative;
-  padding: 140px 0 100px;
+  padding: 60px 0 50px;
   background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.4));
   border-bottom: 1px solid var(--border);
   text-align: center;
