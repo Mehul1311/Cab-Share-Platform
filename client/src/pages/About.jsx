@@ -6,7 +6,7 @@ const About = () => {
     <div className="container about-page-container animate-slide-left" style={{ paddingTop: '20px', paddingBottom: '90px', position: 'relative' }}>
       
       {/* Decorative blurred background blobs */}
-      <div className="contact-blob contact-blob-1" style={{ top: '-100px', left: '-100px', width: '300px', height: '300px' }}></div>
+      <div className="contact-blob contact-blob-1" style={{ position: 'absolute', top: '-100px', left: '-100px', width: '300px', height: '300px', borderRadius: '50%', filter: 'blur(80px)', opacity: 0.15, pointerEvents: 'none', zIndex: 0 }}></div>
 
       <div style={{ maxWidth: '960px', margin: '0 auto' }}>
         

@@ -39,8 +39,8 @@ const Query = ({ isEmbedded = false }) => {
     <div className="container animate-fade-in" style={{ paddingTop: isEmbedded ? '0px' : '20px', paddingBottom: isEmbedded ? '0px' : '60px', position: 'relative', minHeight: 'fit-content' }}>
       
       {/* Decorative blurred background blobs */}
-      <div className="contact-blob contact-blob-1" style={{ top: '0', right: '-10%', width: '400px', height: '400px', opacity: 0.1 }}></div>
-      <div className="contact-blob contact-blob-2" style={{ bottom: '10%', left: '-10%', width: '400px', height: '400px', opacity: 0.1, background: 'var(--orange-accent)' }}></div>
+      <div className="contact-blob contact-blob-1" style={{ position: 'absolute', top: '0', right: '-10%', width: '400px', height: '400px', opacity: 0.1, borderRadius: '50%', filter: 'blur(100px)', pointerEvents: 'none', zIndex: 0 }}></div>
+      <div className="contact-blob contact-blob-2" style={{ position: 'absolute', bottom: '10%', left: '-10%', width: '400px', height: '400px', opacity: 0.1, background: 'var(--orange-accent)', borderRadius: '50%', filter: 'blur(100px)', pointerEvents: 'none', zIndex: 0 }}></div>
 
       <div style={{ textAlign: 'center', marginBottom: '24px', position: 'relative', zIndex: 10 }}>
         <h1 style={{ fontSize: '2.8rem', fontWeight: 900, color: 'var(--text-primary)', fontFamily: 'var(--font-heading)', marginBottom: '16px' }}>
