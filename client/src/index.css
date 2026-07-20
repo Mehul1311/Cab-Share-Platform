@@ -35,6 +35,10 @@
 
   --font-heading: 'Outfit', sans-serif;
   --font-body: 'Plus Jakarta Sans', sans-serif;
+
+  /* Grid background variables */
+  --grid-line: rgba(99, 102, 241, 0.045);
+  --grid-glow: radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.18) 0%, transparent 60%);
 }
 
 .light-theme {
@@ -59,6 +63,10 @@
   --shadow-md: 0 12px 30px rgba(255, 107, 0, 0.12);
   --shadow-lg: 0 20px 48px rgba(255, 107, 0, 0.18);
   --shadow-glow: 0 0 30px rgba(255, 107, 0, 0.25);
+
+  /* Grid background variables (light theme) */
+  --grid-line: rgba(15, 23, 42, 0.035);
+  --grid-glow: radial-gradient(circle at 50% 0%, rgba(255, 107, 0, 0.08) 0%, transparent 60%);
 }
 
 * {
@@ -93,9 +101,13 @@ body,
 
 body {
   background-color: var(--background);
-  background-image:
+  background-image: 
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px),
+    var(--grid-glow),
     radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.08) 0%, transparent 40%),
     radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.08) 0%, transparent 40%);
+  background-size: 45px 45px, 45px 45px, 100% 100%, 100% 100%, 100% 100%;
   background-attachment: fixed;
   color: var(--text-primary);
   min-height: 100vh;
@@ -106,9 +118,13 @@ body {
 body.light-theme {
   background-color: #fffbeb;
   background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px),
+    var(--grid-glow),
     radial-gradient(circle at 10% 20%, rgba(255, 107, 0, 0.12) 0%, transparent 40%),
     radial-gradient(circle at 90% 80%, rgba(37, 99, 235, 0.12) 0%, transparent 40%),
     linear-gradient(135deg, #ffedd5 0%, #fef3c7 50%, #dbeafe 100%);
+  background-size: 45px 45px, 45px 45px, 100% 100%, 100% 100%, 100% 100%, 100% 100%;
   background-attachment: fixed;
 }
 
@@ -520,4 +536,22 @@ body.light-theme .about-page-container h4 {
 
 .animate-skew-reveal {
   animation: skewReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Mouse Follower Glow Interaction */
+.mouse-follower-glow {
+  position: fixed;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.08) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  mix-blend-mode: screen;
+  transition: opacity 0.3s ease;
+}
+
+body.light-theme .mouse-follower-glow {
+  background: radial-gradient(circle, rgba(255, 107, 0, 0.05) 0%, transparent 70%);
 }

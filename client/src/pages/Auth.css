@@ -13,7 +13,7 @@
   justify-content: center;
   position: relative;
   overflow: hidden;
-  background-color: var(--background);
+  background-color: transparent;
 }
 
 /* Background animated gradient blobs */

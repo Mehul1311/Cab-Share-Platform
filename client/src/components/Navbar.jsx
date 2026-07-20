@@ -272,7 +272,7 @@ const Navbar = () => {
 
             <div className="mobile-drawer-footer">
               <div className="mobile-socials-row">
-                <a href="mailto:support@rideshare.com" className="mobile-social-icon"><Mail size={20} /></a>
+                <a href="mailto:rajputkomal7823@gmail.com" className="mobile-social-icon"><Mail size={20} /></a>
                 <a href="#help" className="mobile-social-icon" onClick={() => { setIsOpen(false); alert("Help Center loaded!"); }}><HelpCircle size={20} /></a>
               </div>
             </div>

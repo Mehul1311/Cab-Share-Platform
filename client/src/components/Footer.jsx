@@ -205,15 +205,15 @@ const Footer = () => {
           <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
             <div className="footer-contact-item">
               <MapPin size={18} />
-              <span>Chandigarh, India</span>
+              <span>Phagwara, Punjab</span>
             </div>
             <div className="footer-contact-item">
               <Mail size={18} />
-              <span>support@rideshare.com</span>
+              <span>rajputkomal7823@gmail.com</span>
             </div>
             <div className="footer-contact-item">
               <Phone size={18} />
-              <span>+91 98765 43210</span>
+              <span>+91 6201912023</span>
             </div>
             <div className="footer-contact-item">
               <Clock size={18} />

@@ -7,7 +7,7 @@
 .contact-page-container {
   padding-top: 85px;
   padding-bottom: 90px;
-  background: linear-gradient(180deg, #0b1120 0%, #111827 50%, #0f172a 100%);
+  background: transparent;
   position: relative;
   overflow: hidden;
   min-height: 100vh;
@@ -232,15 +232,24 @@
 
 .map-route-connector {
   flex: 1;
-  height: 2px;
-  background: linear-gradient(90deg, var(--electric-blue), var(--vibrant-cyan), var(--orange-accent));
+  height: 40px;
   position: relative;
-  overflow: hidden;
+}
+
+.map-route-svg {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: visible;
+  pointer-events: none;
 }
 
 .map-moving-car {
   position: absolute;
   top: 50%;
+  left: -10%;
   transform: translateY(-50%);
   color: var(--vibrant-cyan);
   filter: drop-shadow(0 0 4px rgba(6, 182, 212, 0.6));
@@ -248,8 +257,17 @@
 }
 
 @keyframes mapCarMove {
-  0% { left: -10%; }
-  100% { left: 110%; }
+  0% {
+    left: -10%;
+    transform: translateY(12px) rotate(8deg);
+  }
+  50% {
+    transform: translateY(-24px) rotate(0deg);
+  }
+  100% {
+    left: 110%;
+    transform: translateY(12px) rotate(-8deg);
+  }
 }
 
 .map-footer-label {

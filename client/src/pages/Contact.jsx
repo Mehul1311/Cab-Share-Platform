@@ -98,7 +98,7 @@ const Contact = () => {
               </div>
               <div className="info-text-box">
                 <span className="info-label">Office Location</span>
-                <span className="info-val">Chandigarh, India</span>
+                <span className="info-val">Phagwara, Punjab</span>
               </div>
             </div>
 
@@ -108,7 +108,7 @@ const Contact = () => {
               </div>
               <div className="info-text-box">
                 <span className="info-label">Email</span>
-                <span className="info-val">support@rideshare.com</span>
+                <span className="info-val">rajputkomal7823@gmail.com</span>
               </div>
             </div>
 
@@ -118,7 +118,7 @@ const Contact = () => {
               </div>
               <div className="info-text-box">
                 <span className="info-label">Phone</span>
-                <span className="info-val">+91 98765 43210</span>
+                <span className="info-val">+91 6201912023</span>
               </div>
             </div>
 
@@ -138,7 +138,7 @@ const Contact = () => {
             <div className="mini-map-grid"></div>
             
             <div className="map-viz-flow">
-              {/* Chandigarh Pin */}
+              {/* Phagwara Pin */}
               <div className="map-node">
                 <MapPin size={14} />
                 <div className="map-node-pulse"></div>
@@ -146,6 +146,21 @@ const Contact = () => {
               
               {/* Moving Car */}
               <div className="map-route-connector">
+                {/* Curved dashed route line */}
+                <svg viewBox="0 0 100 20" preserveAspectRatio="none" className="map-route-svg">
+                  <path d="M 0,20 Q 50,0 100,20" fill="none" stroke="rgba(255, 255, 255, 0.15)" strokeWidth="1.5" strokeDasharray="3 3" />
+                  <path d="M 0,20 Q 50,0 100,20" fill="none" stroke="url(#route-grad)" strokeWidth="2" strokeDasharray="15 85">
+                    <animate attributeName="stroke-dashoffset" values="100;0" dur="4s" repeatCount="indefinite" />
+                  </path>
+                  <defs>
+                    <linearGradient id="route-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="var(--electric-blue)" />
+                      <stop offset="50%" stopColor="var(--vibrant-cyan)" />
+                      <stop offset="100%" stopColor="var(--orange-accent)" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+
                 <div className="map-moving-car">
                   <svg viewBox="0 0 48 30" width="26" height="16" style={{ overflow: 'visible' }}>
                     <path d="M 3,22 L 3,18 Q 5,18 8,13 Q 10,10 18,10 L 26,10 Q 31,10 35,16 L 43,16 Q 45,16 45,22 Z" fill="var(--vibrant-cyan)" />
@@ -171,7 +186,7 @@ const Contact = () => {
             </div>
 
             <div className="map-footer-label">
-              <span>📍 Chandigarh</span>
+              <span>📍 Phagwara</span>
               <span>🏁 Delhi</span>
             </div>
           </div>

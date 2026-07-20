@@ -5,7 +5,8 @@ import {
   Shield, 
   CreditCard, 
   Clock, 
-  ArrowRight
+  ArrowRight,
+  Star
 } from 'lucide-react';
 import { MobileAppIllustration } from '../components/Illustrations';
 import './Home.css';
@@ -267,6 +268,13 @@ const Home = () => {
 
         <div className="testimonials-grid">
           <div className="testimonial-card">
+            <div className="testimonial-stars">
+              <Star size={15} fill="#f59e0b" color="#f59e0b" />
+              <Star size={15} fill="#f59e0b" color="#f59e0b" />
+              <Star size={15} fill="#f59e0b" color="#f59e0b" />
+              <Star size={15} fill="#f59e0b" color="#f59e0b" />
+              <Star size={15} fill="#f59e0b" color="#f59e0b" />
+            </div>
             <p className="testimonial-quote">
               "Splitting Chandigarh-Delhi travel costs with other colleagues saved me over ₹4,000 last month. Highly recommended platform!"
             </p>
@@ -282,6 +290,13 @@ const Home = () => {
           </div>
 
           <div className="testimonial-card">
+            <div className="testimonial-stars">
+              <Star size={15} fill="#f59e0b" color="#f59e0b" />
+              <Star size={15} fill="#f59e0b" color="#f59e0b" />
+              <Star size={15} fill="#f59e0b" color="#f59e0b" />
+              <Star size={15} fill="#f59e0b" color="#f59e0b" />
+              <Star size={15} fill="#f59e0b" color="#f59e0b" />
+            </div>
             <p className="testimonial-quote">
               "Finding verified, polite co-travelers has never been easier. I love the simple interface and prompt support from the team!"
             </p>
@@ -297,6 +312,13 @@ const Home = () => {
           </div>
 
           <div className="testimonial-card">
+            <div className="testimonial-stars">
+              <Star size={15} fill="#f59e0b" color="#f59e0b" />
+              <Star size={15} fill="#f59e0b" color="#f59e0b" />
+              <Star size={15} fill="#f59e0b" color="#f59e0b" />
+              <Star size={15} fill="#f59e0b" color="#f59e0b" />
+              <Star size={15} fill="#f59e0b" color="#f59e0b" />
+            </div>
             <p className="testimonial-quote">
               "Verifying riders gives me absolute peace of mind. Offering empty seats on my weekend trips pays for my fuel costs easily."
             </p>
@@ -312,6 +334,13 @@ const Home = () => {
           </div>
 
           <div className="testimonial-card">
+            <div className="testimonial-stars">
+              <Star size={15} fill="#f59e0b" color="#f59e0b" />
+              <Star size={15} fill="#f59e0b" color="#f59e0b" />
+              <Star size={15} fill="#f59e0b" color="#f59e0b" />
+              <Star size={15} fill="#f59e0b" color="#f59e0b" />
+              <Star size={15} fill="#f59e0b" color="#f59e0b" />
+            </div>
             <p className="testimonial-quote">
               "No cash arguments, clear dashboard statistics, and eco-friendly cost sharing. The layout is beautiful and simple to navigate."
             </p>
