@@ -1,0 +1,294 @@
+.careers-page {
+  position: relative;
+  overflow: hidden;
+  padding-top: 100px; /* Account for navbar */
+}
+
+/* Background Orbs reused for consistency */
+.careers-page .moving-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  z-index: -1;
+  opacity: 0.3;
+  animation: floatOrb 20s infinite alternate ease-in-out;
+}
+
+.careers-page .orb-1 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.4), transparent);
+  top: 5%;
+  left: -100px;
+}
+
+.careers-page .orb-2 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(6, 182, 212, 0.3), transparent);
+  bottom: 20%;
+  right: -150px;
+  animation-duration: 30s;
+  animation-delay: -5s;
+}
+
+/* Hero */
+.careers-hero {
+  padding: 80px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.careers-hero-content {
+  max-width: 800px;
+}
+
+.badge-pill {
+  display: inline-block;
+  padding: 6px 16px;
+  background: rgba(0, 229, 255, 0.1);
+  border: 1px solid rgba(0, 229, 255, 0.2);
+  color: var(--vibrant-cyan);
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.gradient-text {
+  font-size: 3rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-family: var(--font-heading);
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  font-size: 1.5rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.hero-description {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  max-width: 650px;
+}
+
+.text-highlight {
+  color: white;
+  font-weight: 600;
+}
+
+/* Benefits Grid */
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.benefit-card {
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.benefit-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(99, 102, 241, 0.2);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4), 0 0 20px rgba(99, 102, 241, 0.05);
+}
+
+.benefit-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: rgba(99, 102, 241, 0.1);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.benefit-card:hover .benefit-icon {
+  background: var(--primary);
+  color: white;
+}
+
+.benefit-card h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: white;
+  margin: 0;
+}
+
+/* Openings List */
+.openings-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.job-card {
+  padding: 24px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.job-card:hover {
+  transform: translateX(6px);
+  border-color: rgba(0, 229, 255, 0.2);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4), 0 0 20px rgba(0, 229, 255, 0.05);
+}
+
+.job-info {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.job-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: rgba(0, 229, 255, 0.08);
+  border: 1px solid rgba(0, 229, 255, 0.15);
+  color: var(--vibrant-cyan);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.job-card:hover .job-icon {
+  background: var(--vibrant-cyan);
+  color: white;
+  box-shadow: 0 0 15px rgba(0, 229, 255, 0.4);
+}
+
+.job-info h3 {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: white;
+  margin: 0 0 4px 0;
+}
+
+.job-info p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.apply-btn {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 12px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.job-card:hover .apply-btn {
+  background: var(--primary);
+  border-color: var(--primary);
+  box-shadow: 0 0 15px var(--primary-glow);
+}
+
+@media (max-width: 768px) {
+  .job-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  .apply-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* General Application */
+.general-application-card {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 48px;
+}
+
+.general-application-card h2 {
+  margin-bottom: 16px;
+}
+
+.general-application-card p {
+  margin-bottom: 24px;
+  color: var(--text-secondary);
+}
+
+.email-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  color: var(--secondary);
+  padding: 12px 24px;
+  border-radius: 30px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.email-pill:hover {
+  background: rgba(16, 185, 129, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(16, 185, 129, 0.15);
+}
+
+/* Layout Utilities specific to Careers */
+.badge-pill {
+  margin-bottom: 16px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero-description {
+  margin-top: 16px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.text-highlight {
+  margin-bottom: 32px;
+}
+
+.careers-section {
+  margin-bottom: 64px;
+}
+
+.careers-section-header {
+  margin-bottom: 48px;
+}
+
+.benefits-grid {
+  max-width: 1000px;
+  margin: 0 auto;
+}

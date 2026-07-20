@@ -7,9 +7,7 @@ import {
   Mail, 
   Lock, 
   User as UserIcon, 
-  Phone, 
   Car, 
-  CreditCard, 
   AlertCircle, 
   Sparkles, 
   ArrowRight,
@@ -25,13 +23,10 @@ const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({ 
+    name: '',
     email: '', 
     password: '', 
-    name: '', 
-    role: 'User',
-    phoneNumber: '',
-    vehicleNumber: '',
-    upiId: ''
+    role: 'User'
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -230,60 +225,6 @@ const Auth = () => {
                     </select>
                     <div className="input-icon-wrapper">
                       <Sparkles size={18} />
-                    </div>
-                  </div>
-                </div>
-                
-                {/* Accordion driver fields */}
-                <div className={`driver-accordion ${formData.role === 'Driver' ? 'visible' : ''}`}>
-                  <div className="input-group">
-                    <label>Phone Number</label>
-                    <div className="input-with-icon">
-                      <input 
-                        type="tel" 
-                        className="input-field" 
-                        placeholder="Enter phone number"
-                        value={formData.phoneNumber}
-                        onChange={(e) => setFormData({...formData, phoneNumber: e.target.value})}
-                        required={formData.role === 'Driver'}
-                      />
-                      <div className="input-icon-wrapper">
-                        <Phone size={18} />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="input-group">
-                    <label>Vehicle / Auto Number</label>
-                    <div className="input-with-icon">
-                      <input 
-                        type="text" 
-                        className="input-field" 
-                        placeholder="e.g. MH 12 AB 1234"
-                        value={formData.vehicleNumber}
-                        onChange={(e) => setFormData({...formData, vehicleNumber: e.target.value})}
-                        required={formData.role === 'Driver'}
-                      />
-                      <div className="input-icon-wrapper">
-                        <Car size={18} />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="input-group">
-                    <label>UPI ID (For receiving payments)</label>
-                    <div className="input-with-icon">
-                      <input 
-                        type="text" 
-                        className="input-field" 
-                        placeholder="drivername@upi"
-                        value={formData.upiId}
-                        onChange={(e) => setFormData({...formData, upiId: e.target.value})}
-                        required={formData.role === 'Driver'}
-                      />
-                      <div className="input-icon-wrapper">
-                        <CreditCard size={18} />
-                      </div>
                     </div>
                   </div>
                 </div>

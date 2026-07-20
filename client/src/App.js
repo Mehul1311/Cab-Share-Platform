@@ -10,6 +10,13 @@ import Auth from './pages/Auth';
 import DriverDashboard from './pages/DriverDashboard';
 import UserDashboard from './pages/UserDashboard';
 import AdminDashboard from './pages/AdminDashboard';
+import Careers from './pages/Careers';
+import Blog from './pages/Blog';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsConditions from './pages/TermsConditions';
+import Support from './pages/Support';
+import HelpCenter from './pages/HelpCenter';
+import ComingSoon from './pages/ComingSoon';
 
 // Global Scroll to Top on route change
 function ScrollToTop() {
@@ -77,6 +84,13 @@ function App() {
             <Route path="/driver-dashboard" element={<DriverDashboard />} />
             <Route path="/user-dashboard" element={<UserDashboard />} />
             <Route path="/admin-dashboard" element={<AdminDashboard />} />
+            <Route path="/careers" element={<Careers />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/privacy" element={<PrivacyPolicy />} />
+            <Route path="/terms" element={<TermsConditions />} />
+            <Route path="/support" element={<Support />} />
+            <Route path="/help" element={<HelpCenter />} />
+            <Route path="/coming-soon" element={<ComingSoon />} />
           </Routes>
         </main>
         <Footer />

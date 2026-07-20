@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { 
-  Car, 
-  Mail, 
-  Phone, 
-  Clock, 
-  MapPin, 
-  Star, 
-  Globe, 
-  Shield, 
+import {
+  Car,
+  Mail,
+  Phone,
+  Clock,
+  MapPin,
+  Star,
+  Globe,
+  Shield,
   ArrowRight,
   Flag
 } from 'lucide-react';
@@ -19,6 +19,7 @@ import './Footer.css';
 const Footer = () => {
   const [newsletterEmail, setNewsletterEmail] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isSubscribed, setIsSubscribed] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -30,9 +31,17 @@ const Footer = () => {
   const handleNewsletterSubmit = (e) => {
     e.preventDefault();
     if (newsletterEmail.trim()) {
-      alert(`Thank you for subscribing! We will send updates to ${newsletterEmail}`);
+      setIsSubscribed(true);
       setNewsletterEmail('');
+      setTimeout(() => setIsSubscribed(false), 3000);
     }
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
   };
 
   return (
@@ -122,7 +131,7 @@ const Footer = () => {
         {/* Road layout */}
         <div className="skyline-road-track">
           <div className="skyline-road-dashes"></div>
-          
+
           {/* Moving car illustration */}
           <div className="skyline-moving-car">
             <svg viewBox="0 0 48 30" width="28" height="18" style={{ overflow: 'visible' }}>
@@ -149,7 +158,7 @@ const Footer = () => {
 
       {/* MAIN FOOTER LINKS INFO GRID */}
       <div className="footer-main-grid">
-        
+
         {/* LEFT COLUMN: Branding & tagline */}
         <div className="footer-left-info">
           <div className="footer-logo-title">RideShare</div>
@@ -161,7 +170,7 @@ const Footer = () => {
           <p className="footer-paragraph-desc">
             RideShare is India's trusted ride-sharing platform helping thousands of travelers save money, reduce traffic, and travel together safely every day.
           </p>
-          <div className="footer-trust-rating">
+          {/* <div className="footer-trust-rating">
             <div style={{ display: 'flex', gap: '4px', color: '#FBBF24' }}>
               <Star size={14} fill="currentColor" />
               <Star size={14} fill="currentColor" />
@@ -170,7 +179,7 @@ const Footer = () => {
               <Star size={14} fill="currentColor" />
             </div>
             <span>Trusted by 25,000+ Happy Riders</span>
-          </div>
+          </div> */}
         </div>
 
         {/* CENTER COLUMN: Links (Quick links & Company) */}
@@ -191,12 +200,12 @@ const Footer = () => {
 
           <div className="footer-link-group">
             <h4>Company</h4>
-            <a href="#careers" onClick={() => alert("Careers page loaded!")}>Careers</a>
-            <a href="#blog" onClick={() => alert("Blog page loaded!")}>Blog</a>
-            <a href="#privacy" onClick={() => alert("Privacy policy loaded!")}>Privacy Policy</a>
-            <a href="#terms" onClick={() => alert("Terms & conditions loaded!")}>Terms & Conditions</a>
-            <a href="#support" onClick={() => alert("Support page loaded!")}>Support</a>
-            <a href="#help" onClick={() => alert("Help Center loaded!")}>Help Center</a>
+            <Link to="/coming-soon">Careers</Link>
+            <Link to="/coming-soon">Blog</Link>
+            <Link to="/coming-soon">Privacy Policy</Link>
+            <Link to="/coming-soon">Terms & Conditions</Link>
+            <Link to="/coming-soon">Support</Link>
+            <Link to="/coming-soon">Help Center</Link>
           </div>
         </div>
 
@@ -225,17 +234,24 @@ const Footer = () => {
           <div className="newsletter-box">
             <h4>Stay Updated</h4>
             <p>Get the latest ride offers, travel tips, and exciting platform updates.</p>
-            <form onSubmit={handleNewsletterSubmit} className="newsletter-form-row">
-              <input 
-                type="email" 
-                className="newsletter-input" 
-                placeholder="Enter your email address"
-                value={newsletterEmail}
-                onChange={(e) => setNewsletterEmail(e.target.value)}
-                required
-              />
-              <button type="submit" className="newsletter-btn">Subscribe</button>
-            </form>
+            {isSubscribed ? (
+              <div className="newsletter-success animate-fade-in">
+                <div className="success-icon-circle">✓</div>
+                <span>Thank you for subscribing!</span>
+              </div>
+            ) : (
+              <form onSubmit={handleNewsletterSubmit} className="newsletter-form-row">
+                <input
+                  type="email"
+                  className="newsletter-input"
+                  placeholder="Enter your email address"
+                  value={newsletterEmail}
+                  onChange={(e) => setNewsletterEmail(e.target.value)}
+                  required
+                />
+                <button type="submit" className="newsletter-btn">Subscribe</button>
+              </form>
+            )}
           </div>
         </div>
 
@@ -252,7 +268,6 @@ const Footer = () => {
         >
           <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
         </a>
-        
         <a 
           href="https://www.linkedin.com/in/komalsingh1512/" 
           target="_blank" 
@@ -261,6 +276,16 @@ const Footer = () => {
           data-tooltip="Connect on LinkedIn"
         >
           <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+        </a>
+
+        <a
+          href="https://facebook.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="social-circle-btn facebook"
+          data-tooltip="Like us on Facebook"
+        >
+          <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
         </a>
 
         <a 
@@ -297,6 +322,9 @@ const Footer = () => {
       {/* Copyright Row */}
       <div className="footer-bottom-row">
         <p>&copy; {new Date().getFullYear()} RideShare Platform. All rights reserved. Connecting People, One Ride at a Time.</p>
+        <button className="footer-scroll-top-btn" onClick={scrollToTop} aria-label="Scroll to top">
+          Back to Top <ArrowRight size={16} style={{ transform: 'rotate(-90deg)' }} />
+        </button>
       </div>
     </footer>
   );

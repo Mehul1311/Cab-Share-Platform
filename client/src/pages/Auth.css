@@ -100,7 +100,7 @@
   overflow: hidden;
   position: relative;
   z-index: 1;
-  background: rgba(10, 15, 26, 0.65);
+  background: var(--surface-card);
   backdrop-filter: blur(25px);
   -webkit-backdrop-filter: blur(25px);
   border: 1px solid rgba(255, 255, 255, 0.05);
@@ -383,7 +383,7 @@
 /* Right Column Form Area */
 .auth-form-side {
   padding: 56px;
-  background: rgba(10, 15, 26, 0.85);
+  background: var(--surface);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -410,7 +410,7 @@
 .auth-form-header h2 {
   font-size: 2.25rem;
   font-weight: 700;
-  color: white;
+  color: var(--text-primary);
   margin-bottom: 8px;
 }
 
@@ -613,4 +613,13 @@ body.light-theme .blob-purple {
 body.light-theme .blob-indigo {
   background: var(--primary) !important;
   opacity: 0.04 !important;
+}
+
+@media (max-width: 768px) {
+  .auth-form-side {
+    padding: 32px 24px;
+  }
+  .auth-split-wrapper {
+    min-height: auto;
+  }
 }

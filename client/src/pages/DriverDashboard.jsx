@@ -10,7 +10,7 @@ import {
   CheckCircle,
   PlusCircle
 } from 'lucide-react';
-import { OfferRideIllustration } from '../components/Illustrations';
+import LiveMap from '../components/LiveMap';
 import './DriverDashboard.css';
 
 const DriverDashboard = () => {
@@ -71,8 +71,13 @@ const DriverDashboard = () => {
   };
 
   return (
-    <div className="container animate-slide-down" style={{ paddingTop: '85px', paddingBottom: '90px', position: 'relative' }}>
+    <div className="container animate-fade-in driver-page-wrapper" style={{ paddingTop: '85px', paddingBottom: '90px', position: 'relative' }}>
       
+      {/* 🔮 Animated Floating Orbs */}
+      <div className="moving-orb orb-1"></div>
+      <div className="moving-orb orb-2"></div>
+      <div className="moving-orb orb-3"></div>
+
       {/* Header block with Illustration */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '40px', alignItems: 'center', marginBottom: '48px' }} className="driver-header-split">
         <div>
@@ -82,11 +87,9 @@ const DriverDashboard = () => {
           </p>
         </div>
 
-        {/* Vector SVG Illustration */}
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <div style={{ width: '100%', maxWidth: '320px' }}>
-            <OfferRideIllustration />
-          </div>
+        {/* Live Map Component */}
+        <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+          <LiveMap role="Driver" />
         </div>
       </div>
 
@@ -218,13 +221,27 @@ const DriverDashboard = () => {
                   </div>
                   <div className="driver-ride-details">
                     <div className="driver-ride-detail-item">
-                      <Users size={16} color="var(--primary)" />
+                      <Users size={16} color="var(--vibrant-cyan)" />
                       <span>Seats Offered: {ride.availableSeats}</span>
                     </div>
                     <span className={`driver-status-badge ${ride.availableSeats > 0 ? 'active' : 'pending'}`}>
                       {ride.availableSeats > 0 ? 'Booking Active' : 'Booked Out'}
                     </span>
                   </div>
+
+                  {/* Dynamic Radar for Active Rides */}
+                  {ride.availableSeats > 0 && (
+                    <div className="live-matching-status">
+                      <div className="radar-spinner">
+                        <div className="radar-circle"></div>
+                        <div className="radar-sweep"></div>
+                      </div>
+                      <div className="matching-text">
+                        <span className="pulse-text">Searching for passengers nearby...</span>
+                        <div className="matching-stats">Broadcasting to {Math.floor(Math.random() * 40) + 10} riders</div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { 
   Car, 
   Menu, 
@@ -21,7 +21,6 @@ const Navbar = () => {
   const [user, setUser] = useState(null);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
 
-  const navigate = useNavigate();
   const location = useLocation();
   const profileRef = useRef(null);
 
@@ -84,7 +83,7 @@ const Navbar = () => {
       localStorage.removeItem('userName');
       localStorage.removeItem('userPhoto');
       setShowProfileMenu(false);
-      navigate('/');
+      window.location.href = '/';
     } catch (error) {
       console.error('Logout error:', error);
     }
@@ -136,11 +135,18 @@ const Navbar = () => {
         <div className="desktop-menu">
           <Link to="/" className={`nav-link-custom ${isActive('/')}`} onClick={handleLinkClick}>Home</Link>
           <Link to="/about" className={`nav-link-custom ${isActive('/about')}`} onClick={handleLinkClick}>About</Link>
-          {isLoggedIn && (
-            <>
-              <Link to="/user-dashboard" className={`nav-link-custom ${isActive('/user-dashboard')}`} onClick={handleLinkClick}>Find Ride</Link>
-              <Link to="/driver-dashboard" className={`nav-link-custom ${isActive('/driver-dashboard')}`} onClick={handleLinkClick}>Offer Ride</Link>
-            </>
+          {/* Find Ride: Redirect to /auth if not logged in */}
+          <Link 
+            to={isLoggedIn ? "/user-dashboard" : "/auth"} 
+            className={`nav-link-custom ${isActive('/user-dashboard')}`} 
+            onClick={handleLinkClick}
+          >
+            Find Ride
+          </Link>
+          
+          {/* Offer Ride: Only visible to Drivers when logged in */}
+          {isLoggedIn && role === 'Driver' && (
+            <Link to="/driver-dashboard" className={`nav-link-custom ${isActive('/driver-dashboard')}`} onClick={handleLinkClick}>Offer Ride</Link>
           )}
           <Link to="/contact" className={`nav-link-custom ${isActive('/contact')}`} onClick={handleLinkClick}>Contact</Link>
           
@@ -169,18 +175,18 @@ const Navbar = () => {
               {showProfileMenu && (
                 <div className="profile-dropdown">
                   <div className="dropdown-user-header">
-                    <strong>{userName}</strong>
-                    <span>{role || 'Passenger'}</span>
+                    <span className="dropdown-user-name">{userName}</span>
+                    <span className="dropdown-user-role">{role || 'Passenger'}</span>
                   </div>
                   <div className="dropdown-divider"></div>
                   
                   {role === 'Driver' ? (
-                    <Link to="/driver-dashboard" className="dropdown-item" onClick={handleLinkClick}>
+                    <Link to="/driver-dashboard" className="dropdown-link" onClick={handleLinkClick}>
                       <Car size={16} />
                       <span>Driver Console</span>
                     </Link>
                   ) : (
-                    <Link to="/user-dashboard" className="dropdown-item" onClick={handleLinkClick}>
+                    <Link to="/user-dashboard" className="dropdown-link" onClick={handleLinkClick}>
                       <Bookmark size={16} />
                       <span>Rider Dashboard</span>
                     </Link>
@@ -228,11 +234,18 @@ const Navbar = () => {
             <div className="mobile-drawer-links">
               <Link to="/" className={`nav-link-custom ${isActive('/')}`} onClick={handleLinkClick}>Home</Link>
               <Link to="/about" className={`nav-link-custom ${isActive('/about')}`} onClick={handleLinkClick}>About</Link>
-              {isLoggedIn && (
-                <>
-                  <Link to="/user-dashboard" className={`nav-link-custom ${isActive('/user-dashboard')}`} onClick={handleLinkClick}>Find Ride</Link>
-                  <Link to="/driver-dashboard" className={`nav-link-custom ${isActive('/driver-dashboard')}`} onClick={handleLinkClick}>Offer Ride</Link>
-                </>
+              {/* Find Ride: Redirect to /auth if not logged in */}
+              <Link 
+                to={isLoggedIn ? "/user-dashboard" : "/auth"} 
+                className={`nav-link-custom ${isActive('/user-dashboard')}`} 
+                onClick={handleLinkClick}
+              >
+                Find Ride
+              </Link>
+              
+              {/* Offer Ride: Only visible to Drivers when logged in */}
+              {isLoggedIn && role === 'Driver' && (
+                <Link to="/driver-dashboard" className={`nav-link-custom ${isActive('/driver-dashboard')}`} onClick={handleLinkClick}>Offer Ride</Link>
               )}
               <Link to="/contact" className={`nav-link-custom ${isActive('/contact')}`} onClick={handleLinkClick}>Contact</Link>
               
