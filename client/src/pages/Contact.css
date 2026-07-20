@@ -411,7 +411,6 @@ textarea.input-field {
 }
 
 .map-route-connector {
-<<<<<<< HEAD
   flex: 1;
   height: 40px;
   position: relative;
@@ -429,7 +428,6 @@ textarea.input-field {
 
 .map-moving-car {
   position: absolute;
-<<<<<<< HEAD
   top: 50%;
   left: -10%;
   transform: translateY(-50%);
