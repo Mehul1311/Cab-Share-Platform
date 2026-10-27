@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema({
   phoneNumber: { type: String },
   vehicleNumber: { type: String },
   upiId: { type: String },
+  cashfreeVendorId: { type: String },
   createdAt: { type: Date, default: Date.now }
 });
 

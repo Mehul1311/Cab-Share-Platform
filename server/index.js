@@ -7,6 +7,7 @@ const authRoutes = require('./src/routes/authRoutes');
 const driverRoutes = require('./src/routes/driverRoutes');
 const adminRoutes = require('./src/routes/adminRoutes');
 const contactRoutes = require('./src/routes/contactRoutes');
+const paymentRoutes = require('./src/routes/paymentRoutes');
 
 const app = express();
 
@@ -42,6 +43,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/rides', driverRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/contact', contactRoutes);
+app.use('/api/payments', paymentRoutes);
 
 app.get('/', (req, res) => {
   res.send('Cab Sharing API is running...');
